@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acsc.manager.dao.ActivityDAO">
+    
+    <resultMap id="activity" type="com.acsc.commons.entity.Activity">
+        <id column="activity_id" property="activityId"/>
+        <result column="title" property="title"/>
+        <result column="apply_begin" property="applyBegin"/>
+        <result column="apply_end" property="applyEnd"/>
+        <result column="begin_time" property="beginTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="address" property="address"/>
+        <result column="advisory" property="advisory"/>
+        <result column="refund_info" property="refundInfo"/>
+        <result column="images" property="images"/>
+        <result column="details" property="details"/>
+        <result column="recommend" property="recommend"/>
+        <result column="notice" property="notice"/>
+        <result column="quota" property="quota"/>
+        <association property="club" javaType="com.acsc.commons.entity.Club">
+            <id column="club_id" property="clubId"/>
+            <result column="club_name" property="clubName"/>
+        </association>
+        <collection property="packages" ofType="com.acsc.commons.entity.ActivityPackage">
+            <id column="package_id" property="packageId"/>
+            <result column="package_title" property="title"/>
+            <result column="price" property="price"/>
+            <result column="activity_id" property="activityId"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="userActivityVO" type="com.acsc.manager.vo.UserActivityVO">
+        <id column="id" property="id"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="amount" property="amount"/>
+        <result column="apply_time" property="applyTime"/>
+        <association property="user" javaType="com.acsc.commons.entity.User">
+            <id column="user_id" property="userId"/>
+            <result column="first_name" property="firstName"/>
+            <result column="last_name" property="lastName"/>
+            <result column="mobile" property="mobile"/>
+            <result column="email" property="email"/>
+            <result column="wechat_num" property="wechatNum"/>
+        </association>
+        <association property="activityPackage" javaType="com.acsc.commons.entity.ActivityPackage">
+            <id column="package_id" property="packageId"/>
+            <result column="title" property="title"/>
+            <result column="price" property="price"/>
+        </association>
+    </resultMap>
+
+    <select id="queryAll" resultMap="activity">
+        select t1.activity_id, t1.title, apply_begin, apply_end, begin_time, end_time, quota, address, advisory, refund_info, images, details, recommend, notice, t1.club_id, t2.club_name, package_id, t3.title package_title ,price
+        from t_activity t1 left join t_club t2 on t1.club_id = t2.club_id left join t_activity_package t3 on t1.activity_id = t3.activity_id
+        limit #{begin},#{limit}
+    </select>
+
+    <select id="queryByActivityId" resultMap="activity">
+        select t1.activity_id, t1.title, apply_begin, apply_end, begin_time, end_time, quota, address, advisory, refund_info, images, details, recommend, notice, t1.club_id, t2.club_name, package_id, t3.title package_title ,price
+        from t_activity t1 left join t_club t2 on t1.club_id = t2.club_id left join t_activity_package t3 on t1.activity_id = t3.activity_id
+        where t1.activity_id = #{activityId}
+    </select>
+
+    <select id="queryActivityNum" resultType="java.lang.Integer">
+        select count(activity_id) from t_activity
+    </select>
+
+    <insert id="insert" parameterType="com.acsc.commons.entity.Activity">
+        INSERT INTO `t_activity`(`activity_id`, `title`, `apply_begin`, `apply_end`, `begin_time`, `end_time`, `quota`, `address`, `advisory`, `refund_info`, `images`, `details`, `recommend`, `notice`, `club_id`) VALUES (#{activityId}, #{title}, #{applyBegin}, #{applyEnd}, #{beginTime}, #{endTime}, #{quota}, #{address}, #{advisory}, #{refundInfo}, #{images}, #{details}, #{recommend}, #{notice}, #{club.clubId})
+    </insert>
+
+
+    <delete id="delByActivityId" parameterType="string">
+        delete from t_activity where activity_id = #{activityId}
+    </delete>
+
+    <update id="updateActivityById" parameterType="com.acsc.commons.entity.Activity">
+        UPDATE .t_activity SET `title` = #{title}, `apply_begin` = #{applyBegin}, `apply_end` = #{applyEnd}, `begin_time` = #{beginTime}, `end_time` = #{endTime}, `quota` = #{quota}, `address` = #{address}, `advisory` = #{advisory}, `refund_info` = #{refundInfo}, `images` = #{images}, `details` = #{details}, `recommend` = #{recommend}, `notice` = #{notice}, `club_id` = #{club.clubId}
+        WHERE `activity_id` = #{activityId}
+    </update>
+
+    <select id="queryUserByActivityId" resultMap="userActivityVO">
+        select id, status, amount, remark, apply_time, t1.user_id, first_name, last_name, mobile, email, wechat_num, t1.package_id, title, price
+        from t_user_activity t1 left join t_user t2 on t1.user_id = t2.user_id left join t_activity_package t3 on t1.package_id = t3.package_id
+        where t1.activity_id = #{activityId}
+        limit #{begin}, #{limit}
+    </select>
+
+    <select id="queryUsersActivityNum" resultType="java.lang.Integer">
+        select count(user_id) from t_user_activity where activity_id = #{activityId}
+    </select>
+
+</mapper>

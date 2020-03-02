@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acsc.manager.dao.PackageDAO">
+    <insert id="insertPackages" parameterType="list">
+
+        INSERT INTO `t_activity_package`(`package_id`, `title`, `price`, `activity_id`) VALUES
+        <foreach collection="packages" item="item" index="index" separator=",">
+            (#{item.packageId},#{item.title},#{item.price},#{item.activityId})
+        </foreach>
+    </insert>
+
+    <delete id="delPackagesByActivityId" parameterType="string">
+        delete from t_activity_package where activity_id = #{activityId}
+    </delete>
+</mapper>

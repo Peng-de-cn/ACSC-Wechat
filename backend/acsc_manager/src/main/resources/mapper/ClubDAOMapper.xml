@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acsc.manager.dao.ClubDAO">
+
+
+    <resultMap id="club" type="com.acsc.commons.entity.Club">
+        <id column="club_id" property="clubId"/>
+        <result column="club_name" property="clubName"/>
+        <result column="vip_suffix" property="vipSuffix"/>
+        <result column="add_time" property="addTime"/>
+        <association property="admin" javaType="com.acsc.commons.entity.Admin">
+            <id column="admin_id" property="adminId"/>
+            <result column="usename" property="username"/>
+        </association>
+    </resultMap>
+
+    <select id="queryByPage" resultType="com.acsc.commons.entity.Club">
+        select club_id clubId, club_name clubName, vip_suffix vipSuffix, add_time addTime, t1.admin_id, username from t_club t1 left join t_admin t2 on t1.admin_id = t2.admin_id
+        limit #{begin},#{limit}
+    </select>
+
+    <select id="queryAll" resultType="com.acsc.commons.entity.Club">
+        select club_id clubId, club_name clubName, vip_suffix vipSuffix, add_time addTime, t1.admin_id, username from t_club t1 left join t_admin t2 on t1.admin_id = t2.admin_id
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer">
+        select count(club_id) from t_club
+    </select>
+
+    <select id="queryById" resultType="com.acsc.commons.entity.Club">
+        select club_id clubId, club_name clubName, vip_suffix vipSuffix, add_time addTime, t1.admin_id, username from t_club t1 left join t_admin t2 on t1.admin_id = t2.admin_id where t1.club_id = #{clubId}
+    </select>
+
+    <insert id="insert">
+        insert into t_club (club_id, club_name, vip_suffix, admin_id, add_time) value (#{clubName}, #{clubName}, #{vipSuffix}, #{admin.adminId}, #{addTime})
+    </insert>
+
+    <update id="update">
+        update t_club set club_name = #{clubName},vip_suffix = #{vipSuffix} where club_id = #{clubId}
+    </update>
+
+    <delete id="delete">
+        delete from t_club where club_id = #{clubId}
+    </delete>
+
+</mapper>

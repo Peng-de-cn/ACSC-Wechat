@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://39.106.202.81:3306/acsc?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+    username: root
+    password: root
+    #password: Miword1234*
+
+  main:
+    allow-bean-definition-overriding: true
+  thymeleaf:
+    cache: false
+
+mybatis:
+  type-aliases-package: com.acsc.commons.entity
+  mapper-locations: mapper/*Mapper.xml
+
+upload:
+  filePath: /imgserver

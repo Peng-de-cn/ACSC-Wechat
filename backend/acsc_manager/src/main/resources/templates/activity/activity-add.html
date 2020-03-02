@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加活动</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" th:href="@{/css/font.css}">
+    <link rel="stylesheet" th:href="@{/css/xadmin.css}">
+
+    <style>
+        .layui-form-label{
+            width: 100px;
+        }
+        .layui-layedit{
+            background: #FFF;
+        }
+
+    </style>
+
+    <style type="text/css">
+        .uploader-list {
+            margin-left: -15px;
+        }
+
+        .uploader-list .info {
+            position: relative;
+            margin-top: -25px;
+            background-color: black;
+            color: white;
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            width: 100px;
+            height: 25px;
+            text-align: center;
+            display: none;
+        }
+
+        .uploader-list .handle {
+            position: relative;
+            background-color: black;
+            color: white;
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            width: 100px;
+            text-align: right;
+            height: 18px;
+            margin-bottom: -18px;
+            display: none;
+        }
+
+        .uploader-list .handle i {
+            margin-right: 5px;
+        }
+
+        .uploader-list .handle i:hover {
+            cursor: pointer;
+        }
+
+        .uploader-list .file-iteme {
+            margin: 12px 0 0 15px;
+            padding: 1px;
+            float: left;
+        }
+    </style>
+
+    <script type="text/javascript" th:src="@{/lib/layui/layui.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/xadmin.js}"></script>
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <form class="layui-form" id="activity">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">基础信息</li>
+                    <li>推荐理由</li>
+                    <li>活动详情</li>
+                    <li>活动须知</li>
+                    <li>活动套餐</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-form-item">
+                            <label for="title" class="layui-form-label">
+                                <span class="x-red">*</span>活动名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="title" name="title" lay-verify="required"  autocomplete="off" class="layui-input" style="width: 280px;">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="applyBegin" class="layui-form-label">
+                                <span class="x-red">*</span>报名开始时间
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="applyBegin" name="applyBegin" placeholder="报名开始时间" lay-verify="required|datetime" autocomplete="off" class="layui-input" style="width: 280px;">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label for="applyEnd" class="layui-form-label">
+                                <span class="x-red">*</span>报名结束时间
+                            </label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="applyEnd" name="applyEnd" placeholder="报名结束时间" lay-verify="required|datetime" autocomplete="off" class="layui-input" style="width: 280px;">
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label for="beginTime" class="layui-form-label">
+                                <span class="x-red">*</span>活动开始时间
+                            </label>
+                            <div class="layui-input-inline">
+                                <input class="layui-input" autocomplete="off" placeholder="活动开始时间" lay-verify="required|datetime" name="beginTime" id="beginTime" style="width: 280px;">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label for="endTime" class="layui-form-label">
+                                <span class="x-red">*</span>活动结束时间</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="endTime" name="endTime" placeholder="活动结束时间" lay-verify="required|datetime" autocomplete="off" class="layui-input" style="width: 280px;">
+                            </div>
+                            <!--<div class="layui-form-mid layui-word-aux">
+                                <span class="x-red">*</span>将会成为您唯一的登入名
+                            </div>-->
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label for="quota" class="layui-form-label">
+                                <span class="x-red">*</span>活动人数</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="quota" name="quota" placeholder="请输入内容" lay-verify="required|number" class="layui-input" style="width: 280px;"/>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label for="refundInfo" class="layui-form-label">
+                                <span class="x-red">*</span>退款信息</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="refundInfo" name="refundInfo" placeholder="请输入内容" lay-verify="required" class="layui-input" style="width: 280px;"/>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label for="clubId" class="layui-form-label">
+                                <span class="x-red">*</span>活动俱乐部</label>
+                            <div class="layui-input-inline">
+                                <select id="clubId" name="club.clubId" lay-verify="required" lay-search="">
+                                    <option value="">请选择</option>
+                                    <option th:value="${item.clubId}" th:each="item,stat : ${clubs}" th:text="${item.clubName}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label for="address" class="layui-form-label">
+                                <span class="x-red">*</span>活动地点</label>
+                            <div class="layui-input-inline">
+                                <textarea id="address" name="address" placeholder="请输入内容" lay-verify="required" class="layui-textarea" style="width: 280px;"></textarea>
+                            </div>
+                            <!--<div class="layui-form-mid layui-word-aux">
+                                <span class="x-red">*</span>将会成为您唯一的登入名
+                            </div>-->
+                        </div>
+
+                        <div class="layui-form-item">
+                            <label for="advisory" class="layui-form-label">
+                                <span class="x-red">*</span>活动咨询</label>
+                            <div class="layui-input-inline">
+                                <textarea id="advisory" name="advisory" placeholder="请输入内容" lay-verify="required" class="layui-textarea" style="width: 280px;"></textarea>
+                            </div>
+                            <!--<div class="layui-form-mid layui-word-aux">
+                                <span class="x-red">*</span>将会成为您唯一的登入名
+                            </div>-->
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">
+                                <span class="x-red">*</span>活动图片</label>
+                            <div class="layui-input-inline">
+                                <div class="layui-upload">
+                                    <button type="button" class="layui-btn" id="selectImg">选择图片</button>
+                                    <input type="hidden" id="imageUrl" name="images" />
+                                    <blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;width: 200px;background: #FFF;">
+                                        预览图：
+                                        <div class="layui-upload-list" id="img"></div>
+                                    </blockquote>
+                                </div>
+                            </div>
+                            <!--<div class="layui-form-mid layui-word-aux">
+                                <span class="x-red">*</span>将会成为您唯一的登入名
+                            </div>-->
+                        </div>
+
+                    </div>
+                    <div class="layui-tab-item">
+                        <div id="recommendDiv" style="background: #FFF;"></div>
+                        <textarea id="recommend" name="recommend" style="display: none;"></textarea>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div id="detailsDiv" style="background: #FFF;"></div>
+                        <textarea id="details" name="details" style="display: none;"></textarea>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div id="noticeDiv" style="background: #FFF;"></div>
+                        <textarea id="notice" name="notice" style="display: none;"></textarea>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="layui-card-header">
+                            <button class="layui-btn" id="addOne"><i class="layui-icon"></i>添加一行</button>
+                            <button class="layui-btn layui-btn-danger" id="delOne"><i class="layui-icon"></i>删除一行</button>
+                        </div>
+                        <div class="layui-card-body ">
+                            <table class="layui-table">
+                                <thead>
+                                <tr>
+                                    <td>套餐描述</td>
+                                    <td>套餐价格</td>
+                                    <!--<td>操作</td>-->
+                                </tr>
+                                </thead>
+                                <tbody id="packageList">
+                                <tr id="row0">
+                                    <td>
+                                        <input type="text" name="packages[0].title" required="" lay-verify="required"  autocomplete="off" class="layui-input">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="packages[0].price" required="" lay-verify="required|number"  autocomplete="off" class="layui-input">
+                                    </td>
+                                    <!--<td>
+                                        <a title="删除" class="btn-del" href="javascript:;">
+                                            <i class="layui-icon" style="font-size: 25px;color: #FF5722;">&#xe640;</i>
+                                        </a>
+                                    </td>-->
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="layui-input-block" style="margin: 0;text-align: center;">
+                    <button class="layui-btn" lay-filter="add" lay-submit="">保存</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+<script>
+    layui.use('laydate', function() {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#applyBegin', //指定元素
+            type: 'datetime'
+        });
+
+        laydate.render({
+            elem: '#applyEnd', //指定元素
+            type: 'datetime'
+        });
+
+        laydate.render({
+            elem: '#beginTime', //指定元素
+            type: 'datetime'
+        });
+
+        laydate.render({
+            elem: '#endTime', //指定元素
+            type: 'datetime'
+        });
+
+    });
+</script>
+
+<script type="text/javascript" th:src="@{/lib/wangEditor/wangEditor.js}" charset="utf-8"></script>
+
+<script>
+    var E = window.wangEditor;
+
+    //推荐理由
+
+    var recommendEditor = new E('#recommendDiv');
+    var $recommend = $('#recommend');
+
+    recommendEditor.customConfig.uploadImgServer = '/file/uploadImgEditor';
+    recommendEditor.customConfig.uploadFileName = 'files';
+    recommendEditor.customConfig.showLinkImg = false;
+    recommendEditor.customConfig.uploadImgTimeout = 20000;
+    recommendEditor.customConfig.onchange = function (html) {
+        // 监控变化，同步更新到 textarea
+        $recommend.val(html)
+    };
+    recommendEditor.create();
+    // 初始化 textarea 的值
+    $recommend.val(recommendEditor.txt.html());
+
+    //活动详情
+    var detailsEditor = new E('#detailsDiv');
+    var $details = $('#details');
+
+    detailsEditor.customConfig.uploadImgServer = '/file/uploadImgEditor';
+    detailsEditor.customConfig.uploadFileName = 'files';
+    detailsEditor.customConfig.showLinkImg = false;
+    detailsEditor.customConfig.uploadImgTimeout = 20000;
+    detailsEditor.customConfig.onchange = function (html) {
+        // 监控变化，同步更新到 textarea
+        $details.val(html)
+    };
+    detailsEditor.create();
+    // 初始化 textarea 的值
+    $details.val(detailsEditor.txt.html());
+
+    //活动须知
+    var noticeEditor = new E('#noticeDiv');
+    var $notice = $('#notice');
+
+    noticeEditor.customConfig.uploadImgServer = '/file/uploadImgEditor';
+    noticeEditor.customConfig.uploadFileName = 'files';
+    noticeEditor.customConfig.showLinkImg = false;
+    noticeEditor.customConfig.uploadImgTimeout = 20000;
+    noticeEditor.customConfig.onchange = function (html) {
+        // 监控变化，同步更新到 textarea
+        $notice.val(html)
+    };
+    noticeEditor.create();
+    // 初始化 textarea 的值
+    $notice.val(noticeEditor.txt.html());
+
+</script>
+
+<script>
+
+    var layedit;
+    layui.use('layedit', function(){
+
+        layedit = layui.layedit;
+
+        layedit.set({
+            uploadImage: {
+                url: '/file/uploadImg' //接口url
+                ,type: 'post' //默认post
+            }
+        });
+
+        //recommendIndex = layedit.build('recommend'); //建立编辑器
+        //detailsIndex = layedit.build('details'); //建立编辑器
+        //noticeIndex = layedit.build('notice'); //建立编辑器
+
+    });
+
+    var layer;
+
+    layui.use(['form', 'layer','jquery'], function() {
+        $ = layui.jquery;
+        var form = layui.form;
+        layer = layui.layer;
+
+        //监听提交
+        form.on('submit(add)', function(data) {
+            //layedit.sync(recommendIndex);
+            //layedit.sync(detailsIndex);
+            //layedit.sync(noticeIndex);
+
+            $.ajax({
+
+                type: 'post',
+                data: $('#activity').serialize(),
+                url: '/activity/add',
+                cache:false,
+                dataType:'text',
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    if(result.status){
+
+                        layer.alert("添加成功", {icon: 6},function() {
+                            //关闭当前frame
+                            xadmin.close();
+                            // 可以对父窗口进行刷新
+                            xadmin.father_reload();
+                        });
+                    }else{
+                        layer.alert("添加失败");
+                    }
+                }
+            });
+
+            return false;
+        });
+
+    });
+    layui.use('upload', function(){
+        var $ = layui.jquery
+            ,upload = layui.upload;
+
+        //多图片上传
+        upload.render({
+            elem: '#selectImg',
+            url: '/file/uploadImg',
+            multiple: true,
+            before: function(obj){
+                layer.msg('图片上传中...', {
+                    icon: 16,
+                    shade: 0.01,
+                    time: 0
+                })
+                //预读本地文件示例，不支持ie8
+                /*obj.preview(function(index, file, result){
+                    $('#img').append('<img style="width: 200px;height: auto;" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+                });*/
+            },
+            done: function(res){
+
+                if(res.errno === 0) {
+
+                    var imageUrl = res.data;
+
+                    imageUrl = $("#imageUrl").val() + imageUrl + ",";
+
+                    $("#imageUrl").val(imageUrl);
+
+                    layer.close(layer.msg());//关闭上传提示窗口
+                    //上传完毕
+                    $('#img').append(
+                        '<div id="" class="file-iteme" style="margin-bottom:10px;">' +
+                        '<div class="handle"><i class="layui-icon layui-icon-delete"></i></div>' +
+                        '<img style="width: 200px;height: auto;" src=' + res.data + '>' +
+                        '</div>'
+                    );
+                }else{
+                    layer.close(layer.msg());
+                    layer.alert("上传失败");
+                }
+
+            }
+        });
+
+
+        $(document).on("mouseenter mouseleave", ".file-iteme", function(event){
+            if(event.type === "mouseenter"){
+                //鼠标悬浮
+                $(this).children(".info").fadeIn("fast");
+                $(this).children(".handle").fadeIn("fast");
+            }else if(event.type === "mouseleave") {
+                //鼠标离开
+                $(this).children(".info").hide();
+                $(this).children(".handle").hide();
+            }
+        });
+
+        $(document).on("click", ".file-iteme .handle", function(event){
+
+
+
+            var src = $(this).next().attr("src");
+            //$(this).parent().remove();
+            var obj = $(this).parent();
+
+            $.ajax({
+                type: 'post',
+                data: {'path':src},
+                url: '/file/delUploadFile',
+                cache:false,
+                dataType:'text',
+                async:false,
+                success: function (data) {
+                    var result = JSON.parse(data);
+                    if(result.status){
+                        layer.alert("删除成功",function (index) {
+                            layer.close(index);
+                            obj.remove();
+                        });
+                    }else{
+                        layer.alert("添加失败");
+                    }
+                }
+            });
+
+
+        });
+
+
+    });
+
+</script>
+
+<script>
+    $(function () {
+
+        let i=0;
+
+        $('#addOne').click(function () {
+            i++;
+            addstrs1(i);//增加一条内容函数
+        });
+
+        $('#delOne').click(function () {
+            if(i === 0){
+                layer.msg('最少填写一条！！！');
+                return;
+            }
+            $("#row"+i).remove();
+            i--;
+        });
+
+        function addstrs1(i) {
+            let strs1;
+            strs1 = '<tr id="row'+i+'">\n' +
+                '       <td>\n' +
+                '           <input type="text" name="packages['+i+'].title"  autocomplete="off" class="layui-input">\n' +
+                '       </td>\n' +
+                '       <td>\n' +
+                '           <input type="text" name="packages['+i+'].price" required=""  autocomplete="off" class="layui-input">\n' +
+                '       </td>\n' +
+                '    </tr>';
+            $('#packageList').append(strs1);
+        }
+    })
+
+</script>
+
+</body>
+
+</html>
