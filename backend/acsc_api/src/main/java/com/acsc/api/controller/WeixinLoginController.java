@@ -18,6 +18,7 @@ public class WeixinLoginController {
 
     @RequestMapping("login")
     public ResultVO login(String jscode){
+        System.out.println(jscode);
         return weixinLoginService.login(jscode);
     }
 
