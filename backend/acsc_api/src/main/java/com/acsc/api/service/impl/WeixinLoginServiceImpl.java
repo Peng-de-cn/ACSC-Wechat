@@ -57,10 +57,8 @@ public class WeixinLoginServiceImpl implements WeixinLoginService {
         log.info("微信开始登入.....");
         ResultVO resultvo=new ResultVO();
         try {
-            System.out.println(weixinProperties);
-            String data1="appid="+weixinProperties.getAppid()+"&secret="+weixinProperties.getSecret()+"js_code="+jscode+"grant_type=authorization_code";
+            String data1="appid="+weixinProperties.getAppid()+"&secret="+weixinProperties.getSecret()+"&js_code="+jscode+"&grant_type=authorization_code";
             resultvo = HttpClientUtil.sendUrl(weixinProperties.getHost(), data1);
-            System.out.println(resultvo);
         } catch (Exception  e) {
             log.info("微信登入出错"+e.getMessage());
             resultvo.setStatus(false).setErrmsg("登录请求发送失败");

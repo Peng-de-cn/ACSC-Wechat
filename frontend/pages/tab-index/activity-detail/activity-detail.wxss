@@ -1,0 +1,175 @@
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.activity-swiper swiper {
+  height: 400rpx;
+}
+
+.activity-swiper  image {
+  width: 100%;
+}
+
+.activity-info {
+  padding-bottom: 80rpx;
+}
+
+.activity-info .info-top {
+  padding: 10px 10px 6px;
+  background: #fff;
+}
+
+.activity-info .info-top .info-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.activity-info .info-top .info-title .surplus {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.info-top .info-title .surplus .count {
+  color: #168e8c;
+  font-weight: bold;
+}
+
+.activity-info .info-top .deadline {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.activity-info .info-top .deadline .date {
+  color: #168e8c;
+}
+
+.activity-info .info-middle {
+  background: #fff;
+  margin: 6px 0;
+  padding: 10px 10px 6px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.activity-info .bottom-list {
+  margin-top: 4px;
+  background: #fff;
+  color: #999;
+  font-weight: bold;
+}
+
+.bottom-list .list-item {
+  background: #fff;
+  padding: 6px 10px;
+  font-size: 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+.bottom-list .list-item image {
+  width: 22rpx;
+  height: 22rpx;
+  margin-right: 10rpx;
+}
+
+.bottom-list .list-item .tel {
+  color: #5096f8;
+  margin: 0 4px;
+}
+
+.bottom-list .list-item .state {
+  color: #5096f8;
+  font-weight: bold;
+}
+
+.activity-info .options {
+  background: #fff;
+  margin: 4px 0;
+  padding: 6px 10px;
+  box-sizing: border-box;
+}
+
+.activity-info .options .option {
+  padding: 6px 10px;
+  font-size: 12px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  color: #4c4c4c;
+}
+
+.activity-info .options .option.active {
+  /* background: #5096F8; */
+  background: #9bd8fc;
+  border: 1px solid #37b0f8;
+}
+
+.option .right .original {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 11px;
+}
+
+.option .right .present {
+  margin-left: 6px;
+}
+
+/* 跳转详情页 */
+
+.detail {
+  width: 94%;
+  padding: 6px 0;
+  text-align: center;
+  color: #fff;
+  background: #65B4F5;
+  font-size: 14px;
+  border-radius: 8px;
+  margin: 16px auto;
+}
+
+/* 收藏与预订开始 */
+
+.container .operation {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0px -1px 1px #e6e6e6;
+}
+
+.operation .collection {
+  height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 200rpx 0 0;
+  background: #fff;
+}
+
+.operation .collection image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.operation .collection text {
+  font-size: 14px;
+  margin-left: 12rpx;
+}
+
+.operation .sign-up {
+  height: 80rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 0;
+  background: skyblue;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* 收藏与预订结束 */

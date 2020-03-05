@@ -1,0 +1,81 @@
+<view class='container'>
+  <!-- 搜索栏 -->
+  <view class="top">
+    <view class="page__bd">
+      <view class="weui-search-bar">
+        <view class="weui-search-bar__form">
+          <view class="weui-search-bar__box">
+            <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+            <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+          </view>
+          <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="runSearch">
+            <icon class="weui-icon-search" type="search" size="18"></icon>
+            <view class="weui-search-bar__text">搜索活动</view>
+          </label>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 排序 -->
+  <view class="order">
+    <view class="item active">默认</view>
+    <view class="item">开始时间</view>
+    <view class="item">发布时间</view>
+  </view>
+  <!-- 列表页 -->
+  <view class="activity-list">
+    <view class="list-item" catchtap="runDetail">
+      <view class="picture">
+        <image mode="aspectFill" lazy-load="true" src="https://i.loli.net/2020/03/03/QRG1IdqUOAtYB5h.jpg"></image>
+      </view>
+      <view class="title">[ACSC华人滑雪俱乐部 瑞士 第一季] 瑞士 卢塞恩 铁力士山 4天3晚 自由行</view>
+      <view class="infos">
+        <view class="location">
+          <image src="/images/location.png"></image>
+          <text>瑞士 卢塞恩</text>
+        </view>
+        <view class="date">
+          <image src="/images/time.png"></image>
+          <text>2019.12.05</text>
+        </view>
+      </view>
+      <view class="price">¥ xxxx起</view>
+    </view>
+    <view class="list-item" catchtap="runTest">
+      <view class="picture">
+        <image mode="aspectFill" lazy-load="true" src="https://i.loli.net/2020/02/23/VQXD27NO1atTwkg.jpg"></image>
+      </view>
+      <view class="title">[ACSC华人滑雪俱乐部 瑞士 第二季] 瑞士 格劳宾登州 达沃斯 4天3晚 自由行</view>
+      <view class="infos">
+        <text class="location">
+          <image src="/images/location.png"></image>
+          <text>瑞士 格劳宾登州</text>
+        </text>
+        <text class="date">
+          <image src="/images/time.png"></image>
+          <text>2020.01.16</text>
+        </text>
+      </view>
+      <view class="price">¥ xxxx起</view>
+    </view>
+    <view class="list-item" catchtap="runTest">
+      <view class="picture">
+        <image mode="aspectFill" lazy-load="true" src="https://i.loli.net/2020/02/23/VQXD27NO1atTwkg.jpg"></image>
+      </view>
+      <view class="title">[ACSC华人滑雪俱乐部 瑞士 第三季] 瑞士 格劳宾登州 圣莫里茨 8天7晚 自由行</view>
+      <view class="infos">
+        <text class="location">
+          <image src="/images/location.png"></image>
+          <text>瑞士 格劳宾登州</text>
+        </text>
+        <text class="date">
+          <image src="/images/time.png"></image>
+          <text>2020.04.12</text>
+        </text>
+      </view>
+      <view class="price">¥ xxxx起</view>
+    </view>
+  </view>
+<open-data type="userAvatarUrl"></open-data>
+<open-data type="userNickName"></open-data>
+</view>

@@ -3,14 +3,62 @@
 <mapper namespace="com.acsc.api.dao.UserDAO">
 
     <insert id="insertUser">
-        INSERT INTO t_user (`user_id`, `last_name`, `first_name`, `gender`, `birthday`, `email`, `mobile`, `address`, `avatar`, `wechat_name`, `wechat_num`, `create_time`, `vip_num`, `vip_level`, `club_id`)
-        VALUES (#{userId},#{lastName},#{firstName},#{gender},#{birthday},#{email},#{mobile},#{address},#{avatar},#{wechatName},#{wechatNum},#{createTime},#{vipNum},#{vipLevel},#{clubId});
+        INSERT INTO t_user (`user_id`, `last_name`, `first_name`, `gender`, `birthday`, `email`, `mobile`, `address`, `avatar`, `wechat_name`, `wechat_num`, `create_time`, `vip_num`, `vip_level`, `club_id`,`backup_mobile`)
+        VALUES (#{userId},#{lastName},#{firstName},#{gender},#{birthday,jdbcType=DATE},#{email},#{mobile},#{address},#{avatar},#{wechatName,jdbcType=VARCHAR},#{wechatNum,jdbcType=VARCHAR},#{createTime},#{vipNum,jdbcType=VARCHAR},#{vipLevel,jdbcType=VARCHAR},#{clubId,jdbcType=VARCHAR},#{backupMobile,jdbcType=VARCHAR});
     </insert>
 
-    <update id="updateUserById" parameterType="com.acsc.commons.entity.Activity">
-        UPDATE .t_user SET `vip_num` = #{vipNum}, `vip_level` = #{vipLevel}, `club_id` = #{clubId}, `mobile` = #{mobile}, `email` = #{email}, `birthday` = #{birthday}, `gender` = #{gender}, `first_name` = #{firstName}, `last_name` = #{lastName}
+    <update id="updateUserById" parameterType="com.acsc.commons.entity.User">
+        UPDATE .t_user
+        <set>
+            <if test="vipNum!= null and vipNum!= ''">
+                vip_num=#{vipNum},
+            </if>
+            <if test="vipLevel!= null and vipLevel!= ''">
+                vip_level=#{vipLevel},
+            </if>
+            <if test="clubId!= null and clubId!= ''">
+                club_id=#{clubId},
+            </if>
+            <if test="mobile!= null and mobile!= ''">
+                mobile=#{mobile},
+            </if>
+            <if test="email!= null and email!= ''">
+                email=#{email},
+            </if>
+            <if test="gender!= null and gender!= ''">
+                gender=#{gender},
+            </if>
+            <if test="firstName!= null firstName!= ''">
+                first_name=#{firstName},
+            </if>
+            <if test="lastName!= null lastName!= ''">
+                last_name=#{lastName}
+            </if>
+            <if test="address!= null address!= ''">
+                address=#{address}
+            </if>
+            <if test="avatar!= null avatar!= ''">
+                avatar=#{avatar}
+            </if>
+            <if test="wechatName!= null wechatName!= ''">
+                wechatName=#{wechatName}
+            </if>
+            <if test="wechatNum!= null wechatNum!= ''">
+                wechatNum=#{wechatNum}
+            </if>
+            <if test="backupMobile!= null backupMobile!= ''">
+                backup_mobile=#{backupMobile}
+            </if>
+        </set>
+
         WHERE `user_id` = #{userId}
     </update>
 
+
+    <select id="queryUserById" parameterType="String" resultType="com.acsc.commons.entity.User">
+        select user_id userId, last_name lastName, first_name firstName, gender, email, mobile, address, avatar, wechat_name wechatName, wechat_num wechatNum, create_time createTime, vipNum, vipLevel, clubId,backup_mobile backupMobile
+        from t_user
+        where `user_id` = #{userId}
+    </select>
 
 </mapper>

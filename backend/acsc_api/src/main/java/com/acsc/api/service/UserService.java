@@ -6,4 +6,6 @@ import com.acsc.commons.vo.ResultVO;
 public interface UserService {
 
     ResultVO insertUser (User user);
+    ResultVO updateUserById (User user);
+    ResultVO queryUserById (String userId);
 }

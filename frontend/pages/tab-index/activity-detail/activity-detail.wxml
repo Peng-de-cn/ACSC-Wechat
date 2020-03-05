@@ -1,0 +1,102 @@
+<view class="container">
+  <!-- 轮播图 -->
+  <view class="activity-swiper">
+    <view class="page-section page-section-spacing swiper">
+      <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{swiperList}}" wx:key="*this">
+          <swiper-item>
+            <image mode="aspectFill" lazy-load="true" src="{{item}}"></image>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+  </view>
+  <!-- 活动信息 -->
+  <view class="activity-info">
+    <view class="info-top">
+      <view class="info-title">[ACSC华人滑雪俱乐部 瑞士 第一季] 瑞士 卢塞恩 铁力士山 4天3晚 自由行
+        <text class="surplus">(剩余 <text class="count">220</text> 个名额)</text>
+      </view>
+      <view class="deadline">报名截止:
+        <text class="date">2019.012.13 00:00</text> </view>
+    </view>
+    <view class="info-middle">
+      <text>组织方: ACSC华人滑雪俱乐部</text>
+    </view>
+    <view class="bottom-list">
+      <view class="list-item">
+        <image src="/images/time.png"></image>
+        <text>活动时间: </text>
+        <text>2019.12.05 8:00 - 2019.12.08 18:00</text>
+      </view>
+      <view class="list-item">
+        <image src="/images/location.png"></image>
+        <text>活动地点: </text>
+        <text>瑞士 卢塞恩</text>
+      </view>
+      <view class="list-item">
+        <image src="/images/tel.png"></image>
+        <text>报名资讯: </text>
+        <text class="tel" catchtap="callPhone" data-phone="13612341234">131 xxxx xxxx</text>
+        <text class="tel" catchtap="callPhone" data-phone="13612341234">134 xxxx xxxx</text>
+      </view>
+      <view class="list-item">
+        <image src="/images/_refund.png"></image>
+        <text>退款信息: </text>
+        <text class="state">不可退款</text>
+      </view>
+    </view>
+    <view class="options">
+      <view class="option active">
+        <view class="left">
+          机票+酒店+交通+雪票+早晚餐+温泉
+        </view>
+        <view class="right">
+          <text class="original">¥ 13888</text>
+          <text class="present">¥ 13888</text>
+        </view>
+      </view>
+      <view class="option">
+        <view class="left">
+          早鸟价格,1月31日之前拍有效
+        </view>
+        <view class="right">
+          <text class="original">¥ 12999</text>
+          <text class="present">¥ 12999</text>
+        </view>
+      </view>
+      <view class="option">
+        <view class="left">
+          日本3年多次往返签证(仅限滑雪团拍)
+        </view>
+        <view class="right">
+          <text class="original">¥ 1100</text>
+          <text class="present">¥ 650</text>
+        </view>
+      </view>
+      <view class="option">
+        <view class="left">
+          日本单次往返签证
+        </view>
+        <view class="right">
+          <text class="original">¥ 600</text>
+          <text class="present">¥ 290</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 详情页 -->
+    <view class="detail" style="text-align:center;" catchtap="runWebview">
+      →→→→→ 点击了解活动详情 →→→→→
+    </view>
+  </view>
+
+  <!-- 收藏&预订 -->
+  <view class="operation">
+    <view class="collection" catchtap="collection">
+      <image src="/images/time.png"></image>
+      <text>收藏</text>
+    </view>
+    <view class="sign-up" catchtap="submitData">立即报名</view>
+  </view>
+</view>
