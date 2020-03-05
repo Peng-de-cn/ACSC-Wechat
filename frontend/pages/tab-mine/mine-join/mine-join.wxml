@@ -1,0 +1,59 @@
+<!--index.wxml-->
+<view class="container">
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <!-- <view style="font-size:30rpx;margin-bottom:20rpx;font-weight:bold;margin-left:10rpx;">个人信息：</view> -->
+
+    <!-- 姓 -->
+    <view class="section">
+      <view class="section_title">姓</view>
+      <input name="custom_surname" type="text" placeholder="请输入您的姓" confirm-type="next" maxlength='16' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
+    </view>
+
+    <!-- 名 -->
+    <view class="section">
+      <view class="section_title">名</view>
+      <input name="custom_name" type="text" placeholder="请输入您的名" confirm-type="next" maxlength='16' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
+    </view>
+
+    <!-- 微信号码 -->
+    <view class="section">
+      <view class="section_title">微信号码</view>
+      <input name="custom_wechat" type="text" placeholder="请输入您的微信号码" confirm-type="next" maxlength='18' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
+    </view>
+
+    <!-- 手机号码 -->
+    <view class="section">
+      <view class="section_title">手机号码</view>
+      <input name="custom_phone" type="number" placeholder="请输入您的手机号码" confirm-type="next" maxlength='11' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
+    </view>
+
+    <!-- 备用号码 -->
+    <view class="section">
+      <view class="section_title">备用号码</view>
+      <input name="custom_spare_phone" type="number" placeholder="请输入您的备用号码" confirm-type="next" maxlength='11' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
+    </view>
+
+    <!-- 邮箱 -->
+    <view class="section">
+      <view class="section_title">邮箱</view>
+      <input name="custom_email" type="text" placeholder="请输入您的邮箱" confirm-type="next" maxlength='18' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
+    </view>
+
+    <!-- 地址 -->
+    <view class="section" style="height:100%;">
+      <view class="section_title">地址</view>
+      <view style="width:90%;padding:20px 0;box-sizing: border-box;line-height:1;">
+        <textarea name="custom_address" placeholder="请输入您的地址" cursor-spacing="80" style="width:90%;padding-left: 20rpx;" maxlength="-1"></textarea>
+      </view>
+      <!-- <input name="custom_address" type="text" placeholder="请输入您的地址" confirm-type="next" maxlength='11' autocapitalize='off' autocorrect='off' cursor-spacing="80" /> -->
+    </view>
+
+    <!-- 会员 -->
+    <view class="section">
+      <view class="section_title">会员</view>
+      <input name="custom_price" type="text" placeholder="会员价格" confirm-type="next" maxlength='11' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
+    </view>
+
+    <button class='btnSubmit' form-type="submit"> 加入会员 </button>
+  </form>
+</view>
