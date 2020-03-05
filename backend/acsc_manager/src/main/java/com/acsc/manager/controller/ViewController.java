@@ -4,9 +4,11 @@ package com.acsc.manager.controller;
 import com.acsc.commons.entity.Activity;
 import com.acsc.commons.entity.Admin;
 import com.acsc.commons.entity.Club;
+import com.acsc.commons.entity.Word;
 import com.acsc.manager.service.ActivityService;
 import com.acsc.manager.service.ClubService;
 import com.acsc.manager.service.UserService;
+import com.acsc.manager.service.WordService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,9 @@ public class ViewController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private WordService wordService;
 
     @RequestMapping("index")
     public ModelAndView index(HttpServletRequest request){
@@ -86,6 +91,7 @@ public class ViewController {
     public ModelAndView activityList(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("activity/activity-list");
+        modelAndView.addObject("clubs",clubService.getAllClub());
         return modelAndView;
 
     }
@@ -138,8 +144,8 @@ public class ViewController {
 
     }
 
-    @RequestMapping("toClubUpdate")
-    public ModelAndView toClubUpdate(String clubId){
+    @RequestMapping("clubUpdate")
+    public ModelAndView clubUpdate(String clubId){
 
         Club club = clubService.getClubById(clubId);
 
@@ -149,6 +155,31 @@ public class ViewController {
 
         return modelAndView;
 
+    }
+
+    @RequestMapping("wordList")
+    public ModelAndView wordList(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("word/word-list");
+        return modelAndView;
+    }
+
+    @RequestMapping("wordAdd")
+    public ModelAndView wordAdd(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("word/word-add");
+        return modelAndView;
+    }
+
+    @RequestMapping("wordUpdate")
+    public ModelAndView wordUpdate(String wordId){
+
+        Word word = wordService.getWordById(wordId);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("word/word-update");
+        modelAndView.addObject("word",word);
+        return modelAndView;
     }
 
 

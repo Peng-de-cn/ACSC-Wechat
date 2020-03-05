@@ -49,7 +49,7 @@
 
             <div class="layui-card">
                 <div class="layui-card-body ">
-                    <div class="layui-collapse" lay-filter="test">
+                    <!--<div class="layui-collapse" lay-filter="test">
                         <div class="layui-colla-item">
                             <h2 class="layui-colla-title">条件筛选<i class="layui-icon layui-colla-icon"></i></h2>
                             <div class="layui-colla-content">
@@ -191,18 +191,18 @@
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
-                <div class="layui-card-header">
-                   <!-- <button class="layui-btn layui-btn-danger" onclick="delAll()">
+               <!-- <div class="layui-card-header">
+                   &lt;!&ndash; <button class="layui-btn layui-btn-danger" onclick="delAll()">
                         <i class="layui-icon"></i>批量删除
-                    </button>-->
+                    </button>&ndash;&gt;
                     <button class="layui-btn" onclick="xadmin.open('添加活动','/view/clubAdd',500,300)">
                         <i class="layui-icon"></i>添加
                     </button>
-                </div>
+                </div>-->
                 <div class="layui-card-body ">
-                    <table class="layui-table layui-form" lay-data="{url:'/club/list',page:true,toolbar: '#toolbarDemo',id:'test'}">
+                    <table class="layui-table layui-form" lay-data="{url:'/club/list',page:true,toolbar: '#toolbar',id:'test'}">
                         <thead>
                         <tr>
                             <th lay-data="{type:'checkbox'}">ID</th>
@@ -219,8 +219,19 @@
 </div>
 </body>
 
+<script type="text/html" id="toolbar">
+    <div class = "layui-btn-container" >
+        <!--<button class="layui-btn layui-btn-danger" onclick="delAll()">
+                        <i class="layui-icon"></i>批量删除
+                    </button>-->
+        <button class="layui-btn" onclick="xadmin.open('添加俱乐部','/view/clubAdd',500,300)">
+            <i class="layui-icon"></i>添加
+        </button>
+    </div >
+</script>
+
 <script type="text/html" id="operationTpl">
-    <a title="编辑"  onclick="xadmin.open('编辑活动','/view/toClubUpdate?clubId={{d.clubId}}',500,300)" href="javascript:;">
+    <a title="编辑"  onclick="xadmin.open('编辑活动','/view/clubUpdate?clubId={{d.clubId}}',500,300)" href="javascript:;">
         <i class="layui-icon" style="font-size: 25px;color: #009688;">&#xe642;</i>
     </a>
     <a title="删除" onclick="del(this,'{{d.clubId}}')" href="javascript:;">

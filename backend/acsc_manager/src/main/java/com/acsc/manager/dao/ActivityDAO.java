@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface ActivityDAO {
 
-    List<Activity> queryAll(@Param("begin") Integer begin, @Param("limit") Integer limit);
+    List<Activity> queryAll(@Param("begin") Integer begin, @Param("limit") Integer limit, @Param("title")String title, @Param("clubId")String clubId);
 
     Activity queryByActivityId(String activityId);
 
-    Integer queryActivityNum();
+    Integer queryActivityNum(String title, String clubId);
 
     void insert(Activity activity);
 

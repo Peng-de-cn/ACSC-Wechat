@@ -45,6 +45,7 @@ public class User {
     private String vipLevel;
     /** 会员俱乐部 */
     private String clubId;
-
+    /** 备用手机号 */
+    private String backupMobile;
 
 }

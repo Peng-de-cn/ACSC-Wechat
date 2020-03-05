@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface UserDAO {
 
-    List<User> queryAll(@Param("start") Integer start, @Param("limit") Integer limit);
+    List<User> queryAll(@Param("start")Integer start, @Param("limit")Integer limit, @Param("vipNum")String vipNum, @Param("clubId")String clubId, @Param("mobile")String mobile);
 
     User queryById(String userId);
 
-    int getUserNum();
+    int getUserNum(@Param("vipNum")String vipNum, @Param("clubId")String clubId, @Param("mobile")String mobile);
 
     void insert(User user);
 

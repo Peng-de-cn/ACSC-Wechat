@@ -3,13 +3,28 @@
 <mapper namespace="com.acsc.manager.dao.AdminDAO">
 
     <select id="queryByUsername" resultType="com.acsc.commons.entity.Admin">
-
         select admin_id adminId, username, passwd, salt, email, mobile, name, status
         from t_admin
         where username = #{username}
-
+    </select>
+    <select id="queryById" resultType="com.acsc.commons.entity.Admin">
+        select admin_id adminId, username, passwd, salt, email, mobile, name, status
+        from t_admin
+        where admin_id = #{adminId}
     </select>
 
+    <insert id="insert" parameterType="com.acsc.commons.entity.Admin">
+        INSERT INTO t_admin (`admin_id`, `username`, `passwd`, `salt`, `email`, `mobile`, `name`, `status`) VALUES (#{adminId}, #{username}, #{passwd}, #{salt}, #{email}, #{mobile}, #{name}, #{status});
+    </insert>
+
+    <update id="update">
+        UPDATE t_admin SET `username` = #{username}, `email` = #{email}, `mobile` = #{mobile}, `name` = #{name}, `status` = #{status} WHERE `admin_id` = #{adminId};
+
+    </update>
+
+    <update id="updatePasswd">
+        UPDATE t_admin SET `passwd` = #{passwd} WHERE `admin_id` = #{adminId};
+    </update>
 
 
 </mapper>

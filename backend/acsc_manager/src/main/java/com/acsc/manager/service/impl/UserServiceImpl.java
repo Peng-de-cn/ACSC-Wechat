@@ -20,17 +20,17 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Map<String,Object> getUserList(Integer page,Integer limit) {
+    public Map<String,Object> getUserList(Integer page, Integer limit, String vipNum, String clubId, String mobile) {
 
         Integer start = (page-1)*limit;
 
-        List<User> users = userDAO.queryAll(start,limit);
+        List<User> users = userDAO.queryAll(start, limit, vipNum, clubId, mobile);
 
         HashMap<String, Object> map = new HashMap<>();
 
         map.put("code",0);
         map.put("msg","ok");
-        map.put("count",userDAO.getUserNum());
+        map.put("count",userDAO.getUserNum(vipNum, clubId, mobile));
         map.put("data",users);
 
 

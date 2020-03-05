@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface RoleDAO {
 
-    List<Role> queryByAdminId(BigInteger adminId);
+    List<Role> queryByAdminId(String adminId);
 
 }

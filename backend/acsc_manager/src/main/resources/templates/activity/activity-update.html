@@ -84,9 +84,9 @@
             <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                 <ul class="layui-tab-title">
                     <li class="layui-this">基础信息</li>
-                    <li>推荐理由</li>
+                    <!--<li>推荐理由</li>
                     <li>活动详情</li>
-                    <li>活动须知</li>
+                    <li>活动须知</li>-->
                     <li>活动套餐</li>
                 </ul>
                 <div class="layui-tab-content">
@@ -184,6 +184,18 @@
                                 <span class="x-red">*</span>将会成为您唯一的登入名
                             </div>-->
                         </div>
+
+                        <div class="layui-form-item">
+                            <label for="details" class="layui-form-label">
+                                <span class="x-red">*</span>活动详情</label>
+                            <div class="layui-input-inline">
+                                <textarea id="details" name="details" placeholder="请输入内容" th:text="${activity.details}" class="layui-textarea" style="width: 280px;"></textarea>
+                            </div>
+                            <!--<div class="layui-form-mid layui-word-aux">
+                                <span class="x-red">*</span>将会成为您唯一的登入名
+                            </div>-->
+                        </div>
+
                         <div class="layui-form-item">
                             <label class="layui-form-label">
                                 <span class="x-red">*</span>活动图片</label>
@@ -213,7 +225,7 @@
                     <!--<div class="layui-tab-item">
                         <textarea id="details" name="details" th:text="${activity.details}" style="display: none;"></textarea>
                     </div>-->
-                    <div class="layui-tab-item">
+                    <!--<div class="layui-tab-item">
                         <div id="recommendDiv" style="background: #FFF;"></div>
                         <textarea id="recommend" name="recommend" style="display: none;"></textarea>
                     </div>
@@ -224,7 +236,7 @@
                     <div class="layui-tab-item">
                         <div id="noticeDiv" style="background: #FFF;"></div>
                         <textarea id="notice" name="notice" style="display: none;"></textarea>
-                    </div>
+                    </div>-->
 
                     <div class="layui-tab-item">
                         <div class="layui-card-header">
@@ -298,7 +310,7 @@
 
 <script type="text/javascript" th:src="@{/lib/wangEditor/wangEditor.js}" charset="utf-8"></script>
 
-<script th:inline="javascript">
+<!--<script th:inline="javascript">
     var E = window.wangEditor;
 
     //推荐理由
@@ -352,7 +364,7 @@
     // 初始化 textarea 的值
     $notice.val([[${activity.notice}]]);
 
-</script>
+</script>-->
 
 
 <script>

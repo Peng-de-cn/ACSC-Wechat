@@ -11,7 +11,7 @@ import java.math.BigInteger;
 public class Admin implements Serializable {
 
     /** 管理ID */
-    private BigInteger adminId;
+    private String adminId;
     /** 用户名 */
     private String username;
     /** 密码 */

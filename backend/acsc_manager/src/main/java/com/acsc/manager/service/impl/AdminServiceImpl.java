@@ -2,8 +2,10 @@ package com.acsc.manager.service.impl;
 
 import com.acsc.commons.entity.Admin;
 import com.acsc.commons.vo.ResultVO;
+import com.acsc.manager.dao.AdminDAO;
 import com.acsc.manager.service.AdminService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -12,11 +14,25 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.UUID;
+
+import static com.acsc.manager.utils.ShiroUtils.sha256;
+
 
 @Slf4j
 @Service
 public class AdminServiceImpl implements AdminService {
 
+    @Resource
+    private AdminDAO adminDAO;
+
+    /**
+     * 管理员登录
+     * @param username
+     * @param passwd
+     * @return
+     */
     @Override
     public ResultVO login(String username, String passwd) {
 
@@ -52,8 +68,82 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
+    /**
+     * 添加管理员
+     * @param admin
+     * @return
+     */
     @Override
-    public void logout() {
+    public ResultVO add(Admin admin) {
 
+        ResultVO resultVO = new ResultVO();
+
+        try {
+            admin.setAdminId(UUID.randomUUID().toString().replace("-", ""));
+            //生成salt
+            String salt = RandomStringUtils.randomAlphanumeric(6);
+            admin.setSalt(salt);
+            //密码加密
+            admin.setPasswd(sha256(admin.getPasswd(), salt));
+            admin.setStatus(1);
+            adminDAO.insert(admin);
+            resultVO.setStatus(true).setErrmsg("ok");
+        }catch (Exception e){
+            e.printStackTrace();
+            resultVO.setStatus(false).setErrmsg("error");
+        }
+        return resultVO;
     }
+
+    /**
+     * 修改管理员信息
+     * @param admin
+     * @return
+     */
+    @Override
+    public ResultVO modifyInfo(Admin admin) {
+
+        ResultVO resultVO = new ResultVO();
+
+        try {
+            adminDAO.update(admin);
+            resultVO.setStatus(true).setErrmsg("ok");
+        }catch (Exception e){
+            e.printStackTrace();
+            resultVO.setStatus(false).setErrmsg("error");
+        }
+
+        return resultVO;
+    }
+
+    /**
+     * 修改密码
+     * @param adminId
+     * @param passwd
+     * @return
+     */
+    @Override
+    public ResultVO modifyPasswd(String adminId, String passwd) {
+
+        ResultVO resultVO = new ResultVO();
+
+        try {
+
+            Admin admin = adminDAO.queryById(adminId);
+
+            String newPasswd = sha256(passwd, admin.getSalt());
+
+            adminDAO.updatePasswd(adminId,newPasswd);
+
+            resultVO.setStatus(true).setErrmsg("ok");
+
+        }catch (Exception e){
+            e.printStackTrace();
+            resultVO.setStatus(false).setErrmsg("error");
+        }
+
+        return resultVO;
+    }
+
+
 }

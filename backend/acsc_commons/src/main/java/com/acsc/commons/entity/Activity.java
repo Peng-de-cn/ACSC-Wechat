@@ -68,4 +68,8 @@ public class Activity {
     /** 活动所属俱乐部 */
     private Club club;
 
+    /** 活动创建时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date createTime;
+
 }

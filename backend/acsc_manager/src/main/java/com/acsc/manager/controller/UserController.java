@@ -18,9 +18,8 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("list")
-    public Map<String,Object> list(Integer page,Integer limit){
-
-        return userService.getUserList(page, limit);
+    public Map<String,Object> list(Integer page, Integer limit, String vipNum, String clubId, String mobile){
+        return userService.getUserList(page, limit, vipNum, clubId, mobile);
     }
 
     @RequestMapping("add")
@@ -32,8 +31,6 @@ public class UserController {
 
     @RequestMapping("update")
     public ResultVO update(User user){
-
-        System.out.println(user);
 
         return userService.modify(user);
     }

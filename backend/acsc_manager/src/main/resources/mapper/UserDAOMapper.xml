@@ -3,25 +3,48 @@
 <mapper namespace="com.acsc.manager.dao.UserDAO">
 
     <select id="queryAll" resultType="com.acsc.commons.entity.User">
-        select user_id userId, last_name lastName, first_name firstName, gender, birthday, email, mobile, address, avatar, wechat_name wechatName, wechat_num wechatNum, create_time createTime, vip_num vipNum, vip_level vipLevel, club_id clubId
+        select user_id userId, last_name lastName, first_name firstName, gender, birthday, email, mobile, address, avatar, wechat_name wechatName, wechat_num wechatNum, create_time createTime, vip_num vipNum, vip_level vipLevel, club_id clubId, backup_mobile backupMobile
         from t_user
+        <where>
+            <if test="vipNum != null and vipNum != ''">
+                vip_num = #{vipNum}
+            </if>
+            <if test="clubId != null and clubId != ''">
+                AND club_id = #{clubId}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND mobile = #{mobile}
+            </if>
+        </where>
         order by create_time desc
         limit #{start},#{limit}
     </select>
 
     <select id="queryById" resultType="com.acsc.commons.entity.User">
-        select user_id userId, last_name lastName, first_name firstName, gender, birthday, email, mobile, address, avatar, wechat_name wechatName, wechat_num wechatNum, create_time createTime, vip_num vipNum, vip_level vipLevel, club_id clubId
+        select user_id userId, last_name lastName, first_name firstName, gender, birthday, email, mobile, address, avatar, wechat_name wechatName, wechat_num wechatNum, create_time createTime, vip_num vipNum, vip_level vipLevel, club_id clubId, backup_mobile backupMobile
         from t_user
         where user_id = #{userId}
     </select>
 
     <select id="getUserNum" resultType="java.lang.Integer">
-        select count(user_id) from t_user
+        select count(user_id)
+        from t_user
+        <where>
+            <if test="vipNum != null and vipNum != ''">
+                vip_num = #{vipNum}
+            </if>
+            <if test="clubId != null and clubId != ''">
+                AND club_id = #{clubId}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND mobile = #{mobile}
+            </if>
+        </where>
     </select>
 
     <insert id="insert">
-        INSERT INTO t_user (`user_id`, `last_name`, `first_name`, `gender`, `birthday`, `email`, `mobile`, `address`, `avatar`, `wechat_name`, `wechat_num`, `create_time`, `vip_num`, `vip_level`, `club_id`) VALUES
-         (#{userId}, #{lastName}, #{firstName}, #{gender}, #{birthday}, #{email}, #{mobile}, #{address}, #{avatar}, #{wechatName}, #{wechatNum}, #{createTime}, #{vipNum}, #{vipLevel}, #{clubId});
+        INSERT INTO t_user (`user_id`, `last_name`, `first_name`, `gender`, `birthday`, `email`, `mobile`, `address`, `avatar`, `wechat_name`, `wechat_num`, `create_time`, `vip_num`, `vip_level`, `club_id`, `backup_mobile`) VALUES
+         (#{userId}, #{lastName}, #{firstName}, #{gender}, #{birthday}, #{email}, #{mobile}, #{address}, #{avatar}, #{wechatName}, #{wechatNum}, #{createTime}, #{vipNum}, #{vipLevel}, #{clubId}, #{backupMobile});
     </insert>
 
     <update id="update">
@@ -36,7 +59,6 @@
                             `vip_level` = #{vipLevel},
                             `club_id` = #{clubId}
         WHERE `user_id` = #{userId};
-
     </update>
 
 </mapper>
