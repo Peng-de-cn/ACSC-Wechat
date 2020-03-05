@@ -1,0 +1,142 @@
+Page{
+  height: 100%;
+  background: #f6f6f6;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+}
+
+.container .top {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 46px;
+  min-height: 46px;
+  align-items: center;
+  background: #fff;
+  position: fixed;
+}
+
+/* 搜索框开始 */
+
+.page__bd {
+  width: 100%;
+  padding-bottom: 40px;
+}
+
+.weui-search-bar {
+  position: relative;
+  padding: 8px 10px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  box-sizing: border-box;
+  background-color: #efeff4;
+  border-top: 1rpx solid #d7d6dc;
+  border-bottom: 1rpx solid #d7d6dc;
+}
+
+.weui-search-bar__form {
+  position: relative;
+  -webkit-box-flex: 1;
+  -webkit-flex: auto;
+  flex: auto;
+  border-radius: 5px;
+  background: #fff;
+  border: 1rpx solid #e6e6ea;
+}
+
+.weui-search-bar__box {
+  position: relative;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.weui-icon-search_in-box {
+  position: absolute;
+  left: 10px;
+  top: 7px;
+}
+
+.weui-search-bar__input {
+  height: 28px;
+  line-height: 28px;
+  font-size: 14px;
+}
+
+.weui-icon-clear {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 7px 8px;
+  font-size: 0;
+}
+
+.weui-search-bar__label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  border-radius: 3px;
+  text-align: center;
+  color: #9b9b9b;
+  background: #fff;
+  line-height: 28px;
+}
+
+.weui-icon-search {
+  margin-right: 8px;
+  display: inline-flex;
+  font-size: inherit;
+}
+
+.weui-search-bar__text {
+  display: inline-block;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.weui-search-bar__cancel-btn {
+  margin-left: 10px;
+  line-height: 28px;
+  color: #09bb07;
+  white-space: nowrap;
+}
+
+/* 搜索框结束 */
+
+/* 历史搜索开始 */
+.historySearch,.hotSearch {
+  display: flex;
+  flex-direction: column;
+  padding: 20rpx;
+}
+
+.historySearch .historyTitle,.hotSearch .hotSearchTitle {
+  display: flex;
+  justify-content: space-between;
+}
+
+.historyContent,.hotSearchContent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 30rpx;
+}
+
+.label {
+  border-radius: 30rpx;
+  color: #fff;
+  padding: 2rpx 20rpx;
+  margin: 10rpx 10rpx;
+  font-size: 26rpx;
+}
