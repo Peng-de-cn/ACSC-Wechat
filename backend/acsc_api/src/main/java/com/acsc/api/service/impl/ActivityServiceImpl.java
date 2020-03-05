@@ -60,4 +60,24 @@ public class ActivityServiceImpl implements ActivityService {
         return resultVO;
     }
 
+    @Override
+    public ResultVO queryByKeyword(Integer page, Integer limit, String keyword) {
+        ResultVO resultVO = new ResultVO();
+        try {
+            int begin = (page - 1)*limit;
+
+            List<Activitys> activities = activityDAO.queryByKeyword(begin, limit,keyword);
+
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("count",activityDAO.queryActivityNumByKeyword(keyword));
+            map.put("activities",activities);
+
+            resultVO.setStatus(true).setData(map);
+        }catch (Exception e){
+            log.info("查询数据库活动出错!"+e.getMessage());
+            resultVO.setStatus(false).setErrmsg("查询数据库活动出错!");
+        }
+        return resultVO;
+    }
+
 }

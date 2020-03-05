@@ -14,4 +14,10 @@ public interface ActivityDAO {
 
     Integer queryActivityNum();
 
+    List<Activitys> queryByKeyword(@Param("begin") Integer begin, @Param("limit") Integer limit, @Param("keyword") String keyword);
+
+    Integer queryActivityNumByKeyword(@Param("keyword") String keyword);
+
+
+
 }

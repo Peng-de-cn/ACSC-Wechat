@@ -25,4 +25,9 @@ public class ActivityController {
         return activityService.getActivityById(activityId);
     }
 
+    @RequestMapping("queryByKeyword")
+    public ResultVO queryByKeyword(Integer page, Integer limit, String keyword){
+        return activityService.queryByKeyword(page,limit,keyword);
+    }
+
 }
