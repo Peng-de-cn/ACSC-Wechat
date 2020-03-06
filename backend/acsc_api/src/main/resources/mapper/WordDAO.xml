@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acsc.api.dao.WordDAO">
+
+    <select id="queryWordList" resultType="String">
+        select `word` from t_word where status=1 order by create_time
+    </select>
+
+</mapper>

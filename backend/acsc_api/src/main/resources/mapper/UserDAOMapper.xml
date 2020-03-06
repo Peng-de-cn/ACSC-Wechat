@@ -56,7 +56,7 @@
 
 
     <select id="queryUserById" parameterType="String" resultType="com.acsc.commons.entity.User">
-        select user_id userId, last_name lastName, first_name firstName, gender, email, mobile, address, avatar, wechat_name wechatName, wechat_num wechatNum, create_time createTime, vipNum, vipLevel, clubId,backup_mobile backupMobile
+        select user_id userId, last_name lastName, first_name firstName, gender, email, mobile, address, avatar, wechat_name wechatName, wechat_num wechatNum, create_time createTime, vip_num vipNum,vip_level vipLevel,club_id clubId,backup_mobile backupMobile
         from t_user
         where `user_id` = #{userId}
     </select>

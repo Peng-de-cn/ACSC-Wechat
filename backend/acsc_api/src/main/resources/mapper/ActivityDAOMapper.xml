@@ -30,6 +30,27 @@
         </collection>
     </resultMap>
 
+    <resultMap id="userActivityVO" type="com.acsc.api.entity.UserActivityVO">
+        <id column="id" property="id"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="amount" property="amount"/>
+        <result column="apply_time" property="applyTime"/>
+        <association property="user" javaType="com.acsc.commons.entity.User">
+            <id column="user_id" property="userId"/>
+            <result column="first_name" property="firstName"/>
+            <result column="last_name" property="lastName"/>
+            <result column="mobile" property="mobile"/>
+            <result column="email" property="email"/>
+            <result column="wechat_num" property="wechatNum"/>
+        </association>
+        <association property="activityPackage" javaType="com.acsc.commons.entity.ActivityPackage">
+            <id column="package_id" property="packageId"/>
+            <result column="title" property="title"/>
+            <result column="price" property="price"/>
+        </association>
+    </resultMap>
+
     <select id="queryAll" resultType="com.acsc.api.entity.Activitys">
         select t1.activity_id activityId,t1.title, begin_time beginTime,create_time createTime, address, images, min(price) minprice
         from t_activity t1 left join t_activity_package t2 on t1.activity_id = t2.activity_id
@@ -59,5 +80,18 @@
     <select id="queryActivityNumByKeyword" resultType="java.lang.Integer">
         select count(activity_id) from t_activity
          where title LIKE "%"#{keyword}"%"
+    </select>
+
+    <insert id="insertUserActivity">
+
+        INSERT INTO t_user_activity(`id`, `user_id`, `package_id`, `activity_id`, `status`, `amount`, `remark`, `apply_time`) VALUES (#{id}, #{userId}, #{packageid}, #{activityid}, #{status}, #{amount}, #{remark}, #{applyTime});
+
+    </insert>
+
+    <select id="queryUserByActivityId" resultMap="userActivityVO">
+        select id, status, amount, remark, apply_time, t1.user_id, first_name, last_name, mobile, email, wechat_num, t1.package_id, title, price
+        from t_user_activity t1 left join t_user t2 on t1.user_id = t2.user_id left join t_activity_package t3 on t1.package_id = t3.package_id
+        where t1.activity_id = #{activityId}
+        limit #{begin}, #{limit}
     </select>
 </mapper>
