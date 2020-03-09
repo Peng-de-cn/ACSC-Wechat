@@ -5,10 +5,7 @@ import com.acsc.commons.entity.Activity;
 import com.acsc.commons.entity.Admin;
 import com.acsc.commons.entity.Club;
 import com.acsc.commons.entity.Word;
-import com.acsc.manager.service.ActivityService;
-import com.acsc.manager.service.ClubService;
-import com.acsc.manager.service.UserService;
-import com.acsc.manager.service.WordService;
+import com.acsc.manager.service.*;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +29,9 @@ public class ViewController {
 
     @Resource
     private WordService wordService;
+
+    @Resource
+    private AdminService adminService;
 
     @RequestMapping("index")
     public ModelAndView index(HttpServletRequest request){
@@ -179,6 +179,39 @@ public class ViewController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("word/word-update");
         modelAndView.addObject("word",word);
+        return modelAndView;
+    }
+
+    @RequestMapping("adminList")
+    public ModelAndView adminList(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/admin-list");
+        return modelAndView;
+    }
+
+    @RequestMapping("adminAdd")
+    public ModelAndView adminAdd(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/admin-add");
+        return modelAndView;
+    }
+
+    @RequestMapping("adminUpdate")
+    public ModelAndView adminUpdate(String adminId){
+
+        Admin admin = adminService.getAdminById(adminId);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/admin-update");
+        modelAndView.addObject("admin", admin);
+        return modelAndView;
+    }
+
+
+    @RequestMapping("resetPwd")
+    public ModelAndView resetPwd(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/admin-resetPwd");
         return modelAndView;
     }
 

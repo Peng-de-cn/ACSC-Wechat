@@ -159,7 +159,7 @@ public class FileController {
             }
             file.transferTo(dest);// 文件写入
 
-            return  "http://images.yangz.info" + savePath;
+            return  "http://images.yangz.vip" + savePath;
 
         } catch (IllegalStateException e) {
             e.printStackTrace();

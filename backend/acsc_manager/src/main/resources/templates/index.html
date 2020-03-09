@@ -32,15 +32,11 @@
             </div>
             <ul class="layui-nav right" lay-filter="">
                 <li class="layui-nav-item">
-                    <a href="javascript:;">admin</a>
+                    <a href="javascript:;">[[${session.admin.username}]]</a>
                     <dl class="layui-nav-child">
                         <!-- 二级菜单 -->
-                        <dd>
-                            <a onclick="xadmin.open('个人信息','http://www.baidu.com')">个人信息</a></dd>
-                        <dd>
-                            <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
-                        <dd>
-                            <a href="/logout">退出</a></dd>
+                        <dd><a onclick="xadmin.open('修改密码','/view/resetPwd',600,300)">修改密码</a></dd>
+                        <dd><a href="javascript:logout();">退出</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -110,18 +106,18 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li th:if="${session.admin.level == 0}">
                         <a href="javascript:;">
                             <i class="iconfont left-nav-li" lay-tips="系统设置">&#xe6ae;</i>
                             <cite>系统设置</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('管理员管理','cate.html')">
+                                <a onclick="xadmin.add_tab('管理员管理','/view/adminList')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>管理员管理</cite></a>
                             </li>
-                            <li>
+                            <!--<li>
                                 <a onclick="xadmin.add_tab('角色管理','cate.html')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>角色管理</cite></a>
@@ -130,7 +126,7 @@
                                 <a onclick="xadmin.add_tab('权限管理','cate.html')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>权限管理</cite></a>
-                            </li>
+                            </li>-->
                         </ul>
                     </li>
                 </ul>
@@ -163,5 +159,12 @@
         <div class="page-content-bg"></div>
         <style id="theme_style"></style>
     </body>
+
+    <script>
+        function logout() {
+            $('.layui-tab-title li[lay-id]').find('.layui-tab-close').click();
+            location.href = '/logout';
+        }
+    </script>
 
 </html>
