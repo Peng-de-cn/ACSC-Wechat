@@ -43,6 +43,14 @@ public class ViewController {
 
     }
 
+    @RequestMapping("notFound")
+    public ModelAndView notFound(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("error/404");
+        return modelAndView;
+
+    }
+
     @RequestMapping("welcome")
     public ModelAndView welcome(){
         ModelAndView modelAndView = new ModelAndView();
