@@ -5,6 +5,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://39.106.202.81:3306/acsc?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+    #url: jdbc:mysql://127.0.0.1:3306/acsc?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
     username: root
     password: root
     #password: Miword1234*
@@ -19,4 +20,5 @@ mybatis:
   mapper-locations: mapper/*Mapper.xml
 
 upload:
+  imageServer: http://images.yangz.vip
   filePath: /imgserver

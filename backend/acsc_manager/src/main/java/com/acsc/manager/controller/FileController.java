@@ -22,6 +22,8 @@ public class FileController {
     @Value("${upload.filePath}")
     private String uploadBasePath;
 
+    @Value("${upload.imageServer}")
+    private String imageServer;
 
     /**
      * 图片上传
@@ -77,12 +79,12 @@ public class FileController {
 
             String uploadPath = File.separator + "acsc" + File.separator + "activity";
 
-            System.out.println(uploadPath);
+            //System.out.println(uploadPath);
 
             String path = upload(file, uploadPath);
 
             if( !"error".equals(path) ){
-                System.out.println(path);
+                // System.out.println(path);
                 urls.add(path);
             }
 
@@ -94,26 +96,26 @@ public class FileController {
         return map;
     }
 
+    /**
+     * 删除上传的图片
+     * @param path
+     * @param request
+     * @return
+     */
     @RequestMapping("delUploadFile")
     public ResultVO delUploadFile(String path, HttpServletRequest request){
 
-        String basePath = request.getServletContext().getRealPath("/uploadFiles");
+        //String basePath = request.getServletContext().getRealPath("/uploadFiles");
 
-        System.out.println("path: "+path);
-        System.out.println("basePath: "+basePath);
+        //System.out.println("basePath: "+basePath);
 
-        String filePath = path.replace("/uploadFiles", basePath);
-
-
-
-        System.out.println("basePath: " + basePath);
+        String filePath = path.replace(imageServer, uploadBasePath);
 
         File file = new File(filePath);
 
         ResultVO resultVO = new ResultVO();
 
         if(file.delete()){
-            System.out.println("文件 "+path+" 已删除");
             resultVO.setStatus(true).setErrmsg("ok");
         }else {
             resultVO.setStatus(false).setErrmsg("删除失败");
@@ -159,7 +161,7 @@ public class FileController {
             }
             file.transferTo(dest);// 文件写入
 
-            return  "http://images.yangz.info" + savePath;
+            return  imageServer + savePath;
 
         } catch (IllegalStateException e) {
             e.printStackTrace();

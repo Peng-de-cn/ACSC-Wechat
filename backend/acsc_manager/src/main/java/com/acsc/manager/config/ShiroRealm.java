@@ -10,6 +10,7 @@ import com.acsc.manager.dao.AdminDAO;
 import com.acsc.manager.dao.MenuDAO;
 import com.acsc.manager.dao.RoleDAO;
 import com.acsc.manager.utils.ShiroUtils;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.shiro.authc.*;
@@ -23,6 +24,7 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.security.auth.login.AccountLockedException;
 import java.util.List;
 import java.util.Objects;
 
@@ -108,6 +110,10 @@ public class ShiroRealm extends AuthorizingRealm {
         Admin admin = adminDAO.queryByUsername(username);
         if (Objects.isNull(admin)) {
             return null;
+        }
+
+        if(admin.getStatus() == 0){
+            throw new LockedAccountException("账户已被禁用");
         }
 
         return new SimpleAuthenticationInfo(

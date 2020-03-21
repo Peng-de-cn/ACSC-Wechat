@@ -26,6 +26,7 @@ public class Admin implements Serializable {
     private String name;
     /** 状态 */
     private Integer status;
-
+    /** 管理员等级 */
+    private Integer level;
 
 }

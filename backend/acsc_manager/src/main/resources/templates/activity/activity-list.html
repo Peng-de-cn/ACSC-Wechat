@@ -33,10 +33,10 @@
 <body>
 <div class="x-nav">
             <span class="layui-breadcrumb">
-                <a href="">首页</a>
-                <a href="">演示</a>
+                <!--<a href="">首页</a>
+                <a href="">演示</a>-->
                 <a>
-                    <cite>导航元素</cite></a>
+                    <cite>活动管理</cite></a>
             </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
         <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
@@ -175,7 +175,7 @@
             toolbar: '#toolbar',
             cols: [
                 [
-                    {type:'checkbox'},
+                    {title: '序号', type:'numbers'},
                     {title: '活动名称', field:'title', width: 120},
                     {title: '报名时间', field:'title', width: 280, templet:function(d){return d.applyBegin + ' ~ ' + d.applyEnd;}},
                     {title: '活动时间', field:'title', width: 280, templet:function(d){return d.beginTime + ' ~ ' + d.endTime;}},
@@ -223,7 +223,7 @@
                         layer.msg('已删除!',{icon:1,time:1000});
                         table.reload("test");
                     }else{
-                        layer.alert("添加失败");
+                        layer.alert("删除失败");
                     }
                 }
             });

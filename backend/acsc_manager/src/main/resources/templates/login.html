@@ -48,7 +48,6 @@
 
             //监听提交
             form.on('submit(login)', function(data){
-                console.log(data.field.username);
                 $.ajax({
                     type: "post",
                     url: "/admin/login",
@@ -58,7 +57,7 @@
                         if(r.status){
                             location.href = "/view/index";
                         }else{
-                            layer.msg(r.errmsg,{time:500}, function(){});
+                            layer.msg(r.errmsg,{time:1000}, function(){});
                         }
                     }
                 });
