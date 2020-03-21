@@ -21,8 +21,8 @@ public class ActivityController {
         return activityService.getActivityList(page,limit,orderby);
     }
     @RequestMapping("getOneActivity")
-    public ResultVO getOneActivity(String activityId){
-        return activityService.getActivityById(activityId);
+    public ResultVO getOneActivity(String userId, String activityId){
+        return activityService.getActivityById(userId,activityId);
     }
 
     @RequestMapping("queryByKeyword")

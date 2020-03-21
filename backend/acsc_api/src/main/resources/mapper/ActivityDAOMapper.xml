@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.acsc.api.dao.ActivityDAO">
     
-    <resultMap id="activity" type="com.acsc.commons.entity.Activity">
+    <resultMap id="activity" type="com.acsc.api.entity.Activity">
 
         <id column="activity_id" property="activityId"/>
         <result column="title" property="title"/>

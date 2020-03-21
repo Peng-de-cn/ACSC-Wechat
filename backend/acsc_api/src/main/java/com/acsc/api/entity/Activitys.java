@@ -38,4 +38,5 @@ public class Activitys {
     private BigDecimal minprice;
 
 
+
 }

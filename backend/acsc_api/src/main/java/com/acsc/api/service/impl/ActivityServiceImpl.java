@@ -1,9 +1,10 @@
 package com.acsc.api.service.impl;
 
 import com.acsc.api.dao.ActivityDAO;
+import com.acsc.api.dao.FavoriteDAO;
 import com.acsc.api.entity.Activitys;
 import com.acsc.api.service.ActivityService;
-import com.acsc.commons.entity.Activity;
+import com.acsc.api.entity.Activity;
 import com.acsc.commons.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Resource
     private ActivityDAO activityDAO;
+    @Resource
+    private FavoriteDAO favoriteDAO;
 
     /**
      * 获取活动列表
@@ -47,11 +50,17 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public ResultVO getActivityById(String activityId) {
+    public ResultVO getActivityById(String userId,String activityId) {
         ResultVO resultVO = new ResultVO();
 
         try {
             Activity activity = activityDAO.queryByActivityId(activityId);
+            Integer integer = favoriteDAO.selectIsFavorite(userId, activityId);
+            if (integer==1){
+                activity.setIsfavorite(true);
+            }else {
+                activity.setIsfavorite(false);
+            }
             resultVO.setStatus(true).setErrmsg(null).setData(activity);
         }catch (Exception e){
             log.info("查询数据库活动出错!"+e.getMessage());
