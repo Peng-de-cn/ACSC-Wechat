@@ -54,6 +54,7 @@
     <select id="queryAll" resultType="com.acsc.api.entity.Activitys">
         select t1.activity_id activityId,t1.title, begin_time beginTime,create_time createTime, address, images, min(price) minprice
         from t_activity t1 left join t_activity_package t2 on t1.activity_id = t2.activity_id
+        GROUP BY t1.activity_id
         <if test="orderby!= ''and orderby!= null ">
             order by #{orderby}
         </if>
