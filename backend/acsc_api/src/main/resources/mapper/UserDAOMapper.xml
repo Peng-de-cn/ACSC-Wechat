@@ -28,25 +28,25 @@
             <if test="gender!= null and gender!= ''">
                 gender=#{gender},
             </if>
-            <if test="firstName!= null firstName!= ''">
+            <if test="firstName!= null and firstName!= ''">
                 first_name=#{firstName},
             </if>
-            <if test="lastName!= null lastName!= ''">
-                last_name=#{lastName}
+            <if test="lastName!= null and lastName!= ''">
+                last_name=#{lastName},
             </if>
-            <if test="address!= null address!= ''">
-                address=#{address}
+            <if test="address!= null and address!= ''">
+                address=#{address},
             </if>
-            <if test="avatar!= null avatar!= ''">
-                avatar=#{avatar}
+            <if test="avatar!= null and avatar!= ''">
+                avatar=#{avatar},
             </if>
-            <if test="wechatName!= null wechatName!= ''">
-                wechatName=#{wechatName}
+            <if test="wechatName!= null and wechatName!= ''">
+                wechat_name=#{wechatName},
             </if>
-            <if test="wechatNum!= null wechatNum!= ''">
-                wechatNum=#{wechatNum}
+            <if test="wechatNum!= null and wechatNum!= ''">
+                wechat_num=#{wechatNum},
             </if>
-            <if test="backupMobile!= null backupMobile!= ''">
+            <if test="backupMobile!= null and backupMobile!= ''">
                 backup_mobile=#{backupMobile}
             </if>
         </set>

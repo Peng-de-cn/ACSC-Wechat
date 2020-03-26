@@ -15,10 +15,11 @@ public interface ActivityService {
 
     /**
      * 根据ID获取活动
+     * @param userId
      * @param activityId
      * @return
      */
-    ResultVO getActivityById(String activityId);
+    ResultVO getActivityById(String userId,String activityId);
 
 
     /**
