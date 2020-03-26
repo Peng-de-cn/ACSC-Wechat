@@ -56,7 +56,7 @@ public class ActivityServiceImpl implements ActivityService {
         try {
             Activity activity = activityDAO.queryByActivityId(activityId);
             Integer integer = favoriteDAO.selectIsFavorite(userId, activityId);
-            if (integer==1){
+            if (integer!=0){
                 activity.setIsfavorite(true);
             }else {
                 activity.setIsfavorite(false);

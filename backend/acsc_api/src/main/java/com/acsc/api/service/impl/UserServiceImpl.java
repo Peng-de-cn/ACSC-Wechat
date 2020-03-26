@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResultVO updateUserById(User user) {
         ResultVO resultVO = new ResultVO();
+        System.out.println(user);
         try {
             userDAO.updateUserById(user);
             resultVO.setStatus(true);

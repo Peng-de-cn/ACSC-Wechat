@@ -37,6 +37,15 @@ public class Activitys {
     /** 活动最低价格 */
     private BigDecimal minprice;
 
+    /** 活动图片数组 */
+    private String[] imageArr;
+    /**
+     * 图片数组获取方法
+     * @return
+     */
+    public String[] getImageArr() {
+        return this.images.split(",");
+    }
 
 
 }
