@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/view")
@@ -53,8 +54,13 @@ public class ViewController {
 
     @RequestMapping("welcome")
     public ModelAndView welcome(){
+
+        Map<String, Object> userAndVipNum = userService.getUserAndVipNum();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("welcome");
+        modelAndView.addObject("userNum",userAndVipNum.get("userNum"));
+        modelAndView.addObject("vipNum",userAndVipNum.get("vipNum"));
+        modelAndView.addObject("activityNum",activityService.getActivityNum());
         return modelAndView;
 
     }

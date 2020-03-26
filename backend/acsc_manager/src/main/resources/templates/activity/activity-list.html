@@ -141,6 +141,16 @@
 
 </script>
 
+<script type="text/html" id="images">
+    {{#  layui.each(d.packages, function(index, item){ }}
+    <li>
+        <span>{{ index+1 }}. </span>
+        <span>{{ item.title }}: </span>
+        <span>{{ item.price }}</span>
+    </li>
+    {{#  }); }}
+</script>
+
 <script>
 
     var layer;
@@ -181,7 +191,7 @@
                     {title: '活动时间', field:'title', width: 280, templet:function(d){return d.beginTime + ' ~ ' + d.endTime;}},
                     {title: '活动地点', field:'address', width: 120},
                     {title: '活动咨询', field:'advisory', width: 180},
-                    {title: '活动图片', field:'images', width: 120, templet: '#images'},
+                    {title: '活动图片', field:'images', width: 120, templet: function(d){ let imageArr = d.images.split(",");  return "<img src='"+imageArr[0]+"'/>";}},
                     {title: '活动套餐', field:'title', width: 200, templet: '#packages'},
                     {title: '操作', field:'title', width: 120, templet: '#operationTpl'},
                 ]
@@ -202,9 +212,6 @@
                 }
             });
         });
-
-
-
     });
     /** 删除 */
     function del(obj,activityId){

@@ -75,4 +75,9 @@ public class UserServiceImpl implements UserService {
         return resultVO;
     }
 
+    @Override
+    public Map<String, Object> getUserAndVipNum() {
+        return userDAO.queryUserAndVipNum();
+    }
+
 }

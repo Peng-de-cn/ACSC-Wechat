@@ -174,4 +174,13 @@ public class ActivityServiceImpl implements ActivityService {
 
         return map;
     }
+
+    /**
+     * 获取活动总数
+     * @return
+     */
+    @Override
+    public Integer getActivityNum() {
+        return activityDAO.queryActivityNum(null, null);
+    }
 }
