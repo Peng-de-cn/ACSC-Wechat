@@ -20,5 +20,9 @@ mybatis:
   mapper-locations: mapper/*Mapper.xml
 
 upload:
-  imageServer: http://images.yangz.vip
+  imageServer: http://images.acsclub.net
   filePath: /imgserver
+
+
+logging:
+  config: classpath:log4j2-manager.xml

@@ -52,4 +52,10 @@ public interface ActivityService {
      */
     Map<String,Object> getUsersForActivity(String activityId, Integer page, Integer limit);
 
+    /**
+     * 获取活动总数
+     * @return
+     */
+    Integer getActivityNum();
+
 }

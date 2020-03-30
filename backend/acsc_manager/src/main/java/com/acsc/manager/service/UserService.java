@@ -15,4 +15,6 @@ public interface UserService {
 
     ResultVO modify(User user);
 
+    Map<String, Object> getUserAndVipNum();
+
 }

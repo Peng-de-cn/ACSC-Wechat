@@ -4,6 +4,7 @@ import com.acsc.commons.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserDAO {
 
@@ -16,5 +17,7 @@ public interface UserDAO {
     void insert(User user);
 
     void update(User user);
+
+    Map<String, Object> queryUserAndVipNum();
 
 }

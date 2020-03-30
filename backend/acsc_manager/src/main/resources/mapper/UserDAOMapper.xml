@@ -61,4 +61,7 @@
         WHERE `user_id` = #{userId};
     </update>
 
+    <select id="queryUserAndVipNum" resultType="java.util.Map">
+        SELECT COUNT(user_id) userNum, COUNT(if( `vip_num` is NOT null AND `vip_num` != '' ,true,null)) vipNum FROM t_user
+    </select>
 </mapper>
