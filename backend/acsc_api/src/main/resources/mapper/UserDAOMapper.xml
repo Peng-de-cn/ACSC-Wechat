@@ -8,7 +8,7 @@
     </insert>
 
     <update id="updateUserById" parameterType="com.acsc.commons.entity.User">
-        UPDATE .t_user
+        UPDATE t_user
         <set>
             <if test="vipNum!= null and vipNum!= ''">
                 vip_num=#{vipNum},

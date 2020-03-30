@@ -1,25 +1,24 @@
 package com.acsc.api.entity;
 
-import com.acsc.commons.entity.Activity;
-import com.acsc.commons.entity.ActivityPackage;
-import com.acsc.commons.entity.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-public class UserActivityVO {
+@Accessors(chain = true)
+public class UserActivity {
 
     /** 主键ID */
     private String id;
-/*    *//** 报名用户 *//*
-    private User user;*/
+    /** 报名用户 */
+    private String userId;
     /** 所选套餐 */
-    private ActivityPackage activityPackage;
+    private String packageId;
     /** 报名活动 */
-    private Activity activity;
+    private String activityId;
     /** 状态 */
     private Integer status;
     /** 支付金额 */

@@ -36,17 +36,15 @@
         <result column="remark" property="remark"/>
         <result column="amount" property="amount"/>
         <result column="apply_time" property="applyTime"/>
-        <association property="user" javaType="com.acsc.commons.entity.User">
-            <id column="user_id" property="userId"/>
-            <result column="first_name" property="firstName"/>
-            <result column="last_name" property="lastName"/>
-            <result column="mobile" property="mobile"/>
-            <result column="email" property="email"/>
-            <result column="wechat_num" property="wechatNum"/>
+        <association property="activity" javaType="com.acsc.commons.entity.Activity">
+            <id column="activity_id" property="activityId"/>
+            <result column="activitytitle" property="title"/>
+            <result column="begin_time" property="beginTime"/>
+            <result column="address" property="address"/>
         </association>
         <association property="activityPackage" javaType="com.acsc.commons.entity.ActivityPackage">
             <id column="package_id" property="packageId"/>
-            <result column="title" property="title"/>
+            <result column="packagetitle" property="title"/>
             <result column="price" property="price"/>
         </association>
     </resultMap>
@@ -83,16 +81,38 @@
          where title LIKE "%"#{keyword}"%"
     </select>
 
-    <insert id="insertUserActivity">
+    <select id="queryPackagePrice" resultType="java.math.BigDecimal">
+        select price FROM t_activity_package WHERE package_id=#{packageId}
+    </select>
 
-        INSERT INTO t_user_activity(`id`, `user_id`, `package_id`, `activity_id`, `status`, `amount`, `remark`, `apply_time`) VALUES (#{id}, #{userId}, #{packageid}, #{activityid}, #{status}, #{amount}, #{remark}, #{applyTime});
+    <insert id="insertUserActivity" parameterType="com.acsc.api.entity.UserActivity">
+
+        INSERT INTO t_user_activity(`id`, `user_id`, `package_id`, `activity_id`, `status`, `amount`, `remark`, `apply_time`) VALUES (#{id}, #{userId}, #{packageId}, #{activityId}, #{status}, #{amount}, #{remark,jdbcType=VARCHAR}, #{applyTime});
 
     </insert>
 
-    <select id="queryUserByActivityId" resultMap="userActivityVO">
-        select id, status, amount, remark, apply_time, t1.user_id, first_name, last_name, mobile, email, wechat_num, t1.package_id, title, price
-        from t_user_activity t1 left join t_user t2 on t1.user_id = t2.user_id left join t_activity_package t3 on t1.package_id = t3.package_id
-        where t1.activity_id = #{activityId}
-        limit #{begin}, #{limit}
+    <update id="updateUserActivity">
+        UPDATE t_user_activity
+        set status=#{status}
+        WHERE `id` = #{id}
+    </update>
+
+
+    <select id="queryUserActivity" resultMap="userActivityVO">
+        select id, status, amount, remark, apply_time, t1.package_id, t2.title activitytitle,begin_time,address, t3.title packagetitle
+        from t_user_activity t1 left join t_activity t2 on t1.activity_id = t2.activity_id left join t_activity_package t3 on t1.package_id = t3.package_id
+        WHERE t1.user_id=#{userId}
+
+        <if test="orderby!= ''and orderby!= null ">
+            order by #{orderby}
+        </if>
+        <if test="begin!= ''and orderby!= null and limit!= ''and limit!= null">
+            limit #{begin}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryUserActivityNum" resultType="java.lang.Integer">
+        select count(id) from t_user_activity
+        WHERE user_id=#{userId}
     </select>
 </mapper>

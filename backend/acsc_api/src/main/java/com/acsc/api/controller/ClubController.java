@@ -2,7 +2,6 @@ package com.acsc.api.controller;
 
 
 import com.acsc.api.service.ClubService;
-import com.acsc.commons.entity.Club;
 import com.acsc.commons.vo.ResultVO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
