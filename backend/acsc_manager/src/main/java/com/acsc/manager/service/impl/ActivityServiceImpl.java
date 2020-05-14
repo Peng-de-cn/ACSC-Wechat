@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
@@ -33,17 +30,17 @@ public class ActivityServiceImpl implements ActivityService {
      * @return
      */
     @Override
-    public Map<String, Object> getActivityList(Integer page, Integer limit) {
+    public Map<String, Object> getActivityList(Integer page, Integer limit, String title, String clubId) {
 
         int begin = (page - 1)*limit;
 
-        List<Activity> activities = activityDAO.queryAll(begin, limit);
+        List<Activity> activities = activityDAO.queryAll(begin, limit, title, clubId);
 
         HashMap<String, Object> map = new HashMap<>();
 
         map.put("code",0);
         map.put("msg","ok");
-        map.put("count",activityDAO.queryActivityNum());
+        map.put("count",activityDAO.queryActivityNum(title, clubId));
         map.put("data",activities);
 
         return map;
@@ -75,6 +72,7 @@ public class ActivityServiceImpl implements ActivityService {
 
         String activityId = UUID.randomUUID().toString().replace("-", "");
         activity.setActivityId(activityId);
+        activity.setCreateTime(new Date());
         List<ActivityPackage> packages = activity.getPackages();
 
         for (ActivityPackage aPackage : packages) {
@@ -95,7 +93,6 @@ public class ActivityServiceImpl implements ActivityService {
             resultVO.setStatus(false).setErrmsg("添加失败");
         }
 
-        System.out.println(activity);
 
         return resultVO;
     }
@@ -154,6 +151,13 @@ public class ActivityServiceImpl implements ActivityService {
         return resultVO;
     }
 
+    /**
+     * 获取活动报名用户
+     * @param activityId
+     * @param page
+     * @param limit
+     * @return
+     */
     @Override
     public Map<String, Object> getUsersForActivity(String activityId, Integer page, Integer limit) {
 
@@ -169,5 +173,14 @@ public class ActivityServiceImpl implements ActivityService {
         map.put("data",activityVOS);
 
         return map;
+    }
+
+    /**
+     * 获取活动总数
+     * @return
+     */
+    @Override
+    public Integer getActivityNum() {
+        return activityDAO.queryActivityNum(null, null);
     }
 }

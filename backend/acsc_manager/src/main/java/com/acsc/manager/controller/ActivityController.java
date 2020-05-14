@@ -18,8 +18,8 @@ public class ActivityController {
     private ActivityService activityService;
 
     @RequestMapping("list")
-    public Map<String,Object> list(Integer page,Integer limit){
-        return activityService.getActivityList(page,limit);
+    public Map<String,Object> list(Integer page, Integer limit, String title, String clubId){
+        return activityService.getActivityList(page, limit, title, clubId);
     }
 
     @RequestMapping("add")

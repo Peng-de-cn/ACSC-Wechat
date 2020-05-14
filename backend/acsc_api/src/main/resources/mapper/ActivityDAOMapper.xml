@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.acsc.api.dao.ActivityDAO">
     
-    <resultMap id="activity" type="com.acsc.commons.entity.Activity">
+    <resultMap id="activity" type="com.acsc.api.entity.Activity">
 
         <id column="activity_id" property="activityId"/>
         <result column="title" property="title"/>
@@ -30,10 +30,29 @@
         </collection>
     </resultMap>
 
+    <resultMap id="userActivityVO" type="com.acsc.api.entity.UserActivityVO">
+        <id column="id" property="id"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="amount" property="amount"/>
+        <result column="apply_time" property="applyTime"/>
+        <association property="activity" javaType="com.acsc.commons.entity.Activity">
+            <id column="activity_id" property="activityId"/>
+            <result column="activitytitle" property="title"/>
+            <result column="begin_time" property="beginTime"/>
+            <result column="address" property="address"/>
+        </association>
+        <association property="activityPackage" javaType="com.acsc.commons.entity.ActivityPackage">
+            <id column="package_id" property="packageId"/>
+            <result column="packagetitle" property="title"/>
+            <result column="price" property="price"/>
+        </association>
+    </resultMap>
+
     <select id="queryAll" resultType="com.acsc.api.entity.Activitys">
         select t1.activity_id activityId,t1.title, begin_time beginTime,create_time createTime, address, images, min(price) minprice
         from t_activity t1 left join t_activity_package t2 on t1.activity_id = t2.activity_id
-        GROUP BY t1.title
+        GROUP BY t1.activity_id
         <if test="orderby!= ''and orderby!= null ">
             order by #{orderby}
         </if>
@@ -41,7 +60,7 @@
     </select>
 
     <select id="queryByActivityId" resultMap="activity">
-        select t1.activity_id, t1.title, apply_begin, apply_end, begin_time, end_time, quota, address, advisory, images, details, recommend, notice, t1.club_id, t2.club_name, package_id, t3.title package_title ,price,refund_info refundInfo
+        select t1.activity_id, t1.title, apply_begin, apply_end, begin_time, end_time,quota-(SELECT count(id) FROM t_user_activity WHERE activity_id = #{activityId}) quota, address, advisory, images, details, recommend, notice, t1.club_id, t2.club_name, package_id, t3.title package_title ,price, refund_info
         from t_activity t1 left join t_club t2 on t1.club_id = t2.club_id left join t_activity_package t3 on t1.activity_id = t3.activity_id
         where t1.activity_id = #{activityId}
     </select>
@@ -50,4 +69,50 @@
         select count(activity_id) from t_activity
     </select>
 
+    <select id="queryByKeyword" resultType="com.acsc.api.entity.Activitys">
+        select t1.activity_id activityId,t1.title, begin_time beginTime,create_time createTime, address, images, min(price) minprice
+        from t_activity t1 left join t_activity_package t2 on t1.activity_id = t2.activity_id
+        where t1.title LIKE "%"#{keyword}"%"
+        limit #{begin},#{limit}
+    </select>
+
+    <select id="queryActivityNumByKeyword" resultType="java.lang.Integer">
+        select count(activity_id) from t_activity
+         where title LIKE "%"#{keyword}"%"
+    </select>
+
+    <select id="queryPackagePrice" resultType="java.math.BigDecimal">
+        select price FROM t_activity_package WHERE package_id=#{packageId}
+    </select>
+
+    <insert id="insertUserActivity" parameterType="com.acsc.api.entity.UserActivity">
+
+        INSERT INTO t_user_activity(`id`, `user_id`, `package_id`, `activity_id`, `status`, `amount`, `remark`, `apply_time`) VALUES (#{id}, #{userId}, #{packageId}, #{activityId}, #{status}, #{amount}, #{remark,jdbcType=VARCHAR}, #{applyTime});
+
+    </insert>
+
+    <update id="updateUserActivity">
+        UPDATE t_user_activity
+        set status=#{status}
+        WHERE `id` = #{id}
+    </update>
+
+
+    <select id="queryUserActivity" resultMap="userActivityVO">
+        select id, status, amount, remark, apply_time, t1.package_id, t2.title activitytitle,begin_time,address, t3.title packagetitle
+        from t_user_activity t1 left join t_activity t2 on t1.activity_id = t2.activity_id left join t_activity_package t3 on t1.package_id = t3.package_id
+        WHERE t1.user_id=#{userId}
+
+        <if test="orderby!= ''and orderby!= null ">
+            order by #{orderby}
+        </if>
+        <if test="begin!= ''and orderby!= null and limit!= ''and limit!= null">
+            limit #{begin}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryUserActivityNum" resultType="java.lang.Integer">
+        select count(id) from t_user_activity
+        WHERE user_id=#{userId}
+    </select>
 </mapper>

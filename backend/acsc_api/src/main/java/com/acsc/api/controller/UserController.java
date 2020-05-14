@@ -22,4 +22,13 @@ public class UserController {
         return userService.insertUser(user);
     }
 
+    @RequestMapping("updateUserById")
+    public ResultVO updateUserById(User user){
+        return userService.updateUserById(user);
+    }
+    @RequestMapping("queryUserById")
+    public ResultVO queryUserById(String userId){
+        return userService.queryUserById(userId);
+    }
+
 }

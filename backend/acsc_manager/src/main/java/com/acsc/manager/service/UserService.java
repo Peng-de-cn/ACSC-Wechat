@@ -7,12 +7,14 @@ import java.util.Map;
 
 public interface UserService {
 
-    Map<String,Object> getUserList(Integer page, Integer limit);
+    Map<String,Object> getUserList(Integer page, Integer limit, String vipNum, String clubId, String mobile);
 
     User getUserById(String userId);
 
     ResultVO add(User user);
 
     ResultVO modify(User user);
+
+    Map<String, Object> getUserAndVipNum();
 
 }

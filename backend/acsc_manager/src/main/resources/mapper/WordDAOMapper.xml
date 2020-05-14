@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acsc.manager.dao.WordDAO">
+
+    <select id="queryWordList" resultType="com.acsc.commons.entity.Word">
+        select `word_id` wordId, `word`, `status`, `click_num` clickNum, `create_time` createTime from t_word limit #{begin}, #{limit}
+    </select>
+
+    <select id="queryWordsNum" resultType="java.lang.Integer">
+        select count(word_id) from t_word limit #{begin}, #{limit}
+    </select>
+    <select id="queryById" resultType="com.acsc.commons.entity.Word">
+        select `word_id` wordId, `word`, `status`, `click_num` clickNum, `create_time` createTime from t_word where word_id = #{wordId}
+    </select>
+
+    <insert id="insert" parameterType="com.acsc.commons.entity.Word">
+        INSERT INTO `t_word`(`word_id`, `word`, `status`, `create_time`, `create_admin_id`) VALUES (#{wordId}, #{word}, #{status}, #{createTime}, #{createAdminId});
+    </insert>
+
+    <delete id="delete">
+        delete from t_word where word_id = #{wordId}
+    </delete>
+
+    <update id="update" parameterType="com.acsc.commons.entity.Word">
+        UPDATE `t_word` SET `word` = #{word}, `status` = #{status} WHERE `word_id` = #{wordId};
+    </update>
+
+    <update id="updateStatus">
+        UPDATE `t_word` SET `status` = #{status} WHERE `word_id` = #{wordId};
+    </update>
+
+</mapper>

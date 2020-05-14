@@ -46,7 +46,7 @@ public class ShiroUtils {
         return (Admin) SecurityUtils.getSubject().getPrincipal();
     }
 
-    public static BigInteger getUserId() {
+    public static String getUserId() {
         return getAdminEntity().getAdminId();
     }
 

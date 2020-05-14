@@ -8,7 +8,7 @@
     </insert>
 
     <update id="updateUserById" parameterType="com.acsc.commons.entity.User">
-        UPDATE .t_user
+        UPDATE t_user
         <set>
             <if test="vipNum!= null and vipNum!= ''">
                 vip_num=#{vipNum},
@@ -28,25 +28,25 @@
             <if test="gender!= null and gender!= ''">
                 gender=#{gender},
             </if>
-            <if test="firstName!= null firstName!= ''">
+            <if test="firstName!= null and firstName!= ''">
                 first_name=#{firstName},
             </if>
-            <if test="lastName!= null lastName!= ''">
-                last_name=#{lastName}
+            <if test="lastName!= null and lastName!= ''">
+                last_name=#{lastName},
             </if>
-            <if test="address!= null address!= ''">
-                address=#{address}
+            <if test="address!= null and address!= ''">
+                address=#{address},
             </if>
-            <if test="avatar!= null avatar!= ''">
-                avatar=#{avatar}
+            <if test="avatar!= null and avatar!= ''">
+                avatar=#{avatar},
             </if>
-            <if test="wechatName!= null wechatName!= ''">
-                wechatName=#{wechatName}
+            <if test="wechatName!= null and wechatName!= ''">
+                wechat_name=#{wechatName},
             </if>
-            <if test="wechatNum!= null wechatNum!= ''">
-                wechatNum=#{wechatNum}
+            <if test="wechatNum!= null and wechatNum!= ''">
+                wechat_num=#{wechatNum},
             </if>
-            <if test="backupMobile!= null backupMobile!= ''">
+            <if test="backupMobile!= null and backupMobile!= ''">
                 backup_mobile=#{backupMobile}
             </if>
         </set>
@@ -56,7 +56,7 @@
 
 
     <select id="queryUserById" parameterType="String" resultType="com.acsc.commons.entity.User">
-        select user_id userId, last_name lastName, first_name firstName, gender, email, mobile, address, avatar, wechat_name wechatName, wechat_num wechatNum, create_time createTime, vipNum, vipLevel, clubId,backup_mobile backupMobile
+        select user_id userId, last_name lastName, first_name firstName, gender, email, mobile, address, avatar, wechat_name wechatName, wechat_num wechatNum, create_time createTime, vip_num vipNum,vip_level vipLevel,club_id clubId,backup_mobile backupMobile
         from t_user
         where `user_id` = #{userId}
     </select>

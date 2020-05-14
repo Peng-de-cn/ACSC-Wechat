@@ -13,7 +13,7 @@ public interface ActivityService {
      * @param limit
      * @return
      */
-    Map<String,Object> getActivityList(Integer page, Integer limit);
+    Map<String,Object> getActivityList(Integer page, Integer limit, String title, String clubId);
 
     /**
      * 根据ID获取活动
@@ -51,5 +51,11 @@ public interface ActivityService {
      * @return
      */
     Map<String,Object> getUsersForActivity(String activityId, Integer page, Integer limit);
+
+    /**
+     * 获取活动总数
+     * @return
+     */
+    Integer getActivityNum();
 
 }

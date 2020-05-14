@@ -1,6 +1,7 @@
 package com.acsc.api;
 
 import com.acsc.api.service.ActivityService;
+import com.acsc.api.service.FavoriteService;
 import com.acsc.api.service.UserService;
 import com.acsc.commons.entity.User;
 import com.acsc.commons.vo.ResultVO;
@@ -20,6 +21,8 @@ class AcscApiApplicationTests {
     private UserService userService;
     @Autowired
     private ActivityService activityService;
+    @Autowired
+    private FavoriteService favoriteService;
 
 
     void contextLoads() {
@@ -32,6 +35,11 @@ class AcscApiApplicationTests {
     @Test
     void testacticity() {
         ResultVO resultVO = activityService.getActivityList(1, 2,"create_time");
+        System.out.println(resultVO);
+    }
+    @Test
+    void testdeleteFavorite() {
+        ResultVO resultVO = favoriteService.deleteFavorite("ssss","sssss");
         System.out.println(resultVO);
     }
 

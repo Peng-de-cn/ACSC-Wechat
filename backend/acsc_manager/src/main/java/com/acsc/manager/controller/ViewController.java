@@ -4,9 +4,8 @@ package com.acsc.manager.controller;
 import com.acsc.commons.entity.Activity;
 import com.acsc.commons.entity.Admin;
 import com.acsc.commons.entity.Club;
-import com.acsc.manager.service.ActivityService;
-import com.acsc.manager.service.ClubService;
-import com.acsc.manager.service.UserService;
+import com.acsc.commons.entity.Word;
+import com.acsc.manager.service.*;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/view")
@@ -28,6 +28,12 @@ public class ViewController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private WordService wordService;
+
+    @Resource
+    private AdminService adminService;
+
     @RequestMapping("index")
     public ModelAndView index(HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
@@ -38,10 +44,23 @@ public class ViewController {
 
     }
 
+    @RequestMapping("notFound")
+    public ModelAndView notFound(HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("error/404");
+        return modelAndView;
+
+    }
+
     @RequestMapping("welcome")
     public ModelAndView welcome(){
+
+        Map<String, Object> userAndVipNum = userService.getUserAndVipNum();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("welcome");
+        modelAndView.addObject("userNum",userAndVipNum.get("userNum"));
+        modelAndView.addObject("vipNum",userAndVipNum.get("vipNum"));
+        modelAndView.addObject("activityNum",activityService.getActivityNum());
         return modelAndView;
 
     }
@@ -86,6 +105,7 @@ public class ViewController {
     public ModelAndView activityList(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("activity/activity-list");
+        modelAndView.addObject("clubs",clubService.getAllClub());
         return modelAndView;
 
     }
@@ -138,8 +158,8 @@ public class ViewController {
 
     }
 
-    @RequestMapping("toClubUpdate")
-    public ModelAndView toClubUpdate(String clubId){
+    @RequestMapping("clubUpdate")
+    public ModelAndView clubUpdate(String clubId){
 
         Club club = clubService.getClubById(clubId);
 
@@ -149,6 +169,64 @@ public class ViewController {
 
         return modelAndView;
 
+    }
+
+    @RequestMapping("wordList")
+    public ModelAndView wordList(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("word/word-list");
+        return modelAndView;
+    }
+
+    @RequestMapping("wordAdd")
+    public ModelAndView wordAdd(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("word/word-add");
+        return modelAndView;
+    }
+
+    @RequestMapping("wordUpdate")
+    public ModelAndView wordUpdate(String wordId){
+
+        Word word = wordService.getWordById(wordId);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("word/word-update");
+        modelAndView.addObject("word",word);
+        return modelAndView;
+    }
+
+    @RequestMapping("adminList")
+    public ModelAndView adminList(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/admin-list");
+        return modelAndView;
+    }
+
+    @RequestMapping("adminAdd")
+    public ModelAndView adminAdd(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/admin-add");
+        return modelAndView;
+    }
+
+    @RequestMapping("adminUpdate")
+    public ModelAndView adminUpdate(String adminId){
+
+        Admin admin = adminService.getAdminById(adminId);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/admin-update");
+        modelAndView.addObject("admin", admin);
+        return modelAndView;
+    }
+
+
+    @RequestMapping("resetPwd")
+    public ModelAndView resetPwd(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/admin-resetPwd");
+        return modelAndView;
     }
 
 

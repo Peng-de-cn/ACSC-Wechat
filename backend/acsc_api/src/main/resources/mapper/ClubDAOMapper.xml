@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.acsc.api.dao.ClubDAO">
+
+
+    <resultMap id="club" type="com.acsc.commons.entity.Club">
+        <id column="club_id" property="clubId"/>
+        <result column="club_name" property="clubName"/>
+        <result column="vip_suffix" property="vipSuffix"/>
+        <result column="add_time" property="addTime"/>
+        <association property="admin" javaType="com.acsc.commons.entity.Admin">
+            <id column="admin_id" property="adminId"/>
+            <result column="usename" property="username"/>
+        </association>
+    </resultMap>
+
+    <select id="queryByPage" resultType="com.acsc.commons.entity.Club">
+        select club_id clubId, club_name clubName, vip_suffix vipSuffix, add_time addTime, t1.admin_id, username from t_club t1 left join t_admin t2 on t1.admin_id = t2.admin_id
+        order by add_time desc
+        limit #{begin},#{limit}
+    </select>
+
+    <select id="queryAll" resultType="com.acsc.commons.entity.Club">
+        select club_id clubId, club_name clubName, vip_suffix vipSuffix, add_time addTime, t1.admin_id, username from t_club t1 left join t_admin t2 on t1.admin_id = t2.admin_id
+        order by add_time desc
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer">
+        select count(club_id) from t_club
+    </select>
+
+    <select id="queryById" resultType="com.acsc.commons.entity.Club">
+        select club_id clubId, club_name clubName, vip_suffix vipSuffix, add_time addTime, t1.admin_id, username from t_club t1 left join t_admin t2 on t1.admin_id = t2.admin_id where t1.club_id = #{clubId}
+    </select>
+
+</mapper>

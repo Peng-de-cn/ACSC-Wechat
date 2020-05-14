@@ -30,4 +30,32 @@ public class UserServiceImpl implements UserService {
         }
         return resultVO;
     }
+
+    @Override
+    public ResultVO updateUserById(User user) {
+        ResultVO resultVO = new ResultVO();
+        System.out.println(user);
+        try {
+            userDAO.updateUserById(user);
+            resultVO.setStatus(true);
+        }catch (Exception e){
+            log.info("数据库更新用户出错!"+e.getMessage());
+            resultVO.setStatus(false).setErrmsg("数据库更新用户出错!");
+        }
+        return resultVO;
+
+    }
+
+    @Override
+    public ResultVO queryUserById(String userId) {
+        ResultVO resultVO = new ResultVO();
+        try {
+            User user = userDAO.queryUserById(userId);
+            resultVO.setStatus(true).setData(user);
+        }catch (Exception e){
+            log.info("数据库查询用户出错!"+e.getMessage());
+            resultVO.setStatus(false).setErrmsg("数据库查询用户出错!");
+        }
+        return resultVO;
+    }
 }
