@@ -1,4 +1,5 @@
 // pages/tab-mine/mine-index/mine-index.js
+var utils = require("../../../utils/util.js");
 Page({
   /**
    * 页面的初始数据
@@ -23,7 +24,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    if (typeof this.getTabBar === 'function' &&
+      this.getTabBar()) {
+      console.log('设置选中项 4')
+      this.getTabBar().setData({
+        selected: 4
+      })
+    }
   },
 
   /**
@@ -63,23 +70,38 @@ Page({
   /**
    * 跳转个人资料
    */
-  personal: function() {
+  personal: utils.throttle(function (e) {
     wx.navigateTo({
       url: '../mine-personal/mine-personal'
     })
-  },
+  }),
   /**
    * 跳转我的活动
    */
-  activities: function() {
+  activities: utils.throttle(function (e) {
     wx.navigateTo({
       url: '../mine-activities/mine-activities'
     })
-  },
+  }),
   /**
    * 跳转我的收藏
    */
-  collection: function() {
+  collection: utils.throttle(function (e) {
+    // setTimeout(() => {
+    //   wx.showToast({
+    //     title: '功能暂未开放',
+    //     icon: "none",
+    //     duration: 3000
+    //   })
+    // }, 0);
+    wx.navigateTo({
+      url: '../mine-collection/mine-collection'
+    })
+  }),
+  /**
+   * 跳转加入会员
+   */
+  join: utils.throttle(function (e) {
     setTimeout(() => {
       wx.showToast({
         title: '功能暂未开放',
@@ -88,27 +110,19 @@ Page({
       })
     }, 0);
     // wx.navigateTo({
-    //   url: '../mine-collection/mine-collection'
+    //   url: '../mine-join/mine-join'
     // })
-  },
-  /**
-   * 跳转加入会员
-   */
-  join: function() {
-    wx.navigateTo({
-      url: '../mine-join/mine-join'
-    })
-  },
+  }),
   /**
    * 跳转用户反馈
    */
-  feedback: function() {
+  feedback: utils.throttle(function (e) {
 
-  },
+  }),
   /**
    * 跳转联系客服
    */
-  callUs: function() {
+  callUs: utils.throttle(function (e) {
     wx.makePhoneCall({
       phoneNumber: "400-xxx-xxxx",
       success: function() {
@@ -118,15 +132,15 @@ Page({
         console.log("拨打电话失败！");
       }
     })
-  },
+  }),
   /**
    * 跳转关于我们
    */
-  aboutUs: function() {
+  aboutUs: utils.throttle(function (e) {
     wx.showModal({
       title: '关于我们',
-      content: '本项目由xxxxxxxxxxxxxxx技术支持',
+      content: '本项目由A.C.S.C.滑雪俱乐部提供技术支持',
       showCancel: false
     })
-  }
+  })
 })

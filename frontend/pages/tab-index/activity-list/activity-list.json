@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "usingComponents": {},
+  "navigationBarBackgroundColor": "#5f6fee",
+  "navigationBarTitleText": "ACSC体育协会",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "light"
 }

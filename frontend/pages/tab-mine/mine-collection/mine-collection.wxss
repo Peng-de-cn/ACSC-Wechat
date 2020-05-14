@@ -1,0 +1,100 @@
+Page {
+  height: 100%;
+  background: #fff;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+}
+
+.container .top {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 46px;
+  min-height: 46px;
+  align-items: center;
+  background: #fff;
+  position: fixed;
+}
+
+/* 活动列表开始 */
+
+.activity-list {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.list-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #dedede;
+  margin-bottom: 20px;
+}
+
+.no-border {
+  border: none;
+}
+
+.list-item .picture {
+  width: 100%;
+}
+
+.list-item .picture image {
+  width: 100%;
+  height: 200px;
+}
+
+.list-item .title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 6rpx;
+}
+
+.list-item .infos {
+  font-size: 12px;
+  color: #999;
+  display: flex;
+}
+.list-item .infos .location {
+  margin-right: 12rpx;
+}
+
+.list-item .infos image {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 6rpx;
+}
+
+.list-item .infos {
+  font-size: 12px;
+  color: #999;
+}
+
+.list-item .price {
+  font-size: 12px;
+  font-weight: bold;
+  color: #5096f8;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.activity-list .state {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.activity-list .state text {
+  font-size: 24rpx;
+}
+
+/* 活动列表结束 */

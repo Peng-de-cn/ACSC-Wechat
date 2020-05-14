@@ -1,1 +1,141 @@
-/* pages/tab-mine/mine-activities/mine-activities.wxss */
+Page {
+  height: 100%;
+  background: #fff;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+}
+
+.container .top {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 46px;
+  min-height: 46px;
+  align-items: center;
+  background: #fff;
+  position: fixed;
+}
+
+/* 活动列表开始 */
+
+.activity-list {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.list-item {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #dedede;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 2px 2px 2px #ccc;
+}
+
+.list-item image {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 6rpx;
+}
+
+.no-border {
+  border: none;
+}
+
+.list-item .item-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+}
+
+.list-item .active-title {
+  padding: 14px 6px 6px;
+  font-size: 28rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.list-item .packages {
+  padding: 0px 10px 8px;
+  font-size: 28rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list-item .packages .package {
+  width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-item .packages .price {
+  color: rgb(223, 142, 87);
+  font-weight: bold;
+  font-size: 32rpx;
+}
+
+.list-item .item-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+  padding-bottom: 10px;
+}
+
+.item-bottom .order-location,
+.item-bottom .order-date {
+  display: flex;
+  align-items: center;
+}
+
+.item-top .order-number text,
+.item-top .order-status text,
+.item-bottom .order-location text,
+.item-bottom .order-date text {
+  display: inline-block;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 24rpx;
+}
+
+.order-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.order-buttons .btn {
+  font-size: 24rpx;
+  background-color: #5096f8;
+  color: #fff;
+  padding: 4px 22px;
+  border-radius: 20px;
+  margin-left: 10rpx;
+}
+
+/* 活动列表结束 */
+
+.activity-list .state {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.activity-list .state text {
+  font-size: 24rpx;
+}

@@ -4,10 +4,12 @@
     <view class="left">
       <view class="avatar">
         <!-- <image class="head" src="https://i.loli.net/2019/12/31/fFgCvRIdjJlBuKN.jpg"></image> -->
+        <open-data type="userAvatarUrl"></open-data>
       </view>
     </view>
     <view class="right">
-      <view class="name">测试帐号</view>
+      <!-- <view class="name">加载中...</view> -->
+      <open-data type="userNickName" class="name"></open-data>
       <!-- <view class="slogan">共同成长，彼此成就</view> -->
     </view>
   </view>
@@ -51,7 +53,7 @@
         <image src="/images/right.png"></image>
       </view>
     </view>
-    <view bindtap="join" class="cell">
+    <!-- <view bindtap="join" class="cell">
       <view class="cell-left">
         <view class="cell-icon">
           <image src="/images/join.png"></image>
@@ -63,7 +65,7 @@
       <view class="cell-right">
         <image src="/images/right.png"></image>
       </view>
-    </view>
+    </view> -->
     <view bindtap="feedback" class="cell">
       <view class="cell-left">
         <view class="cell-icon">
@@ -78,7 +80,7 @@
         <image src="/images/right.png"></image>
       </view>
     </view>
-    <view bindtap="callUs" class="cell">
+    <!-- <view bindtap="callUs" class="cell">
       <view class="cell-left">
         <view class="cell-icon">
           <image src="/images/phone.png"></image>
@@ -90,7 +92,7 @@
       <view class="cell-right">
         <image src="/images/right.png"></image>
       </view>
-    </view>
+    </view> -->
     <view bindtap="aboutUs" class="cell">
       <view class="cell-left">
         <view class="cell-icon">

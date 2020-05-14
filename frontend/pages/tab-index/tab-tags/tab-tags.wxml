@@ -1,0 +1,11 @@
+<view class="container">
+	<view class="top">
+		<view class="title">产品标签</view>
+	</view>
+	<view class="items">
+		<view class="item" data-labelId="" data-labelName="全部" data-currentTabIndex="{{currentTabIndex}}" catchtap="runResult">全部</view>
+		<block wx:for="{{tagList}}">
+			<view class="item" data-labelId="{{item.labelId}}" data-labelName="{{item.labelName}}" data-currentTabIndex="{{currentTabIndex}}" catchtap="runResult">{{item.labelName}}</view>
+		</block>
+	</view>
+</view>

@@ -1,0 +1,154 @@
+Page {
+  height: 100%;
+  background: #fff;
+}
+
+.container {
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.swiper {
+  width: 100%;
+  flex: 1;
+  height: 100%;
+  margin-top: 50rpx;
+  /* overflow: scroll; */
+}
+
+.swiper .sub-title {
+  margin: 16rpx 14rpx;
+  color: #000;
+  font-size: 28rpx;
+  border-left: 4px solid #5f6fee;
+  padding-left: 10rpx;
+  box-sizing: border-box;
+}
+
+.swiper .page-section-spacing {
+  height: 100%;
+  min-height: 100%;
+}
+
+/* Tab结束 */
+
+/* 活动页开始 */
+
+.scroll-view_H{
+  height: 240rpx;
+  white-space: nowrap;
+}
+
+.scroll-view-item_H{
+  display: inline-block;
+  width: 38%;
+  border-radius: 22rpx;
+  margin: 0 16rpx;
+}
+
+.scroll-view-item_H .item {
+  width: 100%;
+  height: 200rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.item image{
+  width: 100%;
+  height: 100%;
+  border-radius: 22rpx;
+}
+
+.item text {
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+/* 活动结束 */
+
+/* 活动列表开始 */
+
+.activity-list {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.list-item {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #dedede;
+  margin-bottom: 20px;
+}
+
+.no-border {
+  border: none;
+}
+
+.list-item .picture {
+  width: 100%;
+  border-radius: 20rpx;
+}
+
+.list-item .picture image {
+  width: 100%;
+  height: 200px;
+  border-radius: 20rpx;
+}
+
+.list-item .item-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 6rpx;
+}
+
+.list-item .infos {
+  font-size: 12px;
+  color: #999;
+  display: flex;
+}
+
+.list-item .infos .location {
+  margin-right: 12rpx;
+}
+
+.list-item .infos image {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 6rpx;
+}
+
+.list-item .infos {
+  font-size: 12px;
+  color: #999;
+}
+
+.list-item .price {
+  font-size: 12px;
+  font-weight: bold;
+  color: #5096f8;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.activity-list .state {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.activity-list .state text {
+  font-size: 24rpx;
+}
+
+/* 活动列表结束 */

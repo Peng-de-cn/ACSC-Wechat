@@ -1,6 +1,6 @@
-Page{
+Page {
   height: 100%;
-  background: #f6f6f6;
+  background: #f5f5f5;
 }
 
 .container {
@@ -18,7 +18,7 @@ Page{
   min-height: 46px;
   align-items: center;
   background: #fff;
-  position: fixed;
+  /* position: fixed; */
 }
 
 /* 搜索框开始 */
@@ -115,28 +115,40 @@ Page{
 /* 搜索框结束 */
 
 /* 历史搜索开始 */
-.historySearch,.hotSearch {
+
+.historySearch, .hotSearch {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  /* margin-top: 46px; */
   padding: 20rpx;
 }
 
-.historySearch .historyTitle,.hotSearch .hotSearchTitle {
+.historySearch .historyTitle, .hotSearch .hotSearchTitle {
   display: flex;
   justify-content: space-between;
+  padding: 0 20rpx;
+  font-size: 26rpx;
+  color: #000;
 }
 
-.historyContent,.hotSearchContent {
+.historyContent, .hotSearchContent {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   margin-top: 30rpx;
+  padding: 0 20rpx;
 }
 
 .label {
   border-radius: 30rpx;
   color: #fff;
-  padding: 2rpx 20rpx;
+  padding: 6rpx 24rpx;
   margin: 10rpx 10rpx;
-  font-size: 26rpx;
+  font-size: 24rpx;
+  background: #5096f8;
+  max-width: 180rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

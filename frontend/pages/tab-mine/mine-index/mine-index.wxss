@@ -1,6 +1,7 @@
 page {
   background-clip: #fff;
 }
+
 .topImage {
   width: 100%;
   height: 250rpx;
@@ -20,8 +21,18 @@ page {
 }
 
 .topBG .left {
-  margin-top: 60rpx;
+  margin-top: 40rpx;
   margin-left: 70rpx;
+}
+
+.topBG .left .avatar {
+  overflow: hidden;
+  display: block;
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  /* border: 2px solid #fff; */
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 .topBG .left .head {

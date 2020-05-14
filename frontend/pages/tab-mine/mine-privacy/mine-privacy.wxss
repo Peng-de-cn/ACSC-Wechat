@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+
+.container .title {
+  font-weight: bold;
+  text-align: center;
+  font-size: 32rpx;
+  margin-bottom: 30rpx;
+}
+
+.container .text {
+  font-size: 28rpx;
+}
+
+.container .subtitle {
+  font-size: 30rpx;
+  margin: 20rpx 0;
+}

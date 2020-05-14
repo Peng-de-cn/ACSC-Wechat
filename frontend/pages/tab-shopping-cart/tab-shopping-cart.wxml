@@ -1,3 +1,6 @@
 <view class="container">
-  功能暂未开放...
+	<!-- <image mode="aspectFill" lazy-load="true" src="/images/not_open.png"></image>
+  <text>功能装修中....</text> -->
+	<image mode="aspectFill" lazy-load="true" src="/images/shopping-cart.png"></image>
+	<text>购物车是空的....</text>
 </view>

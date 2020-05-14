@@ -10,7 +10,8 @@ Page({
     inputShowed: false,
     inputVal: "",
     searchVal: [],
-    searchHistory: '' // 搜索历史
+    searchHistory: '', // 搜索历史,
+    hotSearch: [] // 热词搜索
   },
 
   /**
@@ -18,6 +19,7 @@ Page({
    */
   onLoad: function(options) {
     this.existHotSearch();
+    this.getHotList();
   },
 
   /**
@@ -102,54 +104,102 @@ Page({
     });
   },
   /**
-   * 检查是否存在历史记录
+   * 获取热词列表
    */
-  existHotSearch() {
+  getHotList: function() {
     var _this = this;
-    if (wx.getStorageSync("searchVal")) {
-      _this.setData({
-        searchVal: wx.getStorageSync("searchVal")
-      });
+    var params = {
+      isShowLoading: true,
+      method: 'GET',
+      success: function(res) {
+        if (res.data == null) {
+          setTimeout(() => {
+            wx.showToast({
+              title: '数据绑定失败，请稍后重试…',
+              icon: "none",
+              duration: 3000
+            })
+          }, 0);
+        } else {
+          _this.setData({
+            hotSearch: res.data.data
+          })
+        }
+      },
+      fail: function(res) {
+        console.log(res);
+        setTimeout(() => {
+          wx.showToast({
+            title: '数据绑定失败，请稍后再试…',
+            icon: "none",
+            duration: 3000
+          })
+        }, 0);
+      },
+      complete: function(res) {}
     }
-    _this.setData({
-      showHistory: true
+
+    wx.getNetworkType({
+      success(res) {
+        const networkType = res.networkType;
+        if (networkType == "none" || networkType == "unknown") {
+          setTimeout(() => {
+            wx.showToast({
+              title: '请检查网络连接…',
+              icon: "none",
+              duration: 3000
+            })
+          }, 0);
+        } else {
+          utils.ajax(params, app.globalData.basicURL + '/word/getlist');
+        }
+      }
     })
   },
+  /**
+   * 检查是否存在历史搜索
+   */
+  existHotSearch: function() {
+    var searchVal = wx.getStorageSync("searchVal");
+    this.setData({
+      searchVal: searchVal
+    })
+  },
+  /**
+   * 点击热门搜索或历史搜索
+   */
+  runActivityList: utils.throttle(function(option) {
+    wx.navigateTo({
+      url: '../../result-list/result-list?keyword=' + option.currentTarget.dataset.keyword,
+    })
+  }),
   /**
    * 搜索提交数据
    */
   btnSearch: utils.throttle(function(e) {
     let _this = this;
-    console.log(_this.data.inputVal);
-    if (_this.data.inputVal.trim().length > 0) {
-      // 取出本地中所有搜索记录
-      var searchVal = wx.getStorageSync("searchVal") || [];
+    let searchReasult = e.detail.value;
 
-      // 创建新数组
-      let newArr = [];
+    // 取出本地中所有搜索记录
+    var searchVal = wx.getStorageSync("searchVal") || [];
+    console.log(searchVal)
+    // 搜索结果添加到搜索记录
+    searchVal.push(searchReasult)
 
-      // 遍历当前本地中所有记录
-      for (let i = 0; i < searchVal.length; i++) {
-        // 如果当前输入，不存在于本地记录中，则添加到本地记录中
-        if (searchVal[i].inputVal != _this.data.inputVal.trim()) {
-          newArr.push(_this.data.inputVal.trim());
-          // obj.inputVal = _this.data.inputVal.trim();
-        }
-      }
-      // 如果第一次搜索
-      if (searchVal.length == 0) {
-        // obj.inputVal = _this.data.inputVal.trim();
-        newArr.push(_this.data.inputVal.trim());
-      }
-      searchVal = newArr;
-      // searchVal.push(obj);
-      wx.setStorageSync("searchVal", searchVal)
+    // 之前的搜索记录
+    let aryOther = [...searchVal].reverse()
+    searchVal = [searchReasult, ...(aryOther.filter(item => item.toUpperCase() !== searchReasult.toUpperCase())).reverse()]
+    searchVal.length > 10 && (searchVal = searchVal.slice(0, 10))
 
-      // wx.navigateTo({
-      //   url: '../list/question/question?searchVal=' + _this.data.inputVal
-      // })
+    this.setData({
+      searchVal: searchVal
+    })
+    // 存本地
+    wx.setStorageSync('searchVal', searchVal)
+    wx.navigateTo({
+      url: '../../result-list/result-list?keyword=' + searchReasult,
+    })
 
-    }
   }, 1000),
   /**
    * 清除历史记录
@@ -165,7 +215,7 @@ Page({
             console.log('用户点击确定');
             wx.removeStorageSync("searchVal");
             _this.setData({
-              showHistory: true
+              searchVal: []
             });
           } else if (res.cancel) {
             console.log('用户点击取消');
@@ -174,24 +224,4 @@ Page({
       })
     }, 0);
   }, 1000),
-  /**
-   * 点击搜索历史
-   */
-  runIndex: utils.throttle(function(e) {
-    let inputval = e.currentTarget.dataset.inputval;
-    let searchindex = e.currentTarget.dataset.searchindex;
-
-    // 按问题搜索
-    if (searchindex == 0) {
-      wx.navigateTo({
-        url: '../list/question/question?searchVal=' + inputval,
-      })
-    }
-    // 按公司搜索
-    else if (searchindex == 1) {
-      wx.navigateTo({
-        url: '../list/company/company?searchVal=' + inputval,
-      })
-    }
-  })
 })

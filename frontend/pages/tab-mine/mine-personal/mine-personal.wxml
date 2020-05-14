@@ -1,53 +1,111 @@
 <!--index.wxml-->
 <view class="container">
-  <form bindsubmit="formSubmit" bindreset="formReset">
-    <!-- <view style="font-size:30rpx;margin-bottom:20rpx;font-weight:bold;margin-left:10rpx;">个人信息：</view> -->
+	<form bindsubmit="formSubmit" bindreset="formReset">
+		<!-- <view style="font-size:30rpx;margin-bottom:20rpx;font-weight:bold;margin-left:10rpx;">个人信息：</view> -->
 
-    <!-- 姓 -->
-    <view class="section">
-      <view class="section_title">姓</view>
-      <input name="custom_surname" type="text" placeholder="请输入您的姓" confirm-type="next" maxlength='16' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
-    </view>
+		<!-- 姓 -->
+		<view class="section">
+			<view class="section_title">姓</view>
+			<input name="custom_surname" type="text" placeholder="请输入您的姓" confirm-type="next" maxlength='16' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.firstName}}" />
+		</view>
 
-    <!-- 名 -->
-    <view class="section">
-      <view class="section_title">名</view>
-      <input name="custom_name" type="text" placeholder="请输入您的名" confirm-type="next" maxlength='16' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
-    </view>
+		<!-- 名 -->
+		<view class="section">
+			<view class="section_title">名</view>
+			<input name="custom_lastName" type="text" placeholder="请输入您的名" confirm-type="next" maxlength='16' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.lastName}}" />
+		</view>
 
-    <!-- 微信号码 -->
-    <view class="section">
-      <view class="section_title">微信号码</view>
-      <input name="custom_wechat" type="text" placeholder="请输入您的微信号码" confirm-type="next" maxlength='18' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
-    </view>
+		<!-- 姓名全拼或英文名 -->
+		<view class="section">
+			<view class="section_title">姓名全拼</view>
+			<input name="custom_name" type="text" placeholder="姓名全拼或英文名" confirm-type="next" maxlength='30' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.name}}" />
+		</view>
 
-    <!-- 手机号码 -->
-    <view class="section">
-      <view class="section_title">手机号码</view>
-      <input name="custom_phone" type="number" placeholder="请输入您的手机号码" confirm-type="next" maxlength='11' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
-    </view>
+		<!-- 微信号码 -->
+		<view class="section">
+			<view class="section_title">微信号码</view>
+			<input name="custom_wechat" type="text" placeholder="请输入您的微信号码" confirm-type="next" maxlength='18' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.wechatNum}}" />
+		</view>
 
-    <!-- 备用号码 -->
-    <!-- <view class="section">
+		<!-- 手机号码 -->
+		<view class="section">
+			<view class="section_title">手机号码</view>
+			<input name="custom_phone" type="number" placeholder="请输入您的手机号码" confirm-type="next" maxlength='11' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.mobile}}" />
+		</view>
+
+		<!-- 生日 -->
+		<view wx:if="{{isMember == true}}" class="section">
+			<view class="section_title">生日</view>
+			<picker bindchange="bindDateChange" mode="date" name="birthday" value="{{date}}">
+				<view class="picker">
+					当前选择: {{date}}
+				</view>
+			</picker>
+		</view>
+
+		<!-- 俱乐部 -->
+		<view wx:if="{{isMember == true}}" class="section">
+			<view class="section_title">俱乐部</view>
+			<picker bindchange="bindClubChange" name="ClubName" range="{{clubArr}}" rangeKey="clubName" value="{{clubIdx}}">
+				<view class="picker">
+					当前选择: {{clubArr[clubIdx].clubName}}
+				</view>
+			</picker>
+		</view>
+
+		<!-- 备用号码 -->
+		<!-- <view class="section">
       <view class="section_title">备用号码</view>
       <input name="custom_spare_phone" type="number" placeholder="请输入您的备用号码" confirm-type="next" maxlength='11' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
     </view> -->
 
-    <!-- 邮箱 -->
-    <view class="section">
-      <view class="section_title">邮箱</view>
-      <input name="custom_email" type="text" placeholder="请输入您的邮箱" confirm-type="next" autocapitalize='off' autocorrect='off' cursor-spacing="80" />
-    </view>
+		<!-- 邮箱 -->
+		<view class="section">
+			<view class="section_title">邮箱</view>
+			<input name="custom_email" type="text" placeholder="请输入您的邮箱" confirm-type="next" autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.email}}" />
+		</view>
 
-    <!-- 地址 -->
-    <view class="section" style="height:100%;">
-      <view class="section_title">地址</view>
-      <view style="width:90%;padding:20px 0;box-sizing: border-box;line-height:1;">
-        <textarea name="custom_address" placeholder="请输入您的地址" cursor-spacing="80" style="width:90%;padding-left: 20rpx;" maxlength="-1"></textarea>
-      </view>
-      <!-- <input name="custom_address" type="text" placeholder="请输入您的地址" confirm-type="next" maxlength='11' autocapitalize='off' autocorrect='off' cursor-spacing="80" /> -->
-    </view>
+		<!-- 国家 -->
+		<view class="section">
+			<view class="section_title">国家</view>
+			<input name="custom_country" type="text" placeholder="请输入您的国家" confirm-type="next" autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.country}}" />
+		</view>
 
-    <button class='btnSubmit' form-type="submit"> 保存信息 </button>
-  </form>
+		<!-- 城市 -->
+		<view class="section">
+			<view class="section_title">城市</view>
+			<input name="custom_city" type="text" placeholder="请输入您的城市" confirm-type="next" autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.city}}" />
+		</view>
+
+		<!-- 街道 -->
+		<view class="section">
+			<view class="section_title">街道</view>
+			<input name="custom_street" type="text" placeholder="请输入您的街道" confirm-type="next" autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.street}}" />
+		</view>
+
+		<!-- 门牌号 -->
+		<view class="section">
+			<view class="section_title">门牌号</view>
+			<input name="custom_houseNum" type="text" placeholder="请输入您的门牌号" confirm-type="next" autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.houseNum}}" />
+		</view>
+
+		<!-- 邮编 -->
+		<view class="section">
+			<view class="section_title">邮编</view>
+			<input name="custom_postcode" type="text" placeholder="请输入您的邮政编码" confirm-type="next" autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.postcode}}" />
+		</view>
+
+		<!-- 地址 -->
+		<!-- <view class="section" style="height:100%;">
+			<view class="section_title">地址</view>
+			<view style="width:90%;padding:20px 0;box-sizing: border-box;line-height:1;">
+				<textarea name="custom_address" placeholder="请输入您的地址" cursor-spacing="80" style="width:90%;padding-left: 20rpx;" maxlength="-1" value="{{personalInfo.address}}"></textarea>
+			</view> -->
+
+		<!-- <input name="custom_address" type="text" placeholder="请输入您的地址" confirm-type="next" maxlength='11' autocapitalize='off' autocorrect='off' cursor-spacing="80" /> -->
+
+		<!-- </view> -->
+		<view class="privacy">阅读<text catchtap="runPrivacy">隐私政策</text>及<text catchtap="runAgreement">用户协议</text></view>
+		<button class='btnSubmit' form-type="submit"> {{submitText}} </button>
+	</form>
 </view>

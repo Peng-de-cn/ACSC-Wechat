@@ -1,0 +1,36 @@
+<view class="container">
+	<view class="card">
+		<image wx:if="{{level == 'normal'}}" mode="aspectFill" src="/images/normal-vip.png"></image>
+		<image wx:else mode="aspectFill" src="/images/senior-vip.png"></image>
+	</view>
+	<!-- 会员信息 -->
+	<form class="sub-form" bindsubmit="formSubmit" bindreset="formReset">
+		<!-- 生日 -->
+		<view class="section">
+			<view class="section_title">生日</view>
+			<picker bindchange="bindDateChange" mode="date" name="birthday" value="{{date}}">
+				<view class="picker">
+					当前选择: {{date}}
+				</view>
+			</picker>
+		</view>
+		<!-- 俱乐部 -->
+		<view class="section">
+			<view class="section_title">俱乐部</view>
+			<picker bindchange="bindClubChange" name="ClubName" range="{{clubArr}}" rangeKey="clubName" value="{{clubId}}">
+				<view class="picker">
+					当前选择: {{clubArr[clubId].clubName}}
+				</view>
+			</picker>
+		</view>
+		<view class="privilege-title">会员特权：</view>
+		<view class="privilege-list">
+			<view class="privilege-item">特权1</view>
+			<view class="privilege-item">特权2</view>
+			<view class="privilege-item">特权3</view>
+			<view class="privilege-item">特权4</view>
+			<view class="privilege-item">特权5</view>
+		</view>
+		<button class="btnSubmit {{level == 'senior' ? 'btnSenior' : '' }}" form-type="submit"> {{levelText}} </button>
+	</form>
+</view>

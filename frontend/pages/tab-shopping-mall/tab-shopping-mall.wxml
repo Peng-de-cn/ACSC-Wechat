@@ -1,3 +1,56 @@
 <view class="container">
-  功能暂未开放...
+	<!-- <image mode="aspectFill" lazy-load="true" src="/images/not_open.png"></image>
+  <text>功能装修中....</text> -->
+	<!-- 搜索框 -->
+	<view class="search"></view>
+	<view class="shopping-mall">
+		<view class="category">
+			<view class="item active">所有分类</view>
+			<view class="item">品牌</view>
+			<view class="item">文具</view>
+			<view class="item">厨具</view>
+			<view class="item">护肤品</view>
+			<view class="item">保健品</view>
+			<view class="item">箱包</view>
+			<view class="item">首饰</view>
+			<view class="item">瓷器</view>
+			<view class="item">口罩</view>
+		</view>
+		<view class="category-content">
+			<view class="item">
+				<view class="left">
+					<image mode="aspectFill" src="http://wellerlive.com/upFiles/productImg/pic49697999581.JPG"></image>
+				</view>
+				<view class="right">
+					<view class="title">德国Lamy凌美Dialog3钢琴漆白色F细笔尖钢笔仨大厦搭撒大厦搭撒大厦搭撒大厦周星驰</view>
+					<view class="info">
+						<view class="price">€ 290</view>
+						<view class="count">
+							<view class="subtraction">-</view>
+							<view class="number">1</view>
+							<view class="addition">+</view>
+						</view>
+					</view>
+					<view class="unit">单位：支</view>
+				</view>
+			</view>
+			<view class="item">
+				<view class="left">
+					<image mode="aspectFill" src="http://wellerlive.com/upFiles/productImg/pic49697999581.JPG"></image>
+				</view>
+				<view class="right">
+					<view class="title">德国Lamy凌美Dialog3钢琴漆白色F细笔尖钢笔仨大厦搭撒大厦搭撒大厦搭撒大厦周星驰</view>
+					<view class="info">
+						<view class="price">€ 290</view>
+						<view class="count">
+							<view class="subtraction">-</view>
+							<view class="number">1</view>
+							<view class="addition">+</view>
+						</view>
+					</view>
+					<view class="unit">单位：支</view>
+				</view>
+			</view>
+		</view>
+	</view>
 </view>

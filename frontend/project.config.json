@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -58,22 +58,8 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "pages/tab-index/activity-search/activity-search",
-					"pathName": "pages/tab-index/activity-search/activity-search",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/tab-mine/mine-index/mine-index",
-					"pathName": "pages/tab-mine/mine-index/mine-index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/tab-index/activity-detail/activity-detail",
-					"pathName": "pages/tab-index/activity-detail/activity-detail",
+					"name": "pages/tab-shopping-mall/tab-shopping-mall",
+					"pathName": "pages/tab-shopping-mall/tab-shopping-mall",
 					"query": "",
 					"scene": null
 				}

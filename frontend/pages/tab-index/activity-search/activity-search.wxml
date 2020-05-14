@@ -21,16 +21,26 @@
     </view>
   </view>
   <!-- 历史搜索 -->
-  <view class='historySearch' hidden='{{showHistory}}'>
+  <view class='historySearch' hidden="{{searchVal.length<=0}}">
     <view class='historyTitle'>
       <view class='searchTitle'>历史搜索</view>
-      <view class='searchClear' catchtap='clearHistory'>清空</view>
+      <view class='searchClear' catchtap='clearHistory' >清空</view>
     </view>
     <view class='historyContent'>
       <block wx:for="{{searchVal}}" wx:key="key" wx:for-index="key" wx:for-item="item">
-        <text class='label' data-key="{{key}}" data-inputVal='{{item.inputVal}}' data-searchIndex='{{item.searchIndex}}' catchtap='runIndex'>{{item.inputVal}}</text>
+        <text class='label' data-keyword='{{item}}' catchtap='runActivityList'>{{item}}</text>
       </block>
     </view>
   </view>
-  <!-- 热门搜索 -->
+  <!-- 热门推荐 -->
+  <view class='hotSearch'>
+    <view class='hotSearchTitle'>
+      <view class='searchTitle'>热门搜索</view>
+    </view>
+    <view class='hotSearchContent'>
+      <block wx:for="{{hotSearch}}" wx:key="key" wx:for-index="key" wx:for-item="item">
+        <text class='label' data-keyword='{{item}}' catchtap='runActivityList'>{{item}}</text>
+      </block>
+    </view>
+  </view>
 </view>

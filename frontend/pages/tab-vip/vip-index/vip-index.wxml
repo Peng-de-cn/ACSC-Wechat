@@ -1,0 +1,68 @@
+<view class="container">
+	<view wx:if="{{personalInfo.vip == null}}" class="vip-list">
+		<block wx:for="{{vipList}}">
+			<view wx:if="{{index == 0}}" class="vip-item">
+				<view class="free-vip">
+					<image mode="aspectFill" src="/images/normal-vip.png"></image>
+				</view>
+				<view class="detail">
+					<view class="detail-top">
+						<view class="btn-next" catchtap="regeisterVIP" data-level="normal" data-id="{{item.vipId}}">成为{{item.vipName}}</view>
+					</view>
+				</view>
+			</view>
+			<view wx:else class="vip-item">
+				<view class="free-vip">
+					<image mode="aspectFill" src="/images/senior-vip.png"></image>
+				</view>
+				<view class="detail">
+					<view class="detail-top">
+						<view class="btn-next" style="background:#000" catchtap="regeisterVIP" data-level="senior" data-id="{{item.vipId}}">成为{{item.vipName}}</view>
+					</view>
+				</view>
+			</view>
+		</block>
+	</view>
+	<view wx:elif="{{personalInfo.vip.vipId == 1}}" class="vip-infos">
+		<view class="vip-item">
+			<view class="free-vip">
+				<!-- <image mode="aspectFill" src="/images/normal-vip.png"></image> -->
+				<view class="vip-title">{{personalInfo.vip.vipName}}</view>
+				<view class="vip-name">{{personalInfo.firstName }} {{ personalInfo.lastName}}</view>
+				<view class="vip-card">{{personalInfo.vipNum}}</view>
+			</view>
+			<view class="detail">
+				<view class="detail-infos">
+					<view class="infos-item" wx:if="{{personalInfo.deadline!=null}}">到期时间：<text>{{personalInfo.deadline }}</text></view>
+					<view class="infos-item" wx:else>到期时间：<text>无限制</text></view>
+					<view class="infos-item">积分：<text>{{personalInfo.integral}}</text></view>
+				</view>
+				<view class="detail-btn">
+					<view class="btn-next" catchtap="updateInfo">修改资料</view>
+					<view class="btn-next" catchtap="upgradeVIP" data-vipId="{{vipList[1].vipId}}">升级成为年费会员</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view wx:elif="{{personalInfo.vip.vipId == 2}}" class="vip-infos">
+		<view class="vip-item">
+			<view class="free-vip" style="color:#fff;background:url(https://i.loli.net/2020/05/09/oWhZvV5sa87IdUQ.png) no-repeat;background-size: 100% 100%;background-position: center;">
+				<!-- <image mode="aspectFill" src="/images/senior-vip.png"></image> -->
+				<view class="vip-title">{{personalInfo.vip.vipName}}</view>
+				<view class="vip-name">{{personalInfo.firstName }} {{ personalInfo.lastName}}</view>
+				<view class="vip-card">{{personalInfo.vipNum}}</view>
+			</view>
+			<view class="detail">
+				<view class="detail-infos">
+					<view class="infos-item" wx:if="{{personalInfo.deadline!=null}}">到期时间：<text>{{personalInfo.deadline }}</text></view>
+					<view class="infos-item" wx:else>到期时间：<text>无限制</text></view>
+					<view class="infos-item">积分：<text>{{personalInfo.integral}}</text></view>
+				</view>
+				<view class="detail-btn">
+					<view class="btn-next" style="background:#000" catchtap="updateInfo">修改资料</view>
+					<view class="btn-next" style="background:#000" catchtap="renewVIP">续费会员</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</view>

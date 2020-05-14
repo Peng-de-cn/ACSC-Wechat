@@ -1,81 +1,270 @@
 <view class='container'>
-  <!-- 搜索栏 -->
-  <view class="top">
-    <view class="page__bd">
-      <view class="weui-search-bar">
-        <view class="weui-search-bar__form">
-          <view class="weui-search-bar__box">
-            <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-            <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
-          </view>
-          <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="runSearch">
-            <icon class="weui-icon-search" type="search" size="18"></icon>
-            <view class="weui-search-bar__text">搜索活动</view>
-          </label>
-        </view>
-      </view>
-    </view>
-  </view>
-  <!-- 排序 -->
-  <view class="order">
-    <view class="item active">默认</view>
-    <view class="item">开始时间</view>
-    <view class="item">发布时间</view>
-  </view>
-  <!-- 列表页 -->
-  <view class="activity-list">
-    <view class="list-item" catchtap="runDetail">
-      <view class="picture">
-        <image mode="aspectFill" lazy-load="true" src="https://i.loli.net/2020/03/03/QRG1IdqUOAtYB5h.jpg"></image>
-      </view>
-      <view class="title">[ACSC华人滑雪俱乐部 瑞士 第一季] 瑞士 卢塞恩 铁力士山 4天3晚 自由行</view>
-      <view class="infos">
-        <view class="location">
-          <image src="/images/location.png"></image>
-          <text>瑞士 卢塞恩</text>
-        </view>
-        <view class="date">
-          <image src="/images/time.png"></image>
-          <text>2019.12.05</text>
-        </view>
-      </view>
-      <view class="price">¥ xxxx起</view>
-    </view>
-    <view class="list-item" catchtap="runTest">
-      <view class="picture">
-        <image mode="aspectFill" lazy-load="true" src="https://i.loli.net/2020/02/23/VQXD27NO1atTwkg.jpg"></image>
-      </view>
-      <view class="title">[ACSC华人滑雪俱乐部 瑞士 第二季] 瑞士 格劳宾登州 达沃斯 4天3晚 自由行</view>
-      <view class="infos">
-        <text class="location">
-          <image src="/images/location.png"></image>
-          <text>瑞士 格劳宾登州</text>
-        </text>
-        <text class="date">
-          <image src="/images/time.png"></image>
-          <text>2020.01.16</text>
-        </text>
-      </view>
-      <view class="price">¥ xxxx起</view>
-    </view>
-    <view class="list-item" catchtap="runTest">
-      <view class="picture">
-        <image mode="aspectFill" lazy-load="true" src="https://i.loli.net/2020/02/23/VQXD27NO1atTwkg.jpg"></image>
-      </view>
-      <view class="title">[ACSC华人滑雪俱乐部 瑞士 第三季] 瑞士 格劳宾登州 圣莫里茨 8天7晚 自由行</view>
-      <view class="infos">
-        <text class="location">
-          <image src="/images/location.png"></image>
-          <text>瑞士 格劳宾登州</text>
-        </text>
-        <text class="date">
-          <image src="/images/time.png"></image>
-          <text>2020.04.12</text>
-        </text>
-      </view>
-      <view class="price">¥ xxxx起</view>
-    </view>
-  </view>
-<open-data type="userAvatarUrl"></open-data>
-<open-data type="userNickName"></open-data>
+	<view class="top">
+		<view class="tags" catchtap="runTags" data-currentTabId="{{currentTabId}}" data-currentIndex="{{currentIndex}}">
+			{{tagName}}
+			<text class="triangle">
+				<text class="arrow"></text>
+			</text>
+		</view>
+		<!--Tab布局-->
+		<view class='title'>
+			<block wx:for="{{tabList}}" wx:for-index="tabidx">
+				<view class='titleSel' data-idx='{{tabidx}}' data-categoryId='{{item.categoryId}}'>
+					<text class="{{tabidx == currentIndex ? 'tab-active' : ' '}}">{{item.categoryName}}</text>
+					<hr class="{{tabidx == currentIndex ? 'headerLineSel' : 'headerLineUnsel'}}" />
+				</view>
+			</block>
+		</view>
+		<view class="flex-row btn-search" catchtap="runSearch">
+			<image mode="aspectFill" lazy-load="true" src="/images/search.png"></image>
+		</view>
+	</view>
+
+
+	<!--内容布局-->
+	<swiper class='swiper' bindchange='pagechange' current='{{currentIndex}}' data-current="{{currentIndex}}">
+		<swiper-item class='swiper'>
+			<scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="reactBottom" scroll-with-animation scroll-top="{{scrollTop2}}px" style="height:100%">
+				<view class="sub-title">
+					<text>热门活动</text>
+				</view>
+				<view class="page-section-spacing">
+					<!-- 轮播图 -->
+					<scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%">
+						<block wx:for="{{hotList}}" wx:for-index="hotidx">
+							<view id="demo1" class="scroll-view-item_H" catchtap="runDetail" data-activityId="{{item.activityId}}">
+								<view class="item">
+									<image mode="aspectFill" lazy-load="true" src="{{item.images}}"></image>
+									<text>{{item.title}}</text>
+								</view>
+							</view>
+						</block>
+					</scroll-view>
+					<!-- 列表页 -->
+					<view class="activity-list">
+						<view wx:if="{{activityList.length>0}}">
+							<view class="sub-title" style="padding-left:16rpx;margin-bottom:8rpx">
+								<text>{{currentTabName}}</text>
+							</view>
+							<block wx:for="{{activityList}}" wx:for-index="idx">
+								<view class="list-item {{activityList.length-1 == idx ?'no-border':''}}" catchtap="runDetail" data-activityId="{{item.activityId}}">
+									<view class="picture">
+										<image mode="aspectFill" lazy-load="true" src="{{item.imageArr[0]}}"></image>
+									</view>
+									<view class="item-title">{{item.title}}</view>
+									<view class="infos">
+										<view class="location">
+											<image mode="aspectFill" lazy-load="true" src="/images/location.png"></image>
+											<text>{{item.address}}</text>
+										</view>
+										<view class="date">
+											<image mode="aspectFill" lazy-load="true" src="/images/time.png"></image>
+											<text>开始时间：{{item.beginTime}}</text>
+										</view>
+									</view>
+									<view class="price">¥ {{item.minprice}}起</view>
+								</view>
+							</block>
+						</view>
+						<block wx:else>
+							<view class="state">
+								<image mode="aspectFill" lazy-load="true" src="/images/no_data.png"></image>
+								<text>没有数据....</text>
+							</view>
+						</block>
+
+						<!-- <view class="list-item">
+						<view class="picture">
+							<image mode="aspectFill" lazy-load="true" src="https://i.loli.net/2020/02/23/VQXD27NO1atTwkg.jpg"></image>
+						</view>
+						<view class="item-title">[ACSC华人滑雪俱乐部 瑞士 第二季] 瑞士 格劳宾登州 达沃斯 4天3晚 自由行</view>
+						<view class="infos">
+							<view class="location">
+								<image mode="aspectFill" lazy-load="true" src="/images/location.png"></image>
+								<text>瑞士 格劳宾登州</text>
+							</view>
+							<view class="date">
+								<image mode="aspectFill" lazy-load="true" src="/images/time.png"></image>
+								<text>开始时间：2020.01.16</text>
+							</view>
+						</view>
+						<view class="price">¥ xxxx起</view>
+					</view> -->
+					</view>
+				</view>
+			</scroll-view>
+		</swiper-item>
+		<swiper-item class='swiper'>
+			<scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="reactBottom" scroll-with-animation scroll-top="{{scrollTop2}}px" style="height:100%">
+				<view class="sub-title">
+					<text>热门活动</text>
+				</view>
+				<view class="page-section-spacing">
+					<!-- 轮播图 -->
+					<scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%">
+						<block wx:for="{{hotList}}" wx:for-index="hotidx">
+							<view id="demo1" class="scroll-view-item_H" data-activityId="{{item.activityId}}">
+								<view class="item">
+									<image mode="aspectFill" lazy-load="true" src="{{item.images}}"></image>
+									<text>{{item.title}}</text>
+								</view>
+							</view>
+						</block>
+						<!-- <view id="demo1" class="scroll-view-item_H">
+						<view class="item">
+							<image mode="aspectFill" lazy-load="true" src="http://p1-q.mafengwo.net/s9/M00/05/C3/wKgBs1hJdJyATi4ZAAnBy1-S49w60.jpeg"></image>
+							<text>来罗瓦涅米滑雪，当选最大的滑雪场</text>
+						</view>
+					</view>
+					<view id="demo1" class="scroll-view-item_H">
+						<view class="item">
+							<image mode="aspectFill" lazy-load="true" src="https://p1-q.mafengwo.net/s10/M00/0C/99/wKgBZ1huJiuANxHSAAZsOsdwOOw14.jpeg"></image>
+							<text>北海道温泉酒店丨这个冬季</text>
+						</view>
+					</view>
+					<view id="demo1" class="scroll-view-item_H">
+						<view class="item">
+							<image mode="aspectFill" lazy-load="true" src="https://p1-q.mafengwo.net/s9/M00/67/9F/wKgBs1gSw8yAbKyOABa6xyoIQwY70.jpeg"></image>
+							<text>冬季东北纯干货推荐</text>
+						</view>
+					</view>
+					<view id="demo1" class="scroll-view-item_H">
+						<view class="item">
+							<image mode="aspectFill" lazy-load="true" src="https://b1-q.mafengwo.net/s11/M00/3A/76/wKgBEFtf1FuAJtCJABDRcYS0CIU18.jpeg"></image>
+							<text>夏季游长白，这些清凉景点不得不去</text>
+						</view>
+					</view> -->
+					</scroll-view>
+					<!-- 列表页 -->
+					<view class="activity-list">
+						<view wx:if="{{activityList.length>0}}">
+							<view class="sub-title" style="padding-left:16rpx;margin-bottom:8rpx">
+								<text>{{currentTabName}}</text>
+							</view>
+							<block wx:for="{{activityList}}" wx:for-index="idx">
+								<view class="list-item {{activityList.length-1 == idx ?'no-border':''}}" catchtap="runDetail" data-activityId="{{item.activityId}}">
+									<view class="picture">
+										<image mode="aspectFill" lazy-load="true" src="{{item.imageArr[0]}}"></image>
+									</view>
+									<view class="item-title">{{item.title}}</view>
+									<view class="infos">
+										<view class="location">
+											<image mode="aspectFill" lazy-load="true" src="/images/location.png"></image>
+											<text>{{item.address}}</text>
+										</view>
+										<view class="date">
+											<image mode="aspectFill" lazy-load="true" src="/images/time.png"></image>
+											<text>开始时间：{{item.beginTime}}</text>
+										</view>
+									</view>
+									<view class="price">¥ {{item.minprice}}起</view>
+								</view>
+							</block>
+						</view>
+						<block wx:else>
+							<view class="state">
+								<image mode="aspectFill" lazy-load="true" src="/images/no_data.png"></image>
+								<text>没有数据....</text>
+							</view>
+						</block>
+					</view>
+				</view>
+			</scroll-view>
+		</swiper-item>
+		<swiper-item class='swiper'>
+			<scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="reactBottom" scroll-with-animation scroll-top="{{scrollTop2}}px" style="height:100%">
+				<view class="sub-title">
+					<text>热门活动</text>
+				</view>
+				<view class="page-section-spacing">
+					<!-- 轮播图 -->
+					<scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%">
+						<block wx:for="{{hotList}}" wx:for-index="hotidx">
+							<view id="demo1" class="scroll-view-item_H" catchtap="runDetail" data-activityId="{{item.activityId}}">
+								<view class="item">
+									<image mode="aspectFill" lazy-load="true" src="{{item.images}}"></image>
+									<text>{{item.title}}</text>
+								</view>
+							</view>
+						</block>
+						<!-- <view id="demo1" class="scroll-view-item_H">
+						<view class="item">
+							<image mode="aspectFill" lazy-load="true" src="http://p1-q.mafengwo.net/s9/M00/05/C3/wKgBs1hJdJyATi4ZAAnBy1-S49w60.jpeg"></image>
+							<text>来罗瓦涅米滑雪，当选最大的滑雪场</text>
+						</view>
+					</view>
+					<view id="demo1" class="scroll-view-item_H">
+						<view class="item">
+							<image mode="aspectFill" lazy-load="true" src="https://p1-q.mafengwo.net/s10/M00/0C/99/wKgBZ1huJiuANxHSAAZsOsdwOOw14.jpeg"></image>
+							<text>北海道温泉酒店丨这个冬季</text>
+						</view>
+					</view>
+					<view id="demo1" class="scroll-view-item_H">
+						<view class="item">
+							<image mode="aspectFill" lazy-load="true" src="https://p1-q.mafengwo.net/s9/M00/67/9F/wKgBs1gSw8yAbKyOABa6xyoIQwY70.jpeg"></image>
+							<text>冬季东北纯干货推荐</text>
+						</view>
+					</view>
+					<view id="demo1" class="scroll-view-item_H">
+						<view class="item">
+							<image mode="aspectFill" lazy-load="true" src="https://b1-q.mafengwo.net/s11/M00/3A/76/wKgBEFtf1FuAJtCJABDRcYS0CIU18.jpeg"></image>
+							<text>夏季游长白，这些清凉景点不得不去</text>
+						</view>
+					</view> -->
+					</scroll-view>
+					<!-- 列表页 -->
+					<view class="activity-list">
+						<view wx:if="{{activityList.length>0}}">
+							<view class="sub-title" style="padding-left:16rpx;margin-bottom:8rpx">
+								<text>{{currentTabName}}</text>
+							</view>
+							<block wx:for="{{activityList}}" wx:for-index="idx">
+								<view class="list-item {{activityList.length-1 == idx ?'no-border':''}}" catchtap="runDetail" data-activityId="{{item.activityId}}">
+									<view class="picture">
+										<image mode="aspectFill" lazy-load="true" src="{{item.imageArr[0]}}"></image>
+									</view>
+									<view class="item-title">{{item.title}}</view>
+									<view class="infos">
+										<view class="location">
+											<image mode="aspectFill" lazy-load="true" src="/images/location.png"></image>
+											<text>{{item.address}}</text>
+										</view>
+										<view class="date">
+											<image mode="aspectFill" lazy-load="true" src="/images/time.png"></image>
+											<text>开始时间：{{item.beginTime}}</text>
+										</view>
+									</view>
+									<view class="price">¥ {{item.minprice}}起</view>
+								</view>
+							</block>
+						</view>
+						<block wx:else>
+							<view class="state">
+								<image mode="aspectFill" lazy-load="true" src="/images/no_data.png"></image>
+								<text>没有数据....</text>
+							</view>
+						</block>
+
+						<!-- <view class="list-item">
+						<view class="picture">
+							<image mode="aspectFill" lazy-load="true" src="https://i.loli.net/2020/02/23/VQXD27NO1atTwkg.jpg"></image>
+						</view>
+						<view class="item-title">[ACSC华人滑雪俱乐部 瑞士 第二季] 瑞士 格劳宾登州 达沃斯 4天3晚 自由行</view>
+						<view class="infos">
+							<view class="location">
+								<image mode="aspectFill" lazy-load="true" src="/images/location.png"></image>
+								<text>瑞士 格劳宾登州</text>
+							</view>
+							<view class="date">
+								<image mode="aspectFill" lazy-load="true" src="/images/time.png"></image>
+								<text>开始时间：2020.01.16</text>
+							</view>
+						</view>
+						<view class="price">¥ xxxx起</view>
+					</view> -->
+					</view>
+				</view>
+			</scroll-view>
+		</swiper-item>
+	</swiper>
 </view>

@@ -1,3 +1,73 @@
-<view class="container">
-  
+<view class='container'>
+	<!-- 列表页 -->
+	<view class="activity-list">
+		<view wx:if="{{activityList.length>0}}">
+			<block wx:for="{{activityList}}" wx:for-index="idx">
+				<view class="list-item">
+					<view class="item-top">
+						<view class="order-number">
+							<text>订单编号:{{item.id}}</text>
+						</view>
+						<view class="order-status">
+							<text  wx:if="{{item.status == 1}}">预订成功</text>
+							<text  wx:elif="{{item.status == 0}}">待支付...</text>
+							<text  wx:elif="{{item.status == 2}}">订单过期</text>
+						</view>
+					</view>
+					<view class="active-title">
+						{{item.activity.title}}
+					</view>
+					<view class="packages">
+						<text class="package">{{item.activityPackage.title}}</text> <text class="price">¥ {{item.activityPackage.price}}</text>
+					</view>
+					<view class="item-bottom">
+						<view class="order-location">
+							<image src="/images/location.png"></image>
+							<text>活动地点：{{item.activity.address}}</text>
+						</view>
+						<view class="order-date">
+							<image src="/images/time.png"></image>
+							<text>出行时间：{{item.activity.beginTime}}</text>
+						</view>
+					</view>
+					<view class="order-buttons">
+						<view class="btn" wx:if="{{item.status == 0}}" catchtap="continuePayment" data-id="{{item.id}}">继续支付</view>
+						<view class="btn" wx:elif="{{item.status == 1 || item.status == 2}}" catchtap="delOrder" data-id="{{item.id}}">删除订单</view>
+					</view>
+				</view>
+			</block>
+
+			<!-- <view class="list-item">
+				<view class="item-top">
+					<view class="order-number">
+						<text>订单编号:AVB123asdasd</text>
+					</view>
+					<view class="order-status">
+						<text>预订成功</text>
+					</view>
+				</view>
+				<view class="active-title">
+					【ACSC华人滑雪俱乐部 瑞士 第二季】 瑞士 XXXX 达沃斯 4天3晚 自由行
+				</view>
+				<view class="packages">
+					<text class="package">套餐A：可乐雪碧和薯条</text> <text class="price">¥ 100.00</text>
+				</view>
+				<view class="item-bottom">
+					<view class="order-location">
+						<text>活动地点：珠穆朗玛峰</text>
+					</view>
+					<view class="order-date">
+						<text>出行时间：2020-12-31</text>
+					</view>
+				</view>
+			</view> -->
+		</view>
+		<block wx:else>
+			<view class="state">
+				<image mode="aspectFill" lazy-load="true" src="/images/no_data.png"></image>
+				<text>没有数据....</text>
+			</view>
+		</block>
+	</view>
+
 </view>

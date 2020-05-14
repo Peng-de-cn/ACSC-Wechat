@@ -5,14 +5,18 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    webview:""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let webview = decodeURIComponent(options.detail);
+    console.log(webview);
+    this.setData({
+      webview: webview
+    })
   },
 
   /**

@@ -1,0 +1,33 @@
+.container {
+  height: 100%;
+}
+
+.container .top {
+  margin: 6px 0 14px;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+
+.container .top .title {
+  border-left: 4px solid #5f6fee;
+  padding-left: 18rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+
+.container .items {
+  display: flex;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  justify-content: start;
+  flex-wrap: wrap;
+}
+
+.container .items .item {
+  margin: 10rpx;
+  border: 1px solid #5f6fee;
+  border-radius: 20rpx;
+  padding: 4rpx 30rpx;
+  box-sizing: border-box;
+  font-size: 24rpx;
+}

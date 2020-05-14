@@ -59,12 +59,22 @@ view,text {
   flex-basis: 150rpx;
 }
 
+.privacy {
+  text-align: center;
+  color: blue;
+  margin-top: 20rpx;
+}
+
+.privacy text {
+  color: purple;
+}
+
 .btnSubmit {
   width: 90%;
   background: rgb(81,103,168);
   color: #f5f5f5;
   border-radius: 10rpx;
-  margin: 60rpx 20rpx 0;
+  margin: 60rpx 20rpx 30rpx;
   box-shadow: 1px 1px 10px #ccc;
 }
 
