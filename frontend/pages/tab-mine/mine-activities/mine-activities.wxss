@@ -8,6 +8,7 @@ Page {
   flex-direction: column;
   height: 100%;
   align-items: center;
+  background-color: f9f9f9;
 }
 
 .container .top {
@@ -103,7 +104,7 @@ Page {
 .item-bottom .order-location text,
 .item-bottom .order-date text {
   display: inline-block;
-  max-width: 200px;
+  max-width: 380rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -118,7 +119,7 @@ Page {
 
 .order-buttons .btn {
   font-size: 24rpx;
-  background-color: #5096f8;
+  background-color: #1788fa;
   color: #fff;
   padding: 4px 22px;
   border-radius: 20px;
@@ -134,6 +135,7 @@ Page {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: rgb(240,240,240);
 }
 
 .activity-list .state text {

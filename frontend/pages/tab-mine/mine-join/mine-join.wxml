@@ -6,13 +6,13 @@
     <!-- 姓 -->
     <view class="section">
       <view class="section_title">姓</view>
-      <input name="custom_surname" type="text" placeholder="请输入您的姓" confirm-type="next" maxlength='16' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
+      <input name="custom_surname" type="text" placeholder="请输入您的姓" confirm-type="next" maxlength='30' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
     </view>
 
     <!-- 名 -->
     <view class="section">
       <view class="section_title">名</view>
-      <input name="custom_name" type="text" placeholder="请输入您的名" confirm-type="next" maxlength='16' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
+      <input name="custom_name" type="text" placeholder="请输入您的名" confirm-type="next" maxlength='30' autocapitalize='off' autocorrect='off' cursor-spacing="80" />
     </view>
 
     <!-- 微信号码 -->

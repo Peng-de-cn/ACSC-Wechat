@@ -16,17 +16,26 @@ Page({
     activityDetail: [],
     options: [], // 活动套餐选择
     currentOption: '', // 默认选择活动套餐
-    collection: false // 是否收藏
+    collection: false, // 是否收藏
+    showBookBtn: true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options);
+    // 检查更新
+    utils.getUpdate();
+    let tabName = options.currenttabName ? options.currenttabName : '';
+    wx.setNavigationBarTitle({
+      title: tabName + '详情...',
+    })
     this.setData({
       activityid: options.activityid
     })
     this.loadData(options.activityid);
+    this.checkOrderStatus(options.activityid);
   },
 
   /**
@@ -86,7 +95,7 @@ Page({
       isShowLoading: true,
       method: 'GET',
       success: function (res) {
-        console.log(res);
+        console.log(res.data.data);
         if (res.data == null) {
           setTimeout(() => {
             wx.showToast({
@@ -101,6 +110,8 @@ Page({
             options: res.data.data.packages,
             swiperList: res.data.data.imageArr,
             currentOption: res.data.data.packages[0].packageId,
+            currentpriceCNY: res.data.data.packages[0].priceCNY,
+            currentpriceEUR: res.data.data.packages[0].priceEUR,
             collection: res.data.data.isfavorite
           })
         }
@@ -115,7 +126,9 @@ Page({
           })
         }, 0);
       },
-      complete: function (res) {}
+      complete: function (res) {
+        wx.hideLoading()
+      }
     }
 
     wx.getNetworkType({
@@ -155,8 +168,11 @@ Page({
    * 切换套餐选择
    */
   chooseOption: function (options) {
+    console.log(options);
     this.setData({
-      currentOption: options.currentTarget.dataset.optionid
+      currentOption: options.currentTarget.dataset.optionid,
+      currentpriceCNY: options.currentTarget.dataset.pricecny,
+      currentpriceEUR: options.currentTarget.dataset.priceeur
     })
   },
   /**
@@ -202,7 +218,9 @@ Page({
             })
           }, 0);
         },
-        complete: function (res) {}
+        complete: function (res) {
+          wx.hideLoading();
+        }
       }
 
       wx.getNetworkType({
@@ -258,7 +276,9 @@ Page({
             })
           }, 0);
         },
-        complete: function (res) {}
+        complete: function (res) {
+          wx.hideLoading();
+        }
       }
 
       wx.getNetworkType({
@@ -318,7 +338,9 @@ Page({
           })
         }, 0);
       },
-      complete: function (res) {}
+      complete: function (res) {
+        wx.hideLoading();
+      }
     }
 
     wx.getNetworkType({
@@ -343,7 +365,43 @@ Page({
    */
   submitData: utils.throttle(function (activityid) {
     let _this = this;
-    // let activityid = e.currentTarget.dataset.activityid;
+    // 仅支持微信支付(人民币)
+    if (_this.data.currentpriceEUR == 0 && _this.data.currentpriceCNY != 0) {
+      // let activityid = e.currentTarget.dataset.activityid;
+      _this.wechatPay(activityid);
+    }
+    // 选择支付(人民币、欧元)
+    else if (_this.data.currentpriceEUR != 0 && _this.data.currentpriceCNY != 0) {
+      let _this = this;
+      wx.showActionSheet({
+        itemList: ['微信支付', '欧元支付'],
+        success(res) {
+          if (res.tapIndex == 0) {
+            console.log("微信支付");
+            _this.wechatPay(activityid);
+          } else if (res.tapIndex == 1) {
+            console.log("欧元线下支付");
+            _this.freePay(activityid);
+          }
+
+        },
+        complete(res) {
+          wx.hideLoading();
+        }
+      })
+    }
+    // 免费报名(欧元、免费)
+    else {
+      console.log("免费");
+      _this.freePay(activityid);
+    }
+
+  }),
+  /**
+   * 微信支付
+   */
+  wechatPay: function (activityid) {
+    let _this = this;
     var params = {
       isShowLoading: true,
       method: 'GET',
@@ -373,6 +431,7 @@ Page({
               signType: 'MD5',
               paySign: paySign,
               success(res) {
+                console.log(res);
                 if (res.errMsg == "requestPayment:ok") {
                   setTimeout(() => {
                     wx.showToast({
@@ -381,7 +440,6 @@ Page({
                       duration: 3000
                     })
                   }, 0);
-                  _this.loadData();
                 }
               },
               fail(res) {
@@ -394,6 +452,15 @@ Page({
                     })
                   }, 0);
                 }
+              },
+              complete(res) {
+                // _this.loadData();
+                _this.setData({
+                  showBookBtn: false
+                })
+                setTimeout(() => {
+                  _this.checkOrderStatus(_this.data.activityid);
+                }, 10);
               }
             })
           }
@@ -418,7 +485,9 @@ Page({
           })
         }, 0);
       },
-      complete: function (res) {}
+      complete: function (res) {
+        wx.hideLoading();
+      }
     }
 
     wx.getNetworkType({
@@ -436,6 +505,136 @@ Page({
           utils.ajax(params, app.globalData.basicURL + '/activity/addUserActivity?activityId=' + activityid + "&userId=" + app.globalData.openid + "&packageId=" + _this.data.currentOption);
         }
       }
+    })
+  },
+  /**
+   * 免费报名&欧元线下支付
+   */
+  freePay: function (activityid) {
+    let _this = this;
+    var params = {
+      isShowLoading: true,
+      method: 'POST',
+      data: {
+        activityId: activityid,
+        userId: app.globalData.openid,
+        packageId: _this.data.currentOption
+      },
+      success: function (res) {
+        console.log(res);
+        if (res.data.status == true) {
+          setTimeout(() => {
+            wx.showToast({
+              title: '报名成功，请线下联系管理员进行支付',
+              icon: "none",
+              duration: 8000
+            })
+          }, 0);
+          _this.setData({
+            showBookBtn: false
+          })
+        } else if (res.data.status == false) {
+          setTimeout(() => {
+            wx.showToast({
+              title: res.data.errmsg,
+              icon: "none",
+              duration: 3000
+            })
+          }, 0);
+        }
+      },
+      fail: function (res) {
+        setTimeout(() => {
+          wx.showToast({
+            title: '报名失败，请稍后再试…',
+            icon: "none",
+            duration: 3000
+          })
+        }, 0);
+      },
+      complete: function (res) {
+        wx.hideLoading();
+      }
+    }
+
+    wx.getNetworkType({
+      success(res) {
+        const networkType = res.networkType;
+        if (networkType == "none" || networkType == "unknown") {
+          setTimeout(() => {
+            wx.showToast({
+              title: '请检查网络连接…',
+              icon: "none",
+              duration: 3000
+            })
+          }, 0);
+        } else {
+          utils.ajax(params, app.globalData.basicURL + '/activity/applyActivity');
+        }
+      }
+    })
+  },
+  /**
+   * 检查订单状态
+   */
+  checkOrderStatus: function (activityid) {
+    let _this = this;
+    var params = {
+      isShowLoading: true,
+      method: 'POST',
+      success: function (res) {
+        if (res.data.data != null) {
+          let status = res.data.data.status;
+          console.log(status);
+          // 0：未支付
+          // 1：已支付
+          // 2：已过期
+          // 3：退款中
+          // 4：已退款
+          if (status == 0 || status == 1 || status == 3) {
+            _this.setData({
+              showBookBtn: false
+            })
+          }
+        }
+      },
+      fail: function (res) {
+        setTimeout(() => {
+          wx.showToast({
+            title: '数据加载失败，请稍后再试…',
+            icon: "none",
+            duration: 3000
+          })
+        }, 0);
+      },
+      complete: function (res) {
+        wx.hideLoading();
+      }
+    }
+
+    wx.getNetworkType({
+      success(res) {
+        const networkType = res.networkType;
+        if (networkType == "none" || networkType == "unknown") {
+          setTimeout(() => {
+            wx.showToast({
+              title: '请检查网络连接…',
+              icon: "none",
+              duration: 3000
+            })
+          }, 0);
+        } else {
+          utils.ajax(params, app.globalData.basicURL + '/activity/getActivityOrderByUserIdAndActivityId?userId=' + app.globalData.openid + '&activityId=' + activityid);
+        }
+      }
+    })
+  },
+  /**
+   * 跳转我的活动
+   */
+  runActivity: utils.throttle(function (e) {
+    wx.navigateTo({
+      url: '../../tab-mine/mine-activities/mine-activities',
     })
   })
 })

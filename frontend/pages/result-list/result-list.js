@@ -19,15 +19,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options);
-    if(options.labelid) {
+    // 检查更新
+    utils.getUpdate();
+    if (options.labelid) {
       wx.setNavigationBarTitle({
         title: options.labelname
       })
       console.log(options.labelid);
       this.getListByTag(options.labelid);
-      
-    }else if (options.keyword) {
+
+    } else if (options.keyword) {
       wx.setNavigationBarTitle({
         title: options.keyword
       })

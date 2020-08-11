@@ -3,38 +3,45 @@
 	<view class="activity-list">
 		<view wx:if="{{activityList.length>0}}">
 			<block wx:for="{{activityList}}" wx:for-index="idx">
-				<view class="list-item">
-					<view class="item-top">
-						<view class="order-number">
-							<text>订单编号:{{item.id}}</text>
+				<!-- <block wx:if="{{item.status == 4}}"> -->
+				<block>
+					<view class="list-item">
+						<view class="item-top">
+							<view class="order-number">
+								<text>订单编号:{{item.id}}</text>
+							</view>
+							<view class="order-status">
+								<text  wx:if="{{item.status == 1}}">预订成功</text>
+								<text  wx:elif="{{item.status == 0}}">待支付...</text>
+								<text  wx:elif="{{item.status == 2}}">订单过期</text>
+								<text  wx:elif="{{item.status == 3}}">退款中</text>
+								<text  wx:elif="{{item.status == 4}}">退款成功</text>
+							</view>
 						</view>
-						<view class="order-status">
-							<text  wx:if="{{item.status == 1}}">预订成功</text>
-							<text  wx:elif="{{item.status == 0}}">待支付...</text>
-							<text  wx:elif="{{item.status == 2}}">订单过期</text>
+						<view class="active-title" catchtap="runDetail" data-activityId="{{item.activity.activityId}}">
+							{{item.activity.title}}
+						</view>
+						<view class="packages">
+							<text class="package">{{item.activityPackage.title}}</text> <text class="price">¥ {{item.activityPackage.priceCNY}}</text><text class="price">€ {{item.activityPackage.priceEUR}}</text>
+						</view>
+						<view class="item-bottom">
+							<view class="order-location">
+								<image src="/images/location.png"></image>
+								<text>活动地点：{{item.activity.address}}</text>
+							</view>
+							<view class="order-date">
+								<image src="/images/time.png"></image>
+								<text>出行时间：{{item.activity.beginTime}}</text>
+							</view>
+						</view>
+						<view class="order-buttons">
+							<!-- 订单状态：0，未支付；1，已支付；2，已过期;3，退款中;4，退款成功 -->
+							<view class="btn" wx:if="{{item.status == 0}}" catchtap="continuePayment" data-id="{{item.id}}">继续微信支付</view>
+							<view class="btn" wx:elif="{{item.status == 1 || item.status == 0}}" catchtap="cancelOrder" data-id="{{item.id}}">取消订单</view>
+							<view class="btn" wx:if="{{item.status != 0 }}" catchtap="delOrder" data-id="{{item.id}}">删除订单</view>
 						</view>
 					</view>
-					<view class="active-title">
-						{{item.activity.title}}
-					</view>
-					<view class="packages">
-						<text class="package">{{item.activityPackage.title}}</text> <text class="price">¥ {{item.activityPackage.price}}</text>
-					</view>
-					<view class="item-bottom">
-						<view class="order-location">
-							<image src="/images/location.png"></image>
-							<text>活动地点：{{item.activity.address}}</text>
-						</view>
-						<view class="order-date">
-							<image src="/images/time.png"></image>
-							<text>出行时间：{{item.activity.beginTime}}</text>
-						</view>
-					</view>
-					<view class="order-buttons">
-						<view class="btn" wx:if="{{item.status == 0}}" catchtap="continuePayment" data-id="{{item.id}}">继续支付</view>
-						<view class="btn" wx:elif="{{item.status == 1 || item.status == 2}}" catchtap="delOrder" data-id="{{item.id}}">删除订单</view>
-					</view>
-				</view>
+				</block>
 			</block>
 
 			<!-- <view class="list-item">
@@ -65,7 +72,7 @@
 		<block wx:else>
 			<view class="state">
 				<image mode="aspectFill" lazy-load="true" src="/images/no_data.png"></image>
-				<text>没有数据....</text>
+				<!-- <text>没有数据....</text> -->
 			</view>
 		</block>
 	</view>

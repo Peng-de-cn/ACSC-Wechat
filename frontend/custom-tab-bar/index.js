@@ -12,32 +12,32 @@ Component({
    */
   data: {
     selected: 0,
-    color: "#686868",
-    selectedColor: "#5096F8",
+    color: "#636465",
+    selectedColor: "#1788fa",
     list: [{
         "pagePath": "/pages/tab-index/activity-list/activity-list",
         "iconPath": "/images/index.png",
         "selectedIconPath": "/images/index_active.png",
         "text": "首页"
       },
-      {
-        "pagePath": "/pages/tab-shopping-mall/tab-shopping-mall",
-        "iconPath": "/images/shop.png",
-        "selectedIconPath": "/images/shop_active.png",
-        "text": "商城"
-      },
+      // {
+      //   "pagePath": "/pages/tab-shopping-mall/tab-shopping-mall",
+      //   "iconPath": "/images/shop.png",
+      //   "selectedIconPath": "/images/shop_active.png",
+      //   "text": "商城"
+      // },
       {
         "pagePath": "/pages/tab-vip/vip-index/vip-index",
         "iconPath": "/images/vip.png",
         "selectedIconPath": "/images/vip.png",
         "text": "会员卡"
       },
-      {
-        "pagePath": "/pages/tab-shopping-cart/tab-shopping-cart",
-        "iconPath": "/images/shoppingcart.png",
-        "selectedIconPath": "/images/shoppingcart_active.png",
-        "text": "购物车"
-      },
+      // {
+      //   "pagePath": "/pages/tab-shopping-cart/tab-shopping-cart",
+      //   "iconPath": "/images/shoppingcart.png",
+      //   "selectedIconPath": "/images/shoppingcart_active.png",
+      //   "text": "购物车"
+      // },
       {
         "pagePath": "/pages/tab-mine/mine-index/mine-index",
         "iconPath": "/images/mine.png",

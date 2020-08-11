@@ -14,69 +14,73 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
+    // 检查更新
+    utils.getUpdate();
     this.loadData();
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
-
+  onShow: function () {
+    this.loadData();
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
   /**
    * 加载数据
    */
-  loadData: function() {
+  loadData: function () {
     var _this = this;
     var params = {
       isShowLoading: true,
       method: 'GET',
-      success: function(res) {
-        console.log();
-
+      success: function (res) {
+        console.log(res);
+        _this.setData({
+          activityList: []
+        })
         // 没有请求到新的数据  &&  问题列表里面也没有数据，此时显示 暂无数据
         if (res.data.data[0] == null) {
           _this.setData({
@@ -100,7 +104,7 @@ Page({
           })
         }
       },
-      fail: function(res) {
+      fail: function (res) {
         console.log(res);
         setTimeout(() => {
           wx.showToast({
@@ -110,7 +114,7 @@ Page({
           })
         }, 0);
       },
-      complete: function(res) {}
+      complete: function (res) {}
     }
 
     wx.getNetworkType({
@@ -133,7 +137,7 @@ Page({
   /**
    * 跳转详情页
    */
-  runDetail: utils.throttle(function(e) {
+  runDetail: utils.throttle(function (e) {
     wx.navigateTo({
       url: '../../tab-index/activity-detail/activity-detail?activityid=' + e.currentTarget.dataset.activityid,
     })

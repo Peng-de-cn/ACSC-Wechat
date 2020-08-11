@@ -146,7 +146,7 @@ Page {
   padding: 6rpx 24rpx;
   margin: 10rpx 10rpx;
   font-size: 24rpx;
-  background: #5096f8;
+  background: #1788fa;
   max-width: 180rpx;
   overflow: hidden;
   text-overflow: ellipsis;

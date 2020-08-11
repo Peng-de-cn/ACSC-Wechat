@@ -9,7 +9,7 @@
 		<!--Tab布局-->
 		<view class='title'>
 			<block wx:for="{{tabList}}" wx:for-index="tabidx">
-				<view class='titleSel' data-idx='{{tabidx}}' data-categoryId='{{item.categoryId}}'>
+				<view class='titleSel' data-idx='{{tabidx}}' data-categoryId='{{item.categoryId}}' catchtap="titleClick">
 					<text class="{{tabidx == currentIndex ? 'tab-active' : ' '}}">{{item.categoryName}}</text>
 					<hr class="{{tabidx == currentIndex ? 'headerLineSel' : 'headerLineUnsel'}}" />
 				</view>
@@ -23,18 +23,18 @@
 
 	<!--内容布局-->
 	<swiper class='swiper' bindchange='pagechange' current='{{currentIndex}}' data-current="{{currentIndex}}">
-		<swiper-item class='swiper'>
-			<scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="reactBottom" scroll-with-animation scroll-top="{{scrollTop2}}px" style="height:100%">
-				<view class="sub-title">
+		<swiper-item class='swiper' catchtouchmove='stopTouchMove'>
+			<scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="reactBottom" scroll-with-animation scroll-top="{{scrollTop2}}px" style="height:100%;box-sizing:border-box;">
+				<view class="sub-title" style="display:{{hotListEmpty ? 'none' : 'block'}}">
 					<text>热门活动</text>
 				</view>
 				<view class="page-section-spacing">
 					<!-- 轮播图 -->
-					<scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%">
+					<scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%;display:{{hotListEmpty ? 'none' : 'block'}}">
 						<block wx:for="{{hotList}}" wx:for-index="hotidx">
 							<view id="demo1" class="scroll-view-item_H" catchtap="runDetail" data-activityId="{{item.activityId}}">
 								<view class="item">
-									<image mode="aspectFill" lazy-load="true" src="{{item.images}}"></image>
+									<image mode="aspectFill" lazy-load="true" src="{{item.imageArr[0]}}"></image>
 									<text>{{item.title}}</text>
 								</view>
 							</view>
@@ -69,7 +69,7 @@
 						<block wx:else>
 							<view class="state">
 								<image mode="aspectFill" lazy-load="true" src="/images/no_data.png"></image>
-								<text>没有数据....</text>
+								<!-- <text>没有数据....</text> -->
 							</view>
 						</block>
 
@@ -94,18 +94,18 @@
 				</view>
 			</scroll-view>
 		</swiper-item>
-		<swiper-item class='swiper'>
-			<scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="reactBottom" scroll-with-animation scroll-top="{{scrollTop2}}px" style="height:100%">
-				<view class="sub-title">
+		<swiper-item class='swiper' catchtouchmove='stopTouchMove'>
+			<scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="reactBottom" scroll-with-animation scroll-top="{{scrollTop2}}px" style="height:100%;box-sizing:border-box;">
+				<view class="sub-title" style="display:{{hotListEmpty ? 'none' : 'block'}}">
 					<text>热门活动</text>
 				</view>
 				<view class="page-section-spacing">
 					<!-- 轮播图 -->
-					<scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%">
+					<scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%;display:{{hotListEmpty ? 'none' : 'block'}}">
 						<block wx:for="{{hotList}}" wx:for-index="hotidx">
 							<view id="demo1" class="scroll-view-item_H" data-activityId="{{item.activityId}}">
 								<view class="item">
-									<image mode="aspectFill" lazy-load="true" src="{{item.images}}"></image>
+									<image mode="aspectFill" lazy-load="true" src="{{item.imageArr[0]}}"></image>
 									<text>{{item.title}}</text>
 								</view>
 							</view>
@@ -164,25 +164,25 @@
 						<block wx:else>
 							<view class="state">
 								<image mode="aspectFill" lazy-load="true" src="/images/no_data.png"></image>
-								<text>没有数据....</text>
+								<!-- <text>没有数据....</text> -->
 							</view>
 						</block>
 					</view>
 				</view>
 			</scroll-view>
 		</swiper-item>
-		<swiper-item class='swiper'>
-			<scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="reactBottom" scroll-with-animation scroll-top="{{scrollTop2}}px" style="height:100%">
-				<view class="sub-title">
+		<swiper-item class='swiper' catchtouchmove='stopTouchMove'>
+			<scroll-view scroll-y="true" bindscroll="scroll" bindscrolltolower="reactBottom" scroll-with-animation scroll-top="{{scrollTop2}}px" style="height:100%;box-sizing:border-box;">
+				<view class="sub-title" style="display:{{hotListEmpty ? 'none' : 'block'}}">
 					<text>热门活动</text>
 				</view>
 				<view class="page-section-spacing">
 					<!-- 轮播图 -->
-					<scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%">
+					<scroll-view class="scroll-view_H" scroll-x="true" bindscroll="scroll" style="width: 100%;display:{{hotListEmpty ? 'none' : 'block'}}">
 						<block wx:for="{{hotList}}" wx:for-index="hotidx">
 							<view id="demo1" class="scroll-view-item_H" catchtap="runDetail" data-activityId="{{item.activityId}}">
 								<view class="item">
-									<image mode="aspectFill" lazy-load="true" src="{{item.images}}"></image>
+									<image mode="aspectFill" lazy-load="true" src="{{item.imageArr[0]}}"></image>
 									<text>{{item.title}}</text>
 								</view>
 							</view>
@@ -241,7 +241,7 @@
 						<block wx:else>
 							<view class="state">
 								<image mode="aspectFill" lazy-load="true" src="/images/no_data.png"></image>
-								<text>没有数据....</text>
+								<!-- <text>没有数据....</text> -->
 							</view>
 						</block>
 

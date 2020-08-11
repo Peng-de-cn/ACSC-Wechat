@@ -17,7 +17,9 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
+    // 检查更新
+    utils.getUpdate();
     this.existHotSearch();
     this.getHotList();
   },
@@ -25,55 +27,55 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
   /**
    * 显示输入框
    */
-  showInput: function() {
+  showInput: function () {
     this.setData({
       inputShowed: true
     });
@@ -81,7 +83,7 @@ Page({
   /**
    * 隐藏输入框
    */
-  hideInput: function() {
+  hideInput: function () {
     this.setData({
       inputVal: "",
       inputShowed: false
@@ -90,7 +92,7 @@ Page({
   /**
    * 清除输入内容
    */
-  clearInput: function() {
+  clearInput: function () {
     this.setData({
       inputVal: ""
     });
@@ -98,7 +100,7 @@ Page({
   /**
    * 获取输入内容
    */
-  inputTyping: function(e) {
+  inputTyping: function (e) {
     this.setData({
       inputVal: e.detail.value
     });
@@ -106,12 +108,12 @@ Page({
   /**
    * 获取热词列表
    */
-  getHotList: function() {
+  getHotList: function () {
     var _this = this;
     var params = {
       isShowLoading: true,
       method: 'GET',
-      success: function(res) {
+      success: function (res) {
         if (res.data == null) {
           setTimeout(() => {
             wx.showToast({
@@ -126,7 +128,7 @@ Page({
           })
         }
       },
-      fail: function(res) {
+      fail: function (res) {
         console.log(res);
         setTimeout(() => {
           wx.showToast({
@@ -136,7 +138,7 @@ Page({
           })
         }, 0);
       },
-      complete: function(res) {}
+      complete: function (res) {}
     }
 
     wx.getNetworkType({
@@ -159,7 +161,7 @@ Page({
   /**
    * 检查是否存在历史搜索
    */
-  existHotSearch: function() {
+  existHotSearch: function () {
     var searchVal = wx.getStorageSync("searchVal");
     this.setData({
       searchVal: searchVal
@@ -168,7 +170,7 @@ Page({
   /**
    * 点击热门搜索或历史搜索
    */
-  runActivityList: utils.throttle(function(option) {
+  runActivityList: utils.throttle(function (option) {
     wx.navigateTo({
       url: '../../result-list/result-list?keyword=' + option.currentTarget.dataset.keyword,
     })
@@ -176,7 +178,7 @@ Page({
   /**
    * 搜索提交数据
    */
-  btnSearch: utils.throttle(function(e) {
+  btnSearch: utils.throttle(function (e) {
     let _this = this;
     let searchReasult = e.detail.value;
 
@@ -204,7 +206,7 @@ Page({
   /**
    * 清除历史记录
    */
-  clearHistory: utils.throttle(function() {
+  clearHistory: utils.throttle(function () {
     var _this = this;
     setTimeout(() => {
       wx.showModal({

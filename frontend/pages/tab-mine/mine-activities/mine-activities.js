@@ -16,6 +16,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 检查更新
+    utils.getUpdate();
     this.loadData();
   },
 
@@ -112,7 +114,9 @@ Page({
           })
         }, 0);
       },
-      complete: function (res) {}
+      complete: function (res) {
+        wx.hideLoading();
+      }
     }
 
     wx.getNetworkType({
@@ -161,11 +165,12 @@ Page({
           // })
           // _this.loadData();
         } else {
-          let appid = res.data.data.appid;
-          let nonceStr = res.data.data.nonceStr;
-          let mypackage = res.data.data.package;
-          let paySign = res.data.data.paySign;
-          let timeStamp = res.data.data.timeStamp;
+          console.log(res.data.data.params);
+          let appid = res.data.data.params.appid;
+          let nonceStr = res.data.data.params.nonceStr;
+          let mypackage = res.data.data.params.package;
+          let paySign = res.data.data.params.paySign;
+          let timeStamp = res.data.data.params.timeStamp;
 
           wx.requestPayment({
             timeStamp: timeStamp,
@@ -189,6 +194,7 @@ Page({
               }
             },
             fail(res) {
+              console.log(res);
               if (res.errMsg == "requestPayment:fail cancel") {
                 setTimeout(() => {
                   wx.showToast({
@@ -211,7 +217,9 @@ Page({
           })
         }, 0);
       },
-      complete: function (res) {}
+      complete: function (res) {
+        wx.hideLoading()
+      }
     }
 
     wx.getNetworkType({
@@ -250,6 +258,8 @@ Page({
             },
             success: function (res) {
               _this.setData({
+                showNoDate: false, // 是否显示数据为空,
+                pageMax: false, // 是否到最后一页
                 activityList: []
               })
               _this.loadData();
@@ -263,7 +273,9 @@ Page({
                 })
               }, 0);
             },
-            complete: function (res) {}
+            complete: function (res) {
+              wx.hideLoading();
+            }
           }
 
           wx.getNetworkType({
@@ -292,5 +304,75 @@ Page({
 
 
 
+  },
+  /**
+   * 取消订单(发起退款)
+   */
+  cancelOrder: function (e) {
+    let orderId = e.currentTarget.dataset.id;
+    var _this = this;
+    wx.showModal({
+      title: '取消订单',
+      content: '是否发起退款请求？',
+      success(res) {
+        if (res.confirm) {
+          var params = {
+            isShowLoading: true,
+            method: 'POST',
+            data: {
+              id: orderId,
+              userId: app.globalData.openid
+            },
+            success: function (res) {
+              console.log(res);
+              _this.setData({
+                showNoDate: false, // 是否显示数据为空,
+                pageMax: false, // 是否到最后一页
+                activityList: []
+              })
+              _this.loadData();
+            },
+            fail: function (res) {
+              setTimeout(() => {
+                wx.showToast({
+                  title: '数据绑定失败，请稍后再试…',
+                  icon: "none",
+                  duration: 3000
+                })
+              }, 0);
+            },
+            complete: function (res) {
+              wx.hideLoading();
+            }
+          }
+
+          wx.getNetworkType({
+            success(res) {
+              const networkType = res.networkType;
+              if (networkType == "none" || networkType == "unknown") {
+                setTimeout(() => {
+                  wx.showToast({
+                    title: '请检查网络连接…',
+                    icon: "none",
+                    duration: 3000
+                  })
+                }, 0);
+              } else {
+                utils.ajax(params, app.globalData.basicURL + '/activity/refund');
+              }
+            }
+          })
+
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+  runDetail: function (e) {
+    console.log(e.currentTarget.dataset.activityid);
+    wx.navigateTo({
+      url: '../../tab-index/activity-detail/activity-detail?activityid=' + e.currentTarget.dataset.activityid,
+    })
   }
 })

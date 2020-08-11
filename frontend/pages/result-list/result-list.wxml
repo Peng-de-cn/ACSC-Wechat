@@ -30,7 +30,7 @@
 						<block wx:else>
 							<view class="state">
 								<image mode="aspectFill" lazy-load="true" src="/images/no_data.png"></image>
-								<text>没有数据....</text>
+								<!-- <text>没有数据....</text> -->
 							</view>
 						</block>
 

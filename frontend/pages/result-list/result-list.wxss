@@ -133,7 +133,7 @@ Page {
 .list-item .price {
   font-size: 12px;
   font-weight: bold;
-  color: #5096f8;
+  color: #1788fa;
   text-align: right;
   margin-bottom: 10px;
 }
@@ -145,6 +145,7 @@ Page {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: rgb(240,240,240);
 }
 
 .activity-list .state text {

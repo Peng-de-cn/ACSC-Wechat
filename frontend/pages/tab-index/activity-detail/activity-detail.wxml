@@ -1,65 +1,66 @@
 <view class="container">
-  <!-- 轮播图 -->
-  <view class="activity-swiper">
-    <view class="page-section page-section-spacing swiper">
-      <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-        <block wx:for="{{swiperList}}" wx:key="*this">
-          <swiper-item>
-            <image modemode="aspectFill" lazy-load="true" src="{{item}}"></image>
-          </swiper-item>
-        </block>
-      </swiper>
-    </view>
-  </view>
-  <!-- 活动信息 -->
-  <view class="activity-info">
-    <view class="info-top">
-      <view class="info-title">{{activityDetail.title}}
-        <text class="surplus">(剩余 <text class="count">{{activityDetail.quota}}</text> 个名额)</text>
-      </view>
-      <view class="deadline">报名截止:
-        <text class="date">{{activityDetail.applyEnd}}</text> </view>
-    </view>
-    <view class="info-middle">
-      <text>组织方: {{activityDetail.club.clubName}}</text>
-    </view>
-    <view class="bottom-list">
-      <view class="list-item">
-        <image src="/images/time.png"></image>
-        <text>活动时间: </text>
-        <text>{{activityDetail.beginTime}} - {{activityDetail.endTime}}</text>
-      </view>
-      <view class="list-item">
-        <image src="/images/location.png"></image>
-        <text>活动地点: </text>
-        <text>{{activityDetail.address}}</text>
-      </view>
-      <view class="list-item">
-        <image src="/images/tel.png"></image>
-        <text>报名资讯: </text>
-        <block wx:for="{{activityDetail.mobileArr}}">
-          <text class="tel" catchtap="callPhone" data-phone="{{item}}">{{item}}</text>
-        </block>
-      </view>
-      <view class="list-item">
-        <image src="/images/_refund.png"></image>
-        <text>退款信息: </text>
-        <text class="state">{{activityDetail.refundInfo}}</text>
-      </view>
-    </view>
-    <view class="options">
-      <block wx:for="{{options}}">
-        <view class="option {{currentOption==item.packageId?'active':''}}" catchtap="chooseOption" data-optionId="{{item.packageId}}">
-          <view class="left">
-            {{item.title}}
-          </view>
-          <view class="right">
-            <!-- <text class="original">¥ 12999</text> -->
-            <text class="present">¥ {{item.price}}</text>
-          </view>
-        </view>
-      </block>
-      <!-- <view class="option active">
+	<!-- 轮播图 -->
+	<view class="activity-swiper">
+		<view class="page-section page-section-spacing swiper">
+			<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+				<block wx:for="{{swiperList}}" wx:key="*this">
+					<swiper-item>
+						<image modemode="aspectFill" lazy-load="true" src="{{item}}"></image>
+					</swiper-item>
+				</block>
+			</swiper>
+		</view>
+	</view>
+	<!-- 活动信息 -->
+	<view class="activity-info">
+		<view class="info-top">
+			<view class="info-title">{{activityDetail.title}}
+				<text class="surplus">(剩余 <text class="count">{{activityDetail.quota}}</text> 个名额)</text>
+			</view>
+			<view class="deadline">报名截止:
+				<text class="date">{{activityDetail.applyEnd}}</text> </view>
+		</view>
+		<view class="info-middle">
+			<text>组织方: {{activityDetail.club.clubName}}</text>
+		</view>
+		<view class="bottom-list">
+			<view class="list-item">
+				<image src="/images/time.png"></image>
+				<text>活动时间: </text>
+				<text>{{activityDetail.beginTime}} - {{activityDetail.endTime}}</text>
+			</view>
+			<view class="list-item">
+				<image src="/images/location.png"></image>
+				<text>活动地点: </text>
+				<text>{{activityDetail.address}}</text>
+			</view>
+			<view class="list-item">
+				<image src="/images/tel.png"></image>
+				<text>报名咨询: </text>
+				<block wx:for="{{activityDetail.mobileArr}}">
+					<text class="tel" catchtap="callPhone" data-phone="{{item}}">{{item}}</text>
+				</block>
+			</view>
+			<view class="list-item">
+				<image src="/images/_refund.png"></image>
+				<text>退款信息: </text>
+				<text class="state">{{activityDetail.refundInfo}}</text>
+			</view>
+		</view>
+		<view class="options">
+			<block wx:for="{{options}}">
+				<view class="option {{currentOption==item.packageId?'active':''}}" catchtap="chooseOption" data-optionId="{{item.packageId}}" data-priceCNY="{{item.priceCNY}}" data-priceEUR="{{item.priceEUR}}">
+					<view class="left">
+						{{item.title}}
+					</view>
+					<view class="right">
+						<!-- <text class="original">¥ 12999</text> -->
+						<text class="present">¥ {{item.priceCNY}}</text>
+						<text wx:if="{{item.priceEUR !=''}}" class="present">€ {{item.priceEUR}}</text>
+					</view>
+				</view>
+			</block>
+			<!-- <view class="option active">
         <view class="left">
           机票+酒店+交通+雪票+早晚餐+温泉
         </view>
@@ -95,29 +96,30 @@
           <text class="present">¥ 290</text>
         </view>
       </view> -->
-    </view>
+		</view>
 
-    <!-- 详情页 -->
-    <view wx:if="{{activityDetail.detailsUrl != null}}" class="detail" style="text-align:center;" catchtap="runWebview" data-detail="{{activityDetail.detailsUrl}}">
-      →→→→→ 点击了解更多 →→→→→
-    </view>
-    <view wx:if="{{activityDetail.detailsUrl != null}}" class="more">
-      <image mode="widthFix" src="{{activityDetail.details}}"></image>
-    </view>
-  </view>
+		<!-- 详情页 -->
+		<view wx:if="{{activityDetail.detailsUrl != ''}}" class="detail" style="text-align:center;" catchtap="runWebview" data-detail="{{activityDetail.detailsUrl}}">
+			→→→→→ 点击了解更多 →→→→→
+		</view>
+		<view wx:if="{{activityDetail.details != ''}}" class="more">
+			<image mode="widthFix" src="{{activityDetail.details}}"></image>
+		</view>
+	</view>
 
-  <!-- 收藏&预订 -->
-  <view class="operation">
-    <view class="collection" catchtap="collection" data-activityId="{{activityDetail.activityId}}">
-      <block wx:if="{{collection}}" >
-        <image src="/images/collection_full.png"></image>
-        <text>已收藏</text>
-      </block>
-      <block wx:else>
-        <image src="/images/collection.png"></image>
-        <text>收藏</text>
-      </block>
-    </view>
-    <view class="sign-up" catchtap="checkExistence" data-activityId="{{activityDetail.activityId}}">立即报名</view>
-  </view>
+	<!-- 收藏&预订 -->
+	<view class="operation">
+		<view class="collection" catchtap="collection" data-activityId="{{activityDetail.activityId}}">
+			<block wx:if="{{collection}}">
+				<image src="/images/collection_full.png"></image>
+				<text>已收藏</text>
+			</block>
+			<block wx:else>
+				<image src="/images/collection.png"></image>
+				<text>收藏</text>
+			</block>
+		</view>
+		<view wx:if="{{showBookBtn}}" class="sign-up" catchtap="checkExistence" data-activityId="{{activityDetail.activityId}}">立即报名</view>
+		<view wx:else class="sign-up" catchtap="runActivity" style="background-color:rgb(0,206,235);">已报名</view>
+	</view>
 </view>

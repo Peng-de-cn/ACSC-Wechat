@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentTabIndex:0,
+    currentTabIndex: 0,
     tagList: []
   },
 
@@ -15,8 +15,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 检查更新
+    utils.getUpdate();
     this.setData({
-      currentTabIndex:options.currentindex
+      currentTabIndex: options.currentindex,
+      currenttabid: options.currenttabid
     })
     this.getTagList(options.currenttabid);
   },
@@ -119,7 +122,7 @@ Page({
             })
           }, 0);
         } else {
-          utils.ajax(params, app.globalData.basicURL + '/activity/getLabels?categoryId='+currenttabid);
+          utils.ajax(params, app.globalData.basicURL + '/activity/getLabels?categoryId=' + currenttabid);
         }
       }
     })
@@ -129,7 +132,7 @@ Page({
    */
   runResult: function (e) {
     wx.reLaunch({
-      url: '../activity-list/activity-list?labelid='+ e.currentTarget.dataset.labelid + '&labelname=' + e.currentTarget.dataset.labelname+'&currenttabindex='+ e.currentTarget.dataset.currenttabindex,
+      url: '../activity-list/activity-list?labelid=' + e.currentTarget.dataset.labelid + '&labelname=' + e.currentTarget.dataset.labelname + '&currenttabindex=' + e.currentTarget.dataset.currenttabindex + '&currenttabid=' + this.data.currenttabid,
     })
   }
 })

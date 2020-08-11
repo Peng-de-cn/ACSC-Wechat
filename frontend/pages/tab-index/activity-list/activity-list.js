@@ -11,15 +11,17 @@ Page({
     pageMax: false, // 是否到最后一页
     activityList: [], // 活动列表
     page: 1, //当前页码，0：页码1
-    limit: 2, // 每页显示条数
+    limit: 8, // 每页显示条数
     orderby: 'begin_time', //排序方式, begin_time:开始时间;create_time:发布时间
+    sort: 'begin_time',
     tabList: [],
     hotList: [],
     currentIndex: 0,
     currentTabId: '',
     currentTabName: '', // 当前选中Tab名
     tagName: '全部', // 左上角显示标签名
-    labelId: ''
+    labelId: '',
+    hotListEmpty: false // 热门活动列表是否为空
   },
 
   /**
@@ -27,6 +29,8 @@ Page({
    */
   onLoad: function (options) {
     console.log(options);
+    // 检查更新
+    utils.getUpdate();
     let _this = this;
     // 热门活动
     this.getHotActivity();
@@ -37,7 +41,9 @@ Page({
         _this.setData({
           tagName: options.labelname,
           currentIndex: options.currenttabindex,
-          labelId: options.labelid
+          labelId: options.labelid,
+          currentTabId: options.currenttabid,
+          currentTabName: _this.data.tabList[options.currenttabindex].categoryName,
         })
         // let currentTabId = _this.data.tabList[options.currenttabindex].categoryId
         // _this.getListByTag(options.labelid, options.labelname, currentTabId);
@@ -274,19 +280,30 @@ Page({
       isShowLoading: true,
       method: 'GET',
       success: function (res) {
-        // 没有请求到新的数据  &&  问题列表里面也没有数据，此时显示 暂无数据
-        if (res.data.data.activitys.length == 0 && _this.data.hotList.length == 0) {
-          _this.setData({
-            hotList: []
-          })
+        if (res.data.data == null) {
+          setTimeout(() => {
+            wx.showToast({
+              title: '查询数据库活动出错,请稍后再试...',
+              icon: "none",
+              duration: 3000
+            })
+          }, 0);
         } else {
-          let newData = [];
-          for (let i = 0; i < res.data.data.activitys.length; i++) {
-            newData.push(res.data.data.activitys[i]);
+          // 没有请求到新的数据  &&  问题列表里面也没有数据，此时显示 暂无数据
+          if (res.data.data.activitys.length == 0 && _this.data.hotList.length == 0) {
+            _this.setData({
+              hotList: [],
+              hotListEmpty: true
+            })
+          } else {
+            let newData = [];
+            for (let i = 0; i < res.data.data.activitys.length; i++) {
+              newData.push(res.data.data.activitys[i]);
+            }
+            _this.setData({
+              hotList: newData
+            })
           }
-          _this.setData({
-            hotList: newData
-          })
         }
       },
       fail: function (res) {
@@ -332,7 +349,7 @@ Page({
   runDetail: utils.throttle(function (e) {
     console.log(e.currentTarget.dataset);
     wx.navigateTo({
-      url: '../activity-detail/activity-detail?activityid=' + e.currentTarget.dataset.activityid,
+      url: '../activity-detail/activity-detail?activityid=' + e.currentTarget.dataset.activityid + '&currenttabName=' + this.data.currentTabName,
     })
   }),
   /**
@@ -344,28 +361,38 @@ Page({
       isShowLoading: true,
       method: 'GET',
       success: function (res) {
-        // 没有请求到新的数据  &&  问题列表里面也没有数据，此时显示 暂无数据
-        if (res.data.data.activities.length == 0 && _this.data.activityList.length == 0) {
-          console.log("没有数据");
-          _this.setData({
-            activityList: [],
-            showNoDate: !_this.data.showNoDate
-          })
-        }
-        // 没有请求到新的数据  &&  问题列表里面有数据，此时显示 加载到底
-        else if (res.data.data.activities.length == 0 && _this.data.activityList.length != 0) {
-          _this.setData({
-            pageMax: true
-          })
+        if (res.data.data == null) {
+          setTimeout(() => {
+            wx.showToast({
+              title: '查询数据库活动出错,请稍后再试...',
+              icon: "none",
+              duration: 3000
+            })
+          }, 0);
         } else {
-          let newData = _this.data.activityList;
-          for (let i = 0; i < res.data.data.activities.length; i++) {
-            newData.push(res.data.data.activities[i]);
+          // 没有请求到新的数据  &&  问题列表里面也没有数据，此时显示 暂无数据
+          if (res.data.data.activities.length == 0 && _this.data.activityList.length == 0) {
+            console.log("没有数据");
+            _this.setData({
+              activityList: [],
+              showNoDate: !_this.data.showNoDate
+            })
           }
-          _this.setData({
-            activityList: newData,
-            showNoDate: false
-          })
+          // 没有请求到新的数据  &&  问题列表里面有数据，此时显示 加载到底
+          else if (res.data.data.activities.length == 0 && _this.data.activityList.length != 0) {
+            _this.setData({
+              pageMax: true
+            })
+          } else {
+            let newData = _this.data.activityList;
+            for (let i = 0; i < res.data.data.activities.length; i++) {
+              newData.push(res.data.data.activities[i]);
+            }
+            _this.setData({
+              activityList: newData,
+              showNoDate: false
+            })
+          }
         }
       },
       fail: function (res) {
@@ -393,7 +420,8 @@ Page({
             })
           }, 0);
         } else {
-          utils.ajax(params, app.globalData.basicURL + '/activity/getActivityList?orderby=' + _this.data.orderby + '&page=' + _this.data.page + '&limit=' + _this.data.limit + '&categoryId=' + _this.data.currentTabId + "&labelId=" + _this.data.labelId);
+          utils.ajax(params, app.globalData.basicURL + '/activity/getActivityList?sort=' +
+            _this.data.sort + '&orderby=' + _this.data.orderby + '&page=' + _this.data.page + '&limit=' + _this.data.limit + '&categoryId=' + _this.data.currentTabId + "&labelId=" + _this.data.labelId);
         }
       }
     })
@@ -409,24 +437,24 @@ Page({
     })
   }),
   //swiper切换时会调用
-  pagechange: function (e) {
-    var idx = e.detail.current;
-    var tagName = this.data.tagName;
-    // 滑动切换 
-    if (e.detail.source == 'touch') {
-      this.setData({
-        currentIndex: e.detail.current,
-        currentTabId: this.data.tabList[idx].categoryId,
-        currentTabName: this.data.tabList[idx].categoryName,
-        page: 1,
-        pageMax: false,
-        activityList: [],
-        tagName:'全部',
-        labelId:''
-      })
-    }
-    this.loadData();
-  },
+  // pagechange: function (e) {
+  //   var idx = e.detail.current;
+  //   var tagName = this.data.tagName;
+  //   // 滑动切换 
+  //   if (e.detail.source == 'touch') {
+  //     this.setData({
+  //       currentIndex: e.detail.current,
+  //       currentTabId: this.data.tabList[idx].categoryId,
+  //       currentTabName: this.data.tabList[idx].categoryName,
+  //       page: 1,
+  //       pageMax: false,
+  //       activityList: [],
+  //       tagName:'全部',
+  //       labelId:''
+  //     })
+  //   }
+  //   this.loadData();
+  // },
   //用户点击tab时调用
   titleClick: function (e) {
     let currentPageIndex;
@@ -437,9 +465,11 @@ Page({
       currentTabName: this.data.tabList[e.currentTarget.dataset.idx].categoryName,
       page: 1,
       pageMax: false,
-      activityList: []
+      activityList: [],
+      tagName: '全部',
+      labelId: ''
     })
-    // this.loadData();
+    this.loadData();
   },
   /**
    * 根据标签获取产品列表 
@@ -505,5 +535,8 @@ Page({
         }
       }
     })
+  },
+  stopTouchMove: function () {
+    return false;
   }
 })

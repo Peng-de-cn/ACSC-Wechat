@@ -2,18 +2,18 @@
 <view class="tab-bar">
 	<view class="tab-bar-border"></view>
 	<block wx:for="{{list}}" wx:key="index">
-		<view wx:if="{{index!=2}}" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+		<view wx:if="{{index!=1}}" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
 			<image src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image>
 			<view style="color: {{selected === index ? selectedColor : color}}">{{item.text}}</view>
 		</view>
 
-		<view wx:else class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{2}}" bindtap="switchTab" style="position:relative;top:-10px;">
+		<view wx:else class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{1}}" bindtap="switchTab" style="position:relative;top:-10px;background:transparent;">
 			<view class="middle-bg">
-				<view class="middle-img" style="background:{{selected === 2 ? '#5096f8' : '#000'}}">
-					<image src="{{selected === 2 ? item.selectedIconPath : item.iconPath}}"></image>
+				<view class="middle-img" style="background:{{selected === 1 ? '#1788fa' : '#636465'}}">
+					<image src="{{selected === 1 ? item.selectedIconPath : item.iconPath}}"></image>
 				</view>
 			</view>
-			<view style="color: {{selected === 2 ? selectedColor : color}}">{{item.text}}</view>
+			<view style="color: {{selected === 1 ? selectedColor : color}}">{{item.text}}</view>
 		</view>
 	</block>
 </view>

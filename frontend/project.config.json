@@ -6,21 +6,29 @@
 	"setting": {
 		"urlCheck": true,
 		"es6": true,
+		"enhance": false,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
+		"nodeModules": false,
 		"autoAudits": false,
 		"showShadowRootInWxmlPanel": true,
 		"scopeDataCheck": false,
+		"uglifyFileName": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
 		"babelSetting": {
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"useIsolateContext": true,
+		"useCompilerModule": true,
+		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.10.1",
@@ -57,9 +65,9 @@
 			"current": -1,
 			"list": [
 				{
-					"id": 0,
-					"name": "pages/tab-shopping-mall/tab-shopping-mall",
-					"pathName": "pages/tab-shopping-mall/tab-shopping-mall",
+					"id": -1,
+					"name": "pages/tab-mine/mine-personal/mine-personal",
+					"pathName": "pages/tab-mine/mine-personal/mine-personal",
 					"query": "",
 					"scene": null
 				}

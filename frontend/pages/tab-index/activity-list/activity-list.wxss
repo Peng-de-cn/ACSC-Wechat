@@ -9,6 +9,8 @@ Page {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  padding-bottom: 110rpx;
+  box-sizing: border-box;
 }
 
 .container .top {
@@ -119,7 +121,7 @@ Page {
   flex: 1;
   height: 100%;
   margin-top: 45rpx;
-  padding-bottom: 140rpx;
+  /* padding-bottom: 140rpx; */
 }
 
 .swiper .sub-title {
@@ -138,6 +140,10 @@ Page {
 .swiper .page-section-spacing {
   height: 100%;
   min-height: 100%;
+}
+scroo-view {
+  padding-bottom: 80rpx;
+  box-sizing: border-box;
 }
 
 /* Tab结束 */
@@ -203,7 +209,7 @@ Page {
 
 .no-border {
   border: none;
-  padding-bottom: 40rpx;
+  padding-bottom: 60rpx;
 }
 
 .list-item .picture {
@@ -231,6 +237,11 @@ Page {
 
 .list-item .infos .location {
   margin-right: 12rpx;
+  flex: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
 }
 
 .list-item .infos image {
@@ -244,10 +255,18 @@ Page {
   color: #999;
 }
 
+.list-item .infos .date {
+  flex: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+}
+
 .list-item .price {
   font-size: 12px;
   font-weight: bold;
-  color: #5096f8;
+  color: #1788fa;
   text-align: right;
   margin-bottom: 10px;
 }
@@ -259,6 +278,7 @@ Page {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: rgb(240,240,240);
 }
 
 .activity-list .state text {

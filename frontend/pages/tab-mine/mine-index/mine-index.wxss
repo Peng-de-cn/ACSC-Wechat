@@ -10,18 +10,18 @@ page {
 }
 
 .topBG {
-  background-color: #1887f9;
-  height: 250rpx;
+  /* background-color: #1887f9; */
+  height: 300rpx;
   position: relative;
   width: 100%;
-  background-image: url('https://i.loli.net/2019/12/31/7mKNsCgWLVqaObZ.jpg');
+  /* background-image: url('https://i.loli.net/2020/07/31/iQCRVKvHwtU4dEL.jpg'); */
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100%;
   display: flex;
 }
 
 .topBG .left {
-  margin-top: 40rpx;
+  margin-top: 116rpx;
   margin-left: 70rpx;
 }
 
@@ -47,7 +47,7 @@ page {
 }
 
 .topBG .right {
-  margin-top: 76rpx;
+  margin-top: 140rpx;
   margin-left: 50rpx;
 }
 
@@ -115,7 +115,8 @@ page {
   width: 550rpx;
 }
 
-.cell-text button, .cell-text button::after {
+.cell-text button,
+.cell-text button::after {
   background: none !important;
   border: none !important;
   text-align: left !important;
@@ -138,7 +139,8 @@ page {
   margin-left: 12rpx;
 }
 
-button::after, button {
+button::after,
+button {
   border: none;
   background: none;
 }

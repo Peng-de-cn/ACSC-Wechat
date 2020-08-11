@@ -1,4 +1,5 @@
 // pages/tab-mine/mine-join/mine-join.js
+var utils = require("../../../utils/util.js");
 Page({
 
   /**
@@ -12,7 +13,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // 检查更新
+    utils.getUpdate();
   },
 
   /**

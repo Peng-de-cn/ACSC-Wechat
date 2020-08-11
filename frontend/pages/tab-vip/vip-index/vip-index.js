@@ -9,13 +9,20 @@ Page({
    */
   data: {
     vipList: [],
-    personalInfo: []
+    personalInfo: [],
+    defaultLevel: 'normal',
+    defaultId: 1,
+    normal: true,
+    vipNum: '',
+    isInit: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // 检查更新
+    utils.getUpdate();
     // 查询用户信息
     this.checkExistence();
 
@@ -37,7 +44,7 @@ Page({
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
-        selected: 2
+        selected: 1
       })
     }
   },
@@ -93,12 +100,17 @@ Page({
               duration: 3000
             })
           }, 0);
-          wx.reLaunch({
-            url: '../../tab-mine/mine-personal/mine-personal',
+          wx.navigateTo({
+            url: '../../tab-mine/mine-personal/mine-personal?returnVip=returnVip',
           })
         } else {
+          let vipNum = res.data.data.vipNum ? res.data.data.vipNum : '';
+          vipNum = vipNum.replace(/\s/g, '').replace(/(.{4})/g, "$1 ");
+
           _this.setData({
-            personalInfo: res.data.data
+            isInit: true,
+            personalInfo: res.data.data,
+            vipNum: vipNum
           })
         }
       },
@@ -147,11 +159,14 @@ Page({
           })
         } else {
           let newData = [];
+          let vipId = res.data.data.vips[0].vipId;
+          console.log(vipId);
           for (let i = 0; i < res.data.data.vips.length; i++) {
             newData.push(res.data.data.vips[i]);
           }
           _this.setData({
-            vipList: newData
+            vipList: newData,
+            defaultId: vipId
           })
         }
       },
@@ -188,16 +203,31 @@ Page({
    * 成为会员
    */
   regeisterVIP: function (e) {
-    wx.navigateTo({
-      url: '../vip-form/vip-form?level=' + e.currentTarget.dataset.level + "&vipid=" + e.currentTarget.dataset.id,
-    })
+    console.log(this.data.personalInfo.length == 0);;
+    console.log(this.data.vipNum == '');
+    if (this.data.personalInfo.length == 0 && this.data.vipNum == '') {
+      setTimeout(() => {
+        wx.showToast({
+          title: '请填写个人资料…',
+          icon: "none",
+          duration: 3000
+        })
+      }, 0);
+      wx.navigateTo({
+        url: '../../tab-mine/mine-personal/mine-personal?returnVip=returnVip',
+      })
+    } else {
+      wx.navigateTo({
+        url: '../vip-form/vip-form?level=' + this.data.defaultLevel + "&vipid=" + this.data.defaultId,
+      })
+    }
   },
   /**
    * 修改资料
    */
   updateInfo: function () {
     wx.navigateTo({
-      url: '../../tab-mine/mine-personal/mine-personal',
+      url: '../../tab-mine/mine-personal/mine-personal?returnVip=returnVip',
     })
   },
   /**
@@ -232,11 +262,6 @@ Page({
                     duration: 3000
                   })
                 }, 0);
-                _this.setData({
-                  personalInfo: []
-                })
-                // 查询用户信息
-                _this.checkExistence();
               }
             },
             fail(res) {
@@ -249,6 +274,13 @@ Page({
                   })
                 }, 0);
               }
+            },
+            complete(res) {
+              _this.setData({
+                personalInfo: []
+              })
+              // 查询用户信息
+              _this.checkExistence();
             }
           })
         }
@@ -277,7 +309,7 @@ Page({
             })
           }, 0);
         } else {
-          utils.ajax(params, app.globalData.basicURL + '/user/vipRenewal?userId=' + app.globalData.openid );
+          utils.ajax(params, app.globalData.basicURL + '/user/vipRenewal?userId=' + app.globalData.openid);
         }
       }
     })
@@ -314,11 +346,6 @@ Page({
                     duration: 3000
                   })
                 }, 0);
-                _this.setData({
-                  personalInfo: []
-                })
-                // 查询用户信息
-                _this.checkExistence();
               }
             },
             fail(res) {
@@ -331,6 +358,13 @@ Page({
                   })
                 }, 0);
               }
+            },
+            complete(res) {
+              _this.setData({
+                personalInfo: []
+              })
+              // 查询用户信息
+              _this.checkExistence();
             }
           })
         }
@@ -363,5 +397,28 @@ Page({
         }
       }
     })
+  },
+  /**
+   * 切换普通会员和年费会员
+   */
+  switchVip: function (e) {
+    console.log(e.detail.value);
+    let id = e.detail.value;
+    let _this = this;
+
+    if (id == 1) {
+      _this.setData({
+        defaultLevel: 'normal',
+        defaultId: id,
+        normal: true
+      })
+    } else if (id == 2) {
+      _this.setData({
+        defaultLevel: 'senior',
+        defaultId: id,
+        normal: false
+      })
+    }
+
   }
 })

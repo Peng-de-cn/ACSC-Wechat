@@ -8,11 +8,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    personalInfo: [],
-    submitText: '保存信息',
-    clubIdx: 0,
-    clubArr: [],
-    isMember: false
+    personalInfo: [], // 个人信息
+    submitText: '保存信息', // 底部按钮文字
+    clubIdx: 0, // 初始俱乐部ID
+    clubArr: [], // 俱乐部列表
+    countryArr: [], // 国家代码列表
+    countryIdx: 0,
+    countryId: 1,
+    isMember: false,
+    gender: true // 默认性别：男
   },
 
   /**
@@ -21,16 +25,31 @@ Page({
   onLoad: function (options) {
     // 检查更新
     utils.getUpdate();
+    console.log(options.returnVip);
+    if (options.returnVip != undefined) {
+      this.setData({
+        returnVip: true
+      })
+    }
+    // 检查更新
+    utils.getUpdate();
 
     // 获取俱乐部列表
-    this.getClubList().then(this.checkExistence())
+    // this.getClubList().then(this.getCountryList().then(this.checkExistence()))
+    // this.getClubList().then(this.getCountryList());
+    this.setData({
+      clubArr: wx.getStorageSync('clubArr'),
+      clubId: wx.getStorageSync('clubArr')[0].clubId,
+      countryArr: wx.getStorageSync('countryArr'),
+      countryId: wx.getStorageSync('countryArr')[0].Id
+    })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.checkExistence();
   },
 
   /**
@@ -75,56 +94,6 @@ Page({
     wx.hideShareMenu();
   },
   /**
-   * 获取俱乐部列表
-   */
-  getClubList: function () {
-    var _this = this;
-    return new Promise((resolve, reject) => {
-      var params = {
-        isShowLoading: true,
-        method: 'GET',
-        success: function (res) {
-          console.log(res);
-          _this.setData({
-            clubArr: res.data.data,
-            clubId: res.data.data[0].clubId
-          })
-          resolve();
-        },
-        fail: function (res) {
-          setTimeout(() => {
-            wx.showToast({
-              title: '数据提交失败，请稍后再试…',
-              icon: "none",
-              duration: 3000
-            })
-          }, 0);
-          reject();
-        },
-        complete: function (res) {}
-      }
-
-      wx.getNetworkType({
-        success(res) {
-          const networkType = res.networkType;
-          if (networkType == "none" || networkType == "unknown") {
-            setTimeout(() => {
-              wx.showToast({
-                title: '请检查网络连接…',
-                icon: "none",
-                duration: 3000
-              })
-            }, 0);
-          } else {
-            utils.ajax(params, app.globalData.basicURL + '/club/getlist?page=1&limit=99');
-          }
-        }
-      })
-    })
-
-
-  },
-  /**
    * 切换俱乐部
    */
   bindClubChange: function (e) {
@@ -134,34 +103,66 @@ Page({
     });
   },
   /**
+   * 切换国家
+   */
+  bindCountryChange: function (e) {
+    console.log(e.detail.value);
+    console.log("id：" + this.data.countryArr[e.detail.value].id);
+    this.setData({
+      countryIdx: e.detail.value,
+      countryId: this.data.countryArr[e.detail.value].id
+    });
+  },
+  /**
    * 检查用户是否填写过信息
    */
   checkExistence: function () {
     var _this = this;
     var clubIdx = 0;
+    var countryIdx = 0;
     var params = {
       isShowLoading: true,
       method: 'GET',
       success: function (res) {
         console.log(res);
+        // 此用户非会员 且 未填写信息
         if (res.data.data == null) {
           _this.setData({
             isMember: false
           })
-        } else if(res.data.data.vip == null){
+          // 非会员 且 已经填写信息
+        } else if (res.data.data.vip == null) {
+
+          var countryId = res.data.data.area.id;
+          for (var i = 0; i < _this.data.countryArr.length; i++) {
+            if (_this.data.countryArr[i].id == countryId) {
+              countryIdx = i;
+            }
+          }
           _this.setData({
             personalInfo: res.data.data,
             submitText: '更新信息',
             isMember: false,
             date: res.data.data.birthday,
+            gender: res.data.data.gender == 0 ? false : true,
             clubId: res.data.data.club != null ? res.data.data.club.clubId : null,
-            clubIdx: clubIdx
+            clubIdx: clubIdx,
+            countryId: res.data.data.area.id,
+            countryIdx: countryIdx
           })
-        }else {
+          // 已经成为会员
+        } else {
           var clubId = res.data.data.club != null ? res.data.data.club.clubId : null;
           for (var i = 0; i < _this.data.clubArr.length; i++) {
             if (_this.data.clubArr[i].clubId == clubId) {
               clubIdx = i;
+            }
+          }
+
+          var countryId = res.data.data.area.id;
+          for (var i = 0; i < _this.data.countryArr.length; i++) {
+            if (_this.data.countryArr[i].id == countryId) {
+              countryIdx = i;
             }
           }
 
@@ -171,7 +172,9 @@ Page({
             isMember: true,
             date: res.data.data.birthday,
             clubId: res.data.data.club != null ? res.data.data.club.clubId : null,
-            clubIdx: clubIdx
+            clubIdx: clubIdx,
+            countryId: res.data.data.area.id,
+            countryIdx: countryIdx
           })
         }
       },
@@ -213,6 +216,17 @@ Page({
     })
   },
   /**
+   * 切换性别
+   */
+  changeGender: function (e) {
+    console.log(e.detail.value);
+    if (e.detail.value == 0) {
+      this.setData({
+        gender: false
+      });
+    }
+  },
+  /**
    * 提交数据
    */
   formSubmit: utils.throttle(function (e) {
@@ -239,6 +253,8 @@ Page({
       warn = "请选择生日";
     } else if (infoData.custom_email == '') {
       warn = "请输入邮箱";
+    } else if (infoData.custom_email.indexOf("@") < 0 || infoData.custom_email.trim().indexOf(" ") > 0) {
+      warn = "请检查邮箱格式";
     } else if (infoData.custom_country == '') {
       warn = "请输入国家";
     } else if (infoData.custom_city == '') {
@@ -257,10 +273,12 @@ Page({
           method: 'POST',
           data: {
             userId: app.globalData.openid,
-            firstName: infoData.custom_surname,
-            lastName: infoData.custom_lastName,
+            firstName: infoData.custom_lastName,
+            lastName: infoData.custom_surname,
             name: infoData.custom_name,
+            gender: infoData.gender == true ? 1 : 0,
             wechatNum: infoData.custom_wechat,
+            areaCode: _this.data.countryArr[infoData.country_code].id,
             mobile: infoData.custom_phone,
             email: infoData.custom_email,
             country: infoData.custom_country,
@@ -277,9 +295,15 @@ Page({
                 duration: 3000
               })
             }, 0);
-            wx.reLaunch({
-              url: '../mine-index/mine-index',
-            })
+            if (_this.data.returnVip != true) {
+              wx.reLaunch({
+                url: '../mine-index/mine-index',
+              })
+            } else {
+              wx.reLaunch({
+                url: '../../tab-vip/vip-index/vip-index',
+              })
+            }
           },
           fail: function (res) {
             setTimeout(() => {
@@ -316,10 +340,12 @@ Page({
             method: 'POST',
             data: {
               userId: app.globalData.openid,
-              firstName: infoData.custom_surname,
-              lastName: infoData.custom_lastName,
+              firstName: infoData.custom_lastName,
+              lastName: infoData.custom_surname,
               name: infoData.custom_name,
+              gender: infoData.gender == true ? 1 : 0,
               wechatNum: infoData.custom_wechat,
+              areaCode: _this.data.countryArr[infoData.country_code].id,
               mobile: infoData.custom_phone,
               birthday: infoData.birthday,
               clubId: _this.data.clubId,
@@ -338,9 +364,16 @@ Page({
                   duration: 3000
                 })
               }, 0);
-              wx.reLaunch({
-                url: '../mine-index/mine-index',
-              })
+              if (_this.data.returnVip != true) {
+                wx.reLaunch({
+                  url: '../mine-index/mine-index',
+                })
+              } else {
+                wx.reLaunch({
+                  url: '../../tab-vip/vip-index/vip-index',
+                })
+              }
+
             },
             fail: function (res) {
               setTimeout(() => {
@@ -376,10 +409,12 @@ Page({
             method: 'POST',
             data: {
               userId: app.globalData.openid,
-              firstName: infoData.custom_surname,
-              lastName: infoData.custom_lastName,
+              firstName: infoData.custom_lastName,
+              lastName: infoData.custom_surname,
               name: infoData.custom_name,
               wechatNum: infoData.custom_wechat,
+              gender: infoData.gender == true ? 1 : 0,
+              areaCode: _this.data.countryArr[infoData.country_code].id,
               mobile: infoData.custom_phone,
               email: infoData.custom_email,
               country: infoData.custom_country,

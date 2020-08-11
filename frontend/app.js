@@ -1,10 +1,13 @@
 //app.js
+var utils = require("utils/util.js");
 App({
   data: {
 
   },
-  onLaunch: function() {
+  onLaunch: function () {
     let _this = this;
+    _this.getClubList();
+    _this.getCountryList();
     // 登录
     wx.login({
       success: res => {
@@ -12,13 +15,13 @@ App({
         wx.request({
           url: 'https://api.acsclub.net/weixinLogin/login?jscode=' + res.code,
           // url: 'http://baizhisys.ngrok.yangz.info:10010/weixinLogin/login?jscode=' + res.code,
-          success: function(res) {
+          success: function (res) {
             _this.globalData.openid = JSON.parse(res.data.data).openid
           },
-          fail: function(err) {
+          fail: function (err) {
             console.log(err);
           },
-          complete: function(res) {}
+          complete: function (res) {}
         })
       }
     })
@@ -42,6 +45,105 @@ App({
     //     }
     //   }
     // })
+  },
+  /**
+   * 获取俱乐部列表
+   */
+  getClubList: function () {
+    var _this = this;
+    return new Promise((resolve, reject) => {
+      var params = {
+        isShowLoading: true,
+        method: 'GET',
+        success: function (res) {
+          wx.setStorageSync('clubArr', res.data.data);
+          // _this.setData({
+          //   clubArr: res.data.data,
+          //   clubId: res.data.data[0].clubId
+          // })
+          resolve();
+        },
+        fail: function (res) {
+          setTimeout(() => {
+            wx.showToast({
+              title: '数据提交失败，请稍后再试…',
+              icon: "none",
+              duration: 3000
+            })
+          }, 0);
+          reject();
+        },
+        complete: function (res) {}
+      }
+
+      wx.getNetworkType({
+        success(res) {
+          const networkType = res.networkType;
+          if (networkType == "none" || networkType == "unknown") {
+            setTimeout(() => {
+              wx.showToast({
+                title: '请检查网络连接…',
+                icon: "none",
+                duration: 3000
+              })
+            }, 0);
+          } else {
+            utils.ajax(params, getApp().globalData.basicURL + '/club/getlist?page=1&limit=99');
+          }
+        }
+      })
+    })
+
+
+  },
+  /**
+   * 获取国家列表
+   */
+  getCountryList: function () {
+    var _this = this;
+    return new Promise((resolve, reject) => {
+      var params = {
+        isShowLoading: true,
+        method: 'GET',
+        success: function (res) {
+          console.log(res);
+          wx.setStorageSync('countryArr', res.data.data)
+          // _this.setData({
+          //   countryArr: res.data.data,
+          //   countryId: res.data.data[0].Id
+          // })
+          resolve();
+        },
+        fail: function (res) {
+          setTimeout(() => {
+            wx.showToast({
+              title: '数据提交失败，请稍后再试…',
+              icon: "none",
+              duration: 3000
+            })
+          }, 0);
+          reject();
+        },
+        complete: function (res) {}
+      }
+
+      wx.getNetworkType({
+        success(res) {
+          const networkType = res.networkType;
+          if (networkType == "none" || networkType == "unknown") {
+            setTimeout(() => {
+              wx.showToast({
+                title: '请检查网络连接…',
+                icon: "none",
+                duration: 3000
+              })
+            }, 0);
+          } else {
+            utils.ajax(params, getApp().globalData.basicURL + '/area/list');
+          }
+        }
+      })
+    })
   },
   globalData: {
     // basicURL: "http://baizhisys.ngrok.yangz.info:10010",

@@ -6,13 +6,13 @@
 		<!-- 姓 -->
 		<view class="section">
 			<view class="section_title">姓</view>
-			<input name="custom_surname" type="text" placeholder="请输入您的姓" confirm-type="next" maxlength='16' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.firstName}}" />
+			<input name="custom_surname" type="text" placeholder="请输入您的姓" confirm-type="next" maxlength='30' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.lastName}}" />
 		</view>
 
 		<!-- 名 -->
 		<view class="section">
 			<view class="section_title">名</view>
-			<input name="custom_lastName" type="text" placeholder="请输入您的名" confirm-type="next" maxlength='16' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.lastName}}" />
+			<input name="custom_lastName" type="text" placeholder="请输入您的名" confirm-type="next" maxlength='30' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.firstName}}" />
 		</view>
 
 		<!-- 姓名全拼或英文名 -->
@@ -21,22 +21,40 @@
 			<input name="custom_name" type="text" placeholder="姓名全拼或英文名" confirm-type="next" maxlength='30' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.name}}" />
 		</view>
 
+		<!-- 性别 -->
+		<view class="section">
+			<view class="section_title">性别</view>
+			<radio-group name='gender' bindchange="changeGender">
+				<label class="radio">
+					<radio value="1" checked="{{gender}}" />男
+				</label>
+				<label class="radio">
+					<radio value="0" checked="{{!gender}}" />女
+				</label>
+			</radio-group>
+		</view>
+
 		<!-- 微信号码 -->
 		<view class="section">
 			<view class="section_title">微信号码</view>
-			<input name="custom_wechat" type="text" placeholder="请输入您的微信号码" confirm-type="next" maxlength='18' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.wechatNum}}" />
+			<input name="custom_wechat" type="text" placeholder="请输入您的微信号码" confirm-type="next" maxlength='30' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.wechatNum}}" />
 		</view>
 
 		<!-- 手机号码 -->
 		<view class="section">
 			<view class="section_title">手机号码</view>
-			<input name="custom_phone" type="number" placeholder="请输入您的手机号码" confirm-type="next" maxlength='11' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.mobile}}" />
+			<picker style="flex:0 0 80rpx;margin-left:1em;margin-top:10rpx;" bindchange="bindCountryChange" name="country_code" range="{{countryArr}}" rangeKey="area" value="{{countryIdx}}">
+				<view class="picker">
+					+ {{countryArr[countryIdx].code}}
+				</view>
+			</picker>
+			<input name="custom_phone" type="number" placeholder="请输入您的手机号码" confirm-type="next" maxlength='30' autocapitalize='off' autocorrect='off' cursor-spacing="80" value="{{personalInfo.mobile}}" style="width:60%;margin-left:10rpx;" />
 		</view>
 
 		<!-- 生日 -->
 		<view wx:if="{{isMember == true}}" class="section">
 			<view class="section_title">生日</view>
-			<picker bindchange="bindDateChange" mode="date" name="birthday" value="{{date}}">
+			<picker bindchange="bindDateChange" mode="date" name="birthday" value="{{date}}" style="flex:1">
 				<view class="picker">
 					当前选择: {{date}}
 				</view>
@@ -46,7 +64,7 @@
 		<!-- 俱乐部 -->
 		<view wx:if="{{isMember == true}}" class="section">
 			<view class="section_title">俱乐部</view>
-			<picker bindchange="bindClubChange" name="ClubName" range="{{clubArr}}" rangeKey="clubName" value="{{clubIdx}}">
+			<picker bindchange="bindClubChange" name="ClubName" range="{{clubArr}}" rangeKey="clubName" value="{{clubIdx}}" style="flex:1">
 				<view class="picker">
 					当前选择: {{clubArr[clubIdx].clubName}}
 				</view>

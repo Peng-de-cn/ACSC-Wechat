@@ -1,68 +1,55 @@
 {
-  "pages": [
-    "pages/tab-index/activity-list/activity-list",
-    "pages/tab-index/activity-search/activity-search",
-    "pages/tab-index/activity-detail/activity-detail",
-    "pages/tab-index/tab-tags/tab-tags",
-    "pages/tab-shopping-mall/tab-shopping-mall",
-    "pages/tab-shopping-cart/tab-shopping-cart",
-    "pages/tab-mine/mine-index/mine-index",
-    "pages/tab-mine/mine-personal/mine-personal",
-    "pages/tab-mine/mine-activities/mine-activities",
-    "pages/tab-mine/mine-join/mine-join",
-    "pages/tab-mine/mine-service/mine-service",
-    "pages/tab-mine/mine-about/mine-about",
-    "pages/tab-index/activity-webview/activity-webview",
-    "pages/tab-mine/mine-collection/mine-collection",
-    "pages/result-list/result-list",
-    "pages/tab-vip/vip-index/vip-index",
-    "pages/tab-vip/vip-form/vip-form",
-    "pages/tab-mine/mine-privacy/mine-privacy",
-    "pages/tab-mine/mine-agreement/agreement"
-  ],
-  "tabBar": {
-    "custom": true,
-    "color": "#686868",
-    "selectedColor": "#5096F8",
-    "list": [
-      {
-        "pagePath": "pages/tab-index/activity-list/activity-list",
-        "iconPath": "/images/index.png",
-        "selectedIconPath": "/images/index_active.png",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/tab-shopping-mall/tab-shopping-mall",
-        "iconPath": "/images/shop.png",
-        "selectedIconPath": "/images/shop_active.png",
-        "text": "商城"
-      },
-      {
-        "pagePath": "pages/tab-vip/vip-index/vip-index",
-        "iconPath": "/images/vip.png",
-        "selectedIconPath": "/images/vip.png",
-        "text": "会员卡"
-      },
-      {
-        "pagePath": "pages/tab-shopping-cart/tab-shopping-cart",
-        "iconPath": "/images/shoppingcart.png",
-        "selectedIconPath": "/images/shoppingcart_active.png",
-        "text": "购物车"
-      },
-      {
-        "pagePath": "pages/tab-mine/mine-index/mine-index",
-        "iconPath": "/images/mine.png",
-        "selectedIconPath": "/images/mine_active.png",
-        "text": "我的"
-      }
-    ]
-  },
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#5f6fee",
-    "navigationBarTitleText": "ACSC体育协会",
-    "navigationBarTextStyle": "white"
-  },
-  "style": "v2",
-  "sitemapLocation": "sitemap.json"
+    "pages": [
+        "pages/tab-index/activity-list/activity-list",
+        "pages/tab-index/activity-search/activity-search",
+        "pages/tab-index/activity-detail/activity-detail",
+        "pages/tab-index/tab-tags/tab-tags",
+        "pages/tab-shopping-mall/tab-shopping-mall",
+        "pages/tab-shopping-cart/tab-shopping-cart",
+        "pages/tab-mine/mine-index/mine-index",
+        "pages/tab-mine/mine-personal/mine-personal",
+        "pages/tab-mine/mine-activities/mine-activities",
+        "pages/tab-mine/mine-join/mine-join",
+        "pages/tab-mine/mine-service/mine-service",
+        "pages/tab-mine/mine-about/mine-about",
+        "pages/tab-index/activity-webview/activity-webview",
+        "pages/tab-mine/mine-collection/mine-collection",
+        "pages/result-list/result-list",
+        "pages/tab-vip/vip-index/vip-index",
+        "pages/tab-vip/vip-form/vip-form",
+        "pages/tab-mine/mine-privacy/mine-privacy",
+        "pages/tab-mine/mine-agreement/agreement"
+    ],
+    "tabBar": {
+        "custom": true,
+        "color": "#636465",
+        "selectedColor": "#1788fa",
+        "list": [{
+                "pagePath": "pages/tab-index/activity-list/activity-list",
+                "iconPath": "/images/index.png",
+                "selectedIconPath": "/images/index_active.png",
+                "text": "首页"
+            },
+            {
+                "pagePath": "pages/tab-vip/vip-index/vip-index",
+                "iconPath": "/images/vip.png",
+                "selectedIconPath": "/images/vip.png",
+                "text": "会员卡"
+            },
+            {
+                "pagePath": "pages/tab-mine/mine-index/mine-index",
+                "iconPath": "/images/mine.png",
+                "selectedIconPath": "/images/mine_active.png",
+                "text": "我的"
+            }
+        ]
+    },
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#5f6fee",
+        "navigationBarTitleText": "ACSC体育协会",
+        "navigationBarTextStyle": "white"
+    },
+    "style": "v2",
+    "sitemapLocation": "sitemap.json"
 }

@@ -78,12 +78,12 @@ page {
 }
 
 .bottom-list .list-item .tel {
-  color: #5096f8;
+  color: #1788fa;
   margin: 0 4px;
 }
 
 .bottom-list .list-item .state {
-  color: #5096f8;
+  color: #1788fa;
   font-weight: bold;
 }
 
@@ -107,7 +107,7 @@ page {
 }
 
 .activity-info .options .option.active {
-  /* background: #5096F8; */
+  /* background: #1788fa; */
   background: #9bd8fc;
   border: 1px solid #37b0f8;
 }
@@ -177,7 +177,7 @@ page {
 .operation .collection text {
   font-size: 14px;
   margin-left: 12rpx;
-  color: #5096f8;
+  color: #1788fa;
 }
 
 .operation .sign-up {
@@ -186,7 +186,7 @@ page {
   justify-content: center;
   align-items: center;
   flex: 1 0 0;
-  background: skyblue;
+  background: #1788fa;
   color: #fff;
   font-size: 14px;
   font-weight: bold;

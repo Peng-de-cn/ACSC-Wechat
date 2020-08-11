@@ -1,68 +1,109 @@
-<view class="container">
-	<view wx:if="{{personalInfo.vip == null}}" class="vip-list">
-		<block wx:for="{{vipList}}">
-			<view wx:if="{{index == 0}}" class="vip-item">
-				<view class="free-vip">
-					<image mode="aspectFill" src="/images/normal-vip.png"></image>
-				</view>
-				<view class="detail">
-					<view class="detail-top">
-						<view class="btn-next" catchtap="regeisterVIP" data-level="normal" data-id="{{item.vipId}}">成为{{item.vipName}}</view>
+<view class="container" wx:if="{{isInit}}">
+	<!-- 非会员，显示会员列表 -->
+	<view wx:if="{{personalInfo.vip == null}}" style="display:flex;justify-content: center;flex-direction: column;align-items: center;">
+		<radio-group bindchange="switchVip" class="vip-list">
+			<block wx:for="{{vipList}}">
+				<!-- <view class="vip-list"> -->
+				<view wx:if="{{index == 0}}" class="vip-item">
+					<view class="free-vip">
+						<image mode="aspectFill" src="/images/normal-vip.jpg"></image>
+					</view>
+					<view class="detail">
+						<view class="detail-top">
+							<view class="item-title">{{item.vipName}}</view>
+							<!-- <view class="btn-next" catchtap="regeisterVIP" data-level="normal" data-id="{{item.vipId}}">成为{{item.vipName}}</view> -->
+						</view>
+						<view class="options">
+							<!-- <view class="option {{normal ? 'active':''}}" data-id="{{item.vipId}}" catchtap="switchVip">
+								<text>¥ <text class="annual-fee {{normal ? 'active':''}}"> {{item.annualFee}} </text>/年</text>
+							</view> -->
+							<radio checked="{{true}}" value="{{item.vipId}}">¥ {{item.annualFee}} /年</radio>
+						</view>
+						<view class="welfare-list">
+							<view class="welfare-item"><text></text>积分</view>
+							<view class="welfare-item"><text></text>报名</view>
+							<view class="welfare-item"><text></text>代金券500M</view>
+						</view>
 					</view>
 				</view>
-			</view>
-			<view wx:else class="vip-item">
-				<view class="free-vip">
-					<image mode="aspectFill" src="/images/senior-vip.png"></image>
-				</view>
-				<view class="detail">
-					<view class="detail-top">
-						<view class="btn-next" style="background:#000" catchtap="regeisterVIP" data-level="senior" data-id="{{item.vipId}}">成为{{item.vipName}}</view>
+				<view wx:else class="vip-item">
+					<view class="free-vip">
+						<image mode="aspectFill" src="/images/senior-vip.jpg"></image>
+					</view>
+					<view class="detail">
+						<view class="detail-top">
+							<view class="item-title">{{item.vipName}}</view>
+							<!-- <view class="btn-next" style="background:#000" catchtap="regeisterVIP" data-level="senior" data-id="{{item.vipId}}">成为{{item.vipName}}</view> -->
+						</view>
+						<view class="options">
+							<!-- <view class="option {{!normal ? 'active':''}}" data-id="{{item.vipId}}" catchtap="switchVip">
+								<text>¥ <text class="annual-fee {{!normal ? 'active':''}}"> {{item.annualFee}} </text>/年</text>
+							</view> -->
+							<radio value="{{item.vipId}}">¥ {{item.annualFee}} /年</radio>
+						</view>
+						<view class="welfare-list">
+							<view class="welfare-item"><text></text>2倍积分</view>
+							<view class="welfare-item"><text></text>报名</view>
+							<view class="welfare-item"><text></text>代金券10€</view>
+							<view class="welfare-item"><text></text>会员礼品</view>
+							<view class="welfare-item"><text></text>保险</view>
+						</view>
 					</view>
 				</view>
-			</view>
-		</block>
+				<!-- </view> -->
+			</block>
+		</radio-group>
+		<view wx:if="{{personalInfo.vip == null}}" class="joinMember" catchtap="regeisterVIP" data-level="normal" data-id="{{item.vipId}}">加入会员</view>
 	</view>
-	<view wx:elif="{{personalInfo.vip.vipId == 1}}" class="vip-infos">
-		<view class="vip-item">
-			<view class="free-vip">
-				<!-- <image mode="aspectFill" src="/images/normal-vip.png"></image> -->
-				<view class="vip-title">{{personalInfo.vip.vipName}}</view>
-				<view class="vip-name">{{personalInfo.firstName }} {{ personalInfo.lastName}}</view>
-				<view class="vip-card">{{personalInfo.vipNum}}</view>
-			</view>
-			<view class="detail">
-				<view class="detail-infos">
-					<view class="infos-item" wx:if="{{personalInfo.deadline!=null}}">到期时间：<text>{{personalInfo.deadline }}</text></view>
-					<view class="infos-item" wx:else>到期时间：<text>无限制</text></view>
-					<view class="infos-item">积分：<text>{{personalInfo.integral}}</text></view>
+	<view wx:else>
+		<!-- vipStatus：0，状态正常；1:会员过期 -->
+		<!-- 普通会员 -->
+		<view wx:if="{{personalInfo.vip.vipId == 1  || personalInfo.vipStatus == 1 }}" class="vip-infos">
+			<view class="vip-item">
+				<view class="free-vip">
+					<!-- <image mode="aspectFill" src="/images/normal-vip.jpg"></image> -->
+					<!-- <view class="vip-title">{{personalInfo.vip.vipName}}</view> -->
+					<view class="vip-title">普通会员</view>
+					<view class="vip-name">{{ personalInfo.lastName}} {{personalInfo.firstName }}</view>
+					<view class="vip-card">{{vipNum}}</view>
 				</view>
-				<view class="detail-btn">
-					<view class="btn-next" catchtap="updateInfo">修改资料</view>
-					<view class="btn-next" catchtap="upgradeVIP" data-vipId="{{vipList[1].vipId}}">升级成为年费会员</view>
+				<view class="detail">
+					<view class="detail-infos">
+						<view class="infos-item" wx:if="{{personalInfo.deadline!=null}}">到期时间：<text>{{personalInfo.deadline }}</text></view>
+						<view class="infos-item" wx:else>到期时间：<text>无限制</text></view>
+						<view class="infos-item">积分：<text>{{personalInfo.integral}}</text></view>
+					</view>
+					<view class="detail-btn">
+						<view class="btn-next" catchtap="updateInfo">修改资料</view>
+						<view class="btn-next" catchtap="upgradeVIP" data-vipId="{{vipList[1].vipId}}">升级成为年费会员</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- 付费会员 -->
+		<view wx:elif="{{personalInfo.vip.vipId == 2 && personalInfo.vipStatus == 0}}" class="vip-infos">
+			<view class="vip-item">
+				<view class="free-vip" style="color:#fff;background:url(http://images.acsclub.net/acsc/background4.jpg) no-repeat;background-size: 100% 100%;background-position: center;">
+					<!-- <image mode="aspectFill" src="/images/senior-vip.jpg"></image> -->
+					<!-- <view class="vip-title">{{personalInfo.vip.vipName}}</view> -->
+					<view class="vip-title">年费会员</view>
+					<view class="vip-name">{{ personalInfo.lastName}} {{personalInfo.firstName }}</view>
+					<view class="vip-card">{{vipNum}}</view>
+				</view>
+				<view class="detail">
+					<view class="detail-infos">
+						<view class="infos-item" wx:if="{{personalInfo.deadline!=null}}">到期时间：<text>{{personalInfo.deadline }}</text></view>
+						<view class="infos-item" wx:else>到期时间：<text>无限制</text></view>
+						<view class="infos-item">积分：<text>{{personalInfo.integral}}</text></view>
+					</view>
+					<view class="detail-btn">
+						<view class="btn-next" style="background:#636465" catchtap="updateInfo">修改资料</view>
+						<view class="btn-next" style="background:#636465" catchtap="renewVIP">续费会员</view>
+					</view>
 				</view>
 			</view>
 		</view>
 	</view>
-	<view wx:elif="{{personalInfo.vip.vipId == 2}}" class="vip-infos">
-		<view class="vip-item">
-			<view class="free-vip" style="color:#fff;background:url(https://i.loli.net/2020/05/09/oWhZvV5sa87IdUQ.png) no-repeat;background-size: 100% 100%;background-position: center;">
-				<!-- <image mode="aspectFill" src="/images/senior-vip.png"></image> -->
-				<view class="vip-title">{{personalInfo.vip.vipName}}</view>
-				<view class="vip-name">{{personalInfo.firstName }} {{ personalInfo.lastName}}</view>
-				<view class="vip-card">{{personalInfo.vipNum}}</view>
-			</view>
-			<view class="detail">
-				<view class="detail-infos">
-					<view class="infos-item" wx:if="{{personalInfo.deadline!=null}}">到期时间：<text>{{personalInfo.deadline }}</text></view>
-					<view class="infos-item" wx:else>到期时间：<text>无限制</text></view>
-					<view class="infos-item">积分：<text>{{personalInfo.integral}}</text></view>
-				</view>
-				<view class="detail-btn">
-					<view class="btn-next" style="background:#000" catchtap="updateInfo">修改资料</view>
-					<view class="btn-next" style="background:#000" catchtap="renewVIP">续费会员</view>
-				</view>
-			</view>
-		</view>
-	</view>
+
+
 </view>

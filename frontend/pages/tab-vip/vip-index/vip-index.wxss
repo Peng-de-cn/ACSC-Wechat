@@ -8,27 +8,42 @@ page {
   height: 100%;
 }
 
-.container .vip-list,.container .vip-infos {
+.container .vip-list {
+  display: flex;
+  justify-content: center;
+  padding: 100rpx 20rpx 120rpx;
+  width: 96%;
+  box-sizing: border-box;
+}
+
+.container .vip-infos {
   display: flex;
   flex-direction: column;
   padding: 20rpx 30rpx 120rpx;
 }
 
 .container .vip-list .vip-item {
-  margin-bottom: 20rpx;
+  margin: 0 20rpx;
+  flex: 0 0 48%;
 }
 
-.vip-list .vip-item .free-vip,.vip-infos .vip-item .free-vip {
+.vip-list .vip-item .free-vip {
   width: 100%;
-  height: 400rpx;
+  height: 200rpx;
 }
 
 .vip-infos .vip-item .free-vip {
-  background: url(https://i.loli.net/2020/05/12/tZgUGiXs1ExJukr.png) no-repeat;
+  width: 100%;
+  height: 386rpx;
+}
+
+.vip-infos .vip-item .free-vip {
+  background: url(http://images.acsclub.net/acsc/background3.jpg) no-repeat;
   background-size: 100% 100%;
   background-position: center;
   color: #fff;
   position: relative;
+  border-radius: 14rpx;
 }
 
 .vip-item .free-vip .vip-title {
@@ -38,6 +53,7 @@ page {
   top: 54rpx;
   left: 60rpx;
 }
+
 .vip-item .free-vip .vip-name {
   position: absolute;
   top: 230rpx;
@@ -59,14 +75,84 @@ page {
 .vip-list .vip-item .detail {
   display: flex;
   flex-direction: column;
+  padding-left: 30rpx;
 }
 
 .vip-item .detail .detail-top {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
   margin-top: 16rpx;
   padding-right: 32rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.vip-item .detail .options {
+  display: flex;
+  margin-top: 14rpx;
+}
+
+.vip-item .detail .options .option {
+  padding: 14rpx 26rpx;
+  display: inline-flex;
+  flex-direction: column;
+  font-size: 22rpx;
+  border: 1px solid #000;
+  border-radius: 10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vip-item .detail .options .option.active {
+  background-color: #5f6fee;
+  color: #fff;
+  border: none;
+}
+
+.vip-item .detail .options .annual-fee {
+  color: red;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.vip-item .detail .options .annual-fee.active {
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.vip-item .detail .welfare-list {
+  margin-top: 26rpx;
+  font-size: 24rpx;
+}
+
+.vip-item .detail .welfare-list .welfare-item {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.joinMember {
+  width: 60%;
+  margin: 20rpx;
+  padding: 16rpx 100rpx;
+  text-align: center;
+  background: #1788fa;
+  color: #fff;
+  border-radius: 20px;
+  font-size: 28rpx;
+}
+
+.detail .welfare-list .welfare-item text {
+  display: inline-block;
+  width: 10rpx;
+  height: 10rpx;
+  border-radius: 50%;
+  background-color: #000;
+  margin-right: 6rpx;
 }
 
 .detail .detail-top .triangle {
@@ -94,7 +180,7 @@ page {
 
 .detail .btn-next {
   width: 90%;
-  background-color: #5f6fee;
+  background-color: #1788fa;
   color: white;
   border-radius: 10rpx;
   padding: 10rpx;
@@ -110,7 +196,7 @@ page {
 }
 
 .vip-item .detail .detail-infos {
-  padding:30rpx 24rpx;
+  padding: 30rpx 24rpx;
   box-sizing: border-box;
   background: #fff;
   border-radius: 10rpx;
@@ -122,4 +208,42 @@ page {
 
 .vip-item .detail .detail-btn {
   margin-top: 70rpx;
+}
+
+
+/* 默认背景样式*/
+radio .wx-radio-input {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+radio .wx-radio-input.wx-radio-input-checked {
+  width: 30rpx;
+  /* 选中后对勾大小，不要超过背景的尺寸 */
+  height: 30rpx;
+  /* 选中后对勾大小，不要超过背景的尺寸 */
+  border: none;
+  background: #1788fa;
+}
+
+/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
+radio .wx-radio-input.wx-radio-input-checked::before {
+  border-radius: 50%;
+  /* 圆角 */
+  width: 30rpx;
+  /* 选中后对勾大小，不要超过背景的尺寸 */
+  height: 30rpx;
+  /* 选中后对勾大小，不要超过背景的尺寸 */
+  line-height: 30rpx;
+  text-align: center;
+  font-size: 20rpx;
+  /* 对勾大小 30rpx */
+  color: #fff;
+  /* 对勾颜色 白色 */
+  border: 1rpx solid #1788fa;
+  /* background: #f00; */
+  background: #1788fa;
+  transform: translate(-50%, -50%) scale(1);
+  -webkit-transform: translate(-50%, -50%) scale(1);
 }
