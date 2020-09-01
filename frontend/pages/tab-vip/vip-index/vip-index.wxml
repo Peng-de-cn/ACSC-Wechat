@@ -20,9 +20,8 @@
 							<radio checked="{{true}}" value="{{item.vipId}}">¥ {{item.annualFee}} /年</radio>
 						</view>
 						<view class="welfare-list">
-							<view class="welfare-item"><text></text>积分</view>
-							<view class="welfare-item"><text></text>报名</view>
-							<view class="welfare-item"><text></text>代金券500M</view>
+							<view class="welfare-item"><text></text>享受ACSC合作商家优惠</view>
+							<view class="welfare-item"><text></text>活动享受会员价</view>
 						</view>
 					</view>
 				</view>
@@ -42,11 +41,11 @@
 							<radio value="{{item.vipId}}">¥ {{item.annualFee}} /年</radio>
 						</view>
 						<view class="welfare-list">
-							<view class="welfare-item"><text></text>2倍积分</view>
-							<view class="welfare-item"><text></text>报名</view>
-							<view class="welfare-item"><text></text>代金券10€</view>
-							<view class="welfare-item"><text></text>会员礼品</view>
-							<view class="welfare-item"><text></text>保险</view>
+							<view class="welfare-item"><text></text>享受ACSC合作商家优惠</view>
+							<view class="welfare-item"><text></text>动享受VIP会员价</view>
+							<view class="welfare-item"><text></text>活动中免费常规技术指导（滑雪 赛车 潜水）</view>
+							<view class="welfare-item"><text></text>附赠精美礼品</view>
+							<view class="welfare-item"><text></text>部分活动体验卡</view>
 						</view>
 					</view>
 				</view>
@@ -75,7 +74,7 @@
 					</view>
 					<view class="detail-btn">
 						<view class="btn-next" catchtap="updateInfo">修改资料</view>
-						<view class="btn-next" catchtap="upgradeVIP" data-vipId="{{vipList[1].vipId}}">升级成为年费会员</view>
+						<view class="btn-next" catchtap="upgradeVIP" data-vipId="{{vipList[1].vipId}}">升级成为VIP会员</view>
 					</view>
 				</view>
 			</view>
@@ -86,7 +85,7 @@
 				<view class="free-vip" style="color:#fff;background:url(http://images.acsclub.net/acsc/background4.jpg) no-repeat;background-size: 100% 100%;background-position: center;">
 					<!-- <image mode="aspectFill" src="/images/senior-vip.jpg"></image> -->
 					<!-- <view class="vip-title">{{personalInfo.vip.vipName}}</view> -->
-					<view class="vip-title">年费会员</view>
+					<view class="vip-title">VIP会员</view>
 					<view class="vip-name">{{ personalInfo.lastName}} {{personalInfo.firstName }}</view>
 					<view class="vip-card">{{vipNum}}</view>
 				</view>

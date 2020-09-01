@@ -21,6 +21,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
     // 检查更新
     utils.getUpdate();
     // 查询用户信息
@@ -399,7 +400,7 @@ Page({
     })
   },
   /**
-   * 切换普通会员和年费会员
+   * 切换普通会员和VIP会员
    */
   switchVip: function (e) {
     console.log(e.detail.value);

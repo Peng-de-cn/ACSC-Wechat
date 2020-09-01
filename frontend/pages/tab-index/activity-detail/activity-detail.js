@@ -112,7 +112,8 @@ Page({
             currentOption: res.data.data.packages[0].packageId,
             currentpriceCNY: res.data.data.packages[0].priceCNY,
             currentpriceEUR: res.data.data.packages[0].priceEUR,
-            collection: res.data.data.isfavorite
+            collection: res.data.data.isfavorite,
+            overdue:res.data.data.status
           })
         }
       },
@@ -312,7 +313,7 @@ Page({
       success: function (res) {
         if (res.data.data == null) {
           wx.navigateTo({
-            url: '../../tab-mine/mine-personal/mine-personal',
+            url: '../../tab-mine/mine-personal/mine-personal?returnDetail=returnDetail&activityid=' + _this.data.activityid,
           })
         } else {
           _this.submitData(activityid);
@@ -381,7 +382,7 @@ Page({
             _this.wechatPay(activityid);
           } else if (res.tapIndex == 1) {
             console.log("欧元线下支付");
-            _this.freePay(activityid);
+            _this.euroPay(activityid);
           }
 
         },
@@ -508,9 +509,76 @@ Page({
     })
   },
   /**
-   * 免费报名&欧元线下支付
+   * 免费报名
    */
   freePay: function (activityid) {
+    let _this = this;
+    var params = {
+      isShowLoading: true,
+      method: 'POST',
+      data: {
+        activityId: activityid,
+        userId: app.globalData.openid,
+        packageId: _this.data.currentOption
+      },
+      success: function (res) {
+        console.log(res);
+        if (res.data.status == true) {
+          setTimeout(() => {
+            wx.showToast({
+              title: '报名成功',
+              icon: "none",
+              duration: 8000
+            })
+          }, 0);
+          _this.setData({
+            showBookBtn: false
+          })
+        } else if (res.data.status == false) {
+          setTimeout(() => {
+            wx.showToast({
+              title: res.data.errmsg,
+              icon: "none",
+              duration: 3000
+            })
+          }, 0);
+        }
+      },
+      fail: function (res) {
+        setTimeout(() => {
+          wx.showToast({
+            title: '报名失败，请稍后再试…',
+            icon: "none",
+            duration: 3000
+          })
+        }, 0);
+      },
+      complete: function (res) {
+        wx.hideLoading();
+      }
+    }
+
+    wx.getNetworkType({
+      success(res) {
+        const networkType = res.networkType;
+        if (networkType == "none" || networkType == "unknown") {
+          setTimeout(() => {
+            wx.showToast({
+              title: '请检查网络连接…',
+              icon: "none",
+              duration: 3000
+            })
+          }, 0);
+        } else {
+          utils.ajax(params, app.globalData.basicURL + '/activity/applyActivity');
+        }
+      }
+    })
+  },
+  /**
+   * 欧元线下支付
+   */
+  euroPay: function (activityid) {
     let _this = this;
     var params = {
       isShowLoading: true,

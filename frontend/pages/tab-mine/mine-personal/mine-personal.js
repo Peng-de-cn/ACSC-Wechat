@@ -30,6 +30,11 @@ Page({
       this.setData({
         returnVip: true
       })
+    } else if (options.returnDetail != undefined) {
+      this.setData({
+        returnDetail: true,
+        activityid: options.activityid
+      })
     }
     // 检查更新
     utils.getUpdate();
@@ -37,9 +42,11 @@ Page({
     // 获取俱乐部列表
     // this.getClubList().then(this.getCountryList().then(this.checkExistence()))
     // this.getClubList().then(this.getCountryList());
+    var clubId = wx.getStorageSync('clubArr') != null ? wx.getStorageSync('clubArr')[0].clubId : 0;
+    console.log(clubId);
     this.setData({
       clubArr: wx.getStorageSync('clubArr'),
-      clubId: wx.getStorageSync('clubArr')[0].clubId,
+      clubId: clubId,
       countryArr: wx.getStorageSync('countryArr'),
       countryId: wx.getStorageSync('countryArr')[0].Id
     })
@@ -295,9 +302,13 @@ Page({
                 duration: 3000
               })
             }, 0);
-            if (_this.data.returnVip != true) {
+            if (_this.data.returnDetail != true) {
               wx.reLaunch({
                 url: '../mine-index/mine-index',
+              })
+            } else if (_this.data.returnVip != true) {
+              wx.reLaunch({
+                url: '../../tab-index/activity-detail/activity-detail?activityid=' + _this.data.activityid,
               })
             } else {
               wx.reLaunch({

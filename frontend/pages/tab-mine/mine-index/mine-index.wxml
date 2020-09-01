@@ -1,5 +1,5 @@
 <view class="center-wrap">
-	<view class="topBG" style="background-image:{{vipLevel.vipName=='年费会员'?'url(http://images.acsclub.net/acsc/background2.jpg)':'url(http://images.acsclub.net/acsc/background1.jpg)'}}">
+	<view class="topBG" style="background-image:{{vipLevel.vipName=='VIP会员'?'url(http://images.acsclub.net/acsc/background2.jpg)':'url(http://images.acsclub.net/acsc/background1.jpg)'}}">
 		<!-- <image class="topImage" src="https://i.loli.net/2019/12/31/7mKNsCgWLVqaObZ.jpg"></image> -->
 		<view class="left">
 			<view class="avatar">

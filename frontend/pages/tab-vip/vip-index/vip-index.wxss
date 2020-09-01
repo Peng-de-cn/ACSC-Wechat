@@ -128,11 +128,11 @@ page {
 }
 
 .vip-item .detail .welfare-list .welfare-item {
-  overflow: hidden;
+  /* overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   display: flex;
-  align-items: center;
+  align-items: center; */
 }
 
 .joinMember {
